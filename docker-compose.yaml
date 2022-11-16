@@ -31,7 +31,7 @@ services:
       context: ./concerts-api
       dockerfile: ./Dockerfile.dev
     environment:
-      DATABASE_URL: postgresql://user:password@postgres/concerts
+      DATABASE_URL: postgresql://concerts:password@postgres/concerts
       WAIT_HOSTS: postgres:5432
     ports:
       - "8000:8000"
