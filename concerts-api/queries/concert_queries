@@ -1,0 +1,13 @@
+# import os
+# from psycopg_pool import ConnectionPool
+# from routers import ConcertsList
+
+# pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
+
+# class ConcertQueries:
+#     def get_all_concerts(self) -> ConcertsList:
+#         with pool.connection() as conn:
+#             with conn.cursor() as cur:
+#                 result = cur.execute(
+
+#                 )
