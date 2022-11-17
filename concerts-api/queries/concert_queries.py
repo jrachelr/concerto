@@ -66,21 +66,20 @@ class ConcertQueries:
 
                 return results
 
-    def get_one_concert(self, concert_id: int) -> ConcertOut:
+    def get_one_concert(self, concert_id:int) -> ConcertOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
                     """
                     SELECT c.id, c.concert_name, c.artist_name, c.start_date, c.min_price, c.max_price
                     FROM concert_info AS c
-                    ORDER BY c.concert_name
                     WHERE c.id = %s
                     """,
                     [concert_id],
                 )
 
-                print(result)
                 record = result.fetchone()
+                print(record)
                 data = {
                     "id": record[0],
                     "concert_name": record[1],
@@ -88,5 +87,5 @@ class ConcertQueries:
                     "start_date": record[3],
                     "min_price": record[4],
                     "max_price": record[5],
-                },
+                }
             return ConcertOut(**data)
