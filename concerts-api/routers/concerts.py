@@ -11,8 +11,6 @@ from queries.concert_queries import (
 router = APIRouter()
 
 # when we create a concert
-
-
 @router.get("/concerts", response_model=ConcertsList)
 def get_all_concerts(queries: ConcertQueries = Depends()):
     return {"concerts": queries.get_all_favorites()}
@@ -26,10 +24,3 @@ def get_concert_by_id(concert_id: int, queries: ConcertQueries = Depends()):
 @router.post("/concerts", response_model=ConcertIn)
 def post_concert(concert: ConcertIn, queries: ConcertQueries = Depends()):
     return queries.add_favorite_concert(concert)
-
-
-# @router.get('/concerts', response_model=ConcertsList)
-# def get_concerts(queries: ConcertQueries = Depends()):
-#     # concerts = queries.get_all_concerts()
-#     # return {'concerts': concerts}
-#     pass
