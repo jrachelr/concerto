@@ -30,7 +30,7 @@ pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 # need to fix so it can return the id as well
 class ConcertQueries:
-    def add_favorite_concert(self, concert: ConcertIn) -> ConcertOut:
+    def create(self, concert: ConcertIn) -> ConcertOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -56,7 +56,7 @@ class ConcertQueries:
                 print(old_data)
                 return ConcertOut(id=id, **old_data)
 
-    def get_all_favorites(self) -> ConcertOut:
+    def get_all(self) -> ConcertOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -76,7 +76,7 @@ class ConcertQueries:
 
                 return results
 
-    def get_one_concert(self, concert_id: int) -> ConcertOut:
+    def get_one(self, concert_id: int) -> ConcertOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -100,17 +100,17 @@ class ConcertQueries:
                 }
             return ConcertOut(**data)
 
-    def update_concert(self, concert_id, concert: ConcertIn) -> ConcertOut:
+    def update(self, concert_id, concert: ConcertIn) -> ConcertOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
                     UPDATE concert_info
-                    SET 
-                    concert_name = %s, 
-                    artist_name = %s, 
-                    start_date = %s, 
-                    min_price = %s, 
+                    SET
+                    concert_name = %s,
+                    artist_name = %s,
+                    start_date = %s,
+                    min_price = %s,
                     max_price = %s
                     WHERE id = %s
 
@@ -130,7 +130,7 @@ class ConcertQueries:
                 print(old_data)
                 return ConcertOut(id=concert_id, **old_data)
 
-    def delete_concert(self, concert_id: int):
+    def delete(self, concert_id: int):
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
