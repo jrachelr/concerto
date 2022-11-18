@@ -3,12 +3,14 @@ from psycopg_pool import ConnectionPool
 from datetime import date
 from pydantic import BaseModel
 
+
 class ConcertIn(BaseModel):
     concert_name: str
     artist_name: str
     start_date: date
     min_price: int
     max_price: int
+
 
 class ConcertOut(BaseModel):
     id: int
@@ -22,12 +24,13 @@ class ConcertOut(BaseModel):
 class ConcertsList(BaseModel):
     concerts: list[ConcertOut]
 
+
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 
-#need to fix so it can return the id as well
+# need to fix so it can return the id as well
 class ConcertQueries:
-    def add_favorite_concert(self, concert:ConcertIn) -> ConcertOut:
+    def add_favorite_concert(self, concert: ConcertIn) -> ConcertOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -38,14 +41,21 @@ class ConcertQueries:
                         (%s, %s, %s, %s, %s)
                     RETURNING id;
                     """,
-                    [concert.concert_name, concert.artist_name, concert.start_date, concert.min_price, concert.max_price]
+                    [
+                        concert.concert_name,
+                        concert.artist_name,
+                        concert.start_date,
+                        concert.min_price,
+                        concert.max_price,
+                    ],
                 )
 
                 id = result.fetchone()[0]
                 print(id)
                 old_data = concert.dict()
                 print(old_data)
-                return ConcertOut(id = id, **old_data)
+                return ConcertOut(id=id, **old_data)
+
     def get_all_favorites(self) -> ConcertOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -66,7 +76,7 @@ class ConcertQueries:
 
                 return results
 
-    def get_one_concert(self, concert_id:int) -> ConcertOut:
+    def get_one_concert(self, concert_id: int) -> ConcertOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -89,3 +99,45 @@ class ConcertQueries:
                     "max_price": record[5],
                 }
             return ConcertOut(**data)
+
+    def update_concert(self, concert_id, concert: ConcertIn) -> ConcertOut:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    UPDATE concert_info
+                    SET 
+                    concert_name = %s, 
+                    artist_name = %s, 
+                    start_date = %s, 
+                    min_price = %s, 
+                    max_price = %s
+                    WHERE id = %s
+
+
+                    """,
+                    [
+                        concert.concert_name,
+                        concert.artist_name,
+                        concert.start_date,
+                        concert.min_price,
+                        concert.max_price,
+                        concert_id,
+                    ],
+                )
+
+                old_data = concert.dict()
+                print(old_data)
+                return ConcertOut(id=concert_id, **old_data)
+
+    def delete_concert(self, concert_id: int):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    DELETE FROM concert_info
+                    WHERE id = %s
+                    """,
+                    [concert_id],
+                )
+                return True
