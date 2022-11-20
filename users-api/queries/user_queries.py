@@ -2,11 +2,19 @@ from pydantic import BaseModel
 import os
 from psycopg_pool import ConnectionPool
 
+class User(BaseModel):
+    id: int
+    first_name: str
+    last_name: str
+    email: str
+    hashed_password: str
+    username: str
 
 class UserIn(BaseModel):
     first_name: str
     last_name: str
     email: str
+    password: str
     username: str
 
 class UserOut(BaseModel):
@@ -26,7 +34,7 @@ class UserQueries:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute("""
-                    SELECT id, first_name, last_name, email, username
+                    SELECT id, first_name, last_name, email, hashed_password, username
                     FROM user_info
                     ORDER BY last_name, first_name
                     """
@@ -41,16 +49,16 @@ class UserQueries:
 
                 return results
 
-    def get_one_user(self, user_id: int) -> UserOut:
+    def get_one_user(self, email: str) -> User:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
                     """
-                    SELECT u.id, u.first_name, u.last_name, u.email, u.username
+                    SELECT u.id, u.first_name, u.last_name, u.email, u.hashed_password, u.last_name, u.username
                     FROM user_info AS u
-                    WHERE u.id = %s
+                    WHERE u.email = %s
                     """,
-                    [user_id],
+                    [email],
                 )
 
                 record = result.fetchone()
@@ -60,34 +68,36 @@ class UserQueries:
                     "first_name": record[1],
                     "last_name": record[2],
                     "email": record[3],
-                    "username": record[4],
+                    "hashed_password": record[4],
+                    "username": record[5],
                 }
-            return UserOut(**data)
+            return User(**data)
 
-    def post_user(self, user: UserIn) -> UserOut:
+    def create_user(self, user: UserIn, hashed_password: str) -> User:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
                     """
                     INSERT INTO user_info
-                        (first_name, last_name, email, username)
+                        (first_name, last_name, email, hashed_password, username)
                     VALUES
-                        (%s, %s, %s, %s)
+                        (%s, %s, %s, %s, %s)
                     RETURNING id;
                     """,
                     [
                         user.first_name,
                         user.last_name,
                         user.email,
+                        hashed_password,
                         user.username,
                     ],
                 )
 
                 id = result.fetchone()[0]
                 print(id)
-                old_data = user.dict()
-                print(old_data)
-                return UserOut(id=id, **old_data)
+                # old_data = user.dict()
+                # print(old_data)
+                return User(id=id, first_name = user.first_name, last_name = user.last_name, email = user.email, hashed_password = hashed_password, username = user.username,)
     def delete_user(self, user_id: int):
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -110,6 +120,7 @@ class UserQueries:
                     first_name = %s,
                     last_name = %s,
                     email = %s,
+                    hashed_password = %s,
                     username = %s
 
 
@@ -118,6 +129,7 @@ class UserQueries:
                         user.first_name,
                         user.last_name,
                         user.email,
+                        user.hashed_password,
                         user.username,
                     ],
                 )
