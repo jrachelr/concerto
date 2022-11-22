@@ -49,7 +49,32 @@ class UserQueries:
 
                 return results
 
-    def get_one_user(self, email: str) -> User:
+    def get_one_user(self, user_id: int) -> User:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                result = cur.execute(
+                    """
+                    SELECT u.id, u.first_name, u.last_name, u.email, u.hashed_password, u.last_name, u.username
+                    FROM user_info AS u
+                    WHERE u.id = %s
+                    """,
+                    [user_id],
+                )
+
+                record = result.fetchone()
+                print(record)
+                if record is None:
+                    return None
+                return User (
+                    id = record[0],
+                    first_name = record[1],
+                    last_name = record[2],
+                    email = record[3],
+                    hashed_password = record[4],
+                    username = record[5],
+                )
+
+    def get_one_user_email(self, email: str) -> User:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -63,15 +88,16 @@ class UserQueries:
 
                 record = result.fetchone()
                 print(record)
-                data = {
-                    "id": record[0],
-                    "first_name": record[1],
-                    "last_name": record[2],
-                    "email": record[3],
-                    "hashed_password": record[4],
-                    "username": record[5],
-                }
-            return User(**data)
+                if record is None:
+                    return None
+                return User (
+                    id = record[0],
+                    first_name = record[1],
+                    last_name = record[2],
+                    email = record[3],
+                    hashed_password = record[4],
+                    username = record[5],
+                )
 
     def create_user(self, user: UserIn, hashed_password: str) -> User:
         with pool.connection() as conn:
@@ -98,6 +124,7 @@ class UserQueries:
                 # old_data = user.dict()
                 # print(old_data)
                 return User(id=id, first_name = user.first_name, last_name = user.last_name, email = user.email, hashed_password = hashed_password, username = user.username,)
+
     def delete_user(self, user_id: int):
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -120,7 +147,6 @@ class UserQueries:
                     first_name = %s,
                     last_name = %s,
                     email = %s,
-                    hashed_password = %s,
                     username = %s
 
 
@@ -129,7 +155,6 @@ class UserQueries:
                         user.first_name,
                         user.last_name,
                         user.email,
-                        user.hashed_password,
                         user.username,
                     ],
                 )
