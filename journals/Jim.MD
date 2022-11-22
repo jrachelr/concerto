@@ -9,4 +9,8 @@
 
 11/18/22
 
--Added POST, GET, PUT, and DELETE for users. They appear on FastAPI docs on localhost
+- Added POST, GET, PUT, and DELETE for users. They appear on FastAPI docs on localhost
+
+11/19/22
+
+- Starting to work on authentication for users 
