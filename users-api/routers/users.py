@@ -1,8 +1,52 @@
-from fastapi import APIRouter, Depends
+from fastapi import (
+    Depends,
+    HTTPException,
+    status,
+    Response,
+    APIRouter,
+    Request,
+)
 from pydantic import BaseModel
+from jwtdown_fastapi.authentication import Token
+from authenticator import authenticator
 from queries.user_queries import UsersList, UserQueries, UserIn, UserOut
 
 router = APIRouter()
+
+
+
+class AccountForm(BaseModel):
+    username: str
+    password: str
+
+class AccountToken(Token):
+    account: UserOut
+
+class HttpError(BaseModel):
+    detail: str
+
+router = APIRouter()
+
+
+@router.post("/users", response_model=AccountToken | HttpError)
+async def post_user(
+    info: UserIn,
+    request: Request,
+    response: Response,
+    repo: UserQueries = Depends(),
+):
+    hashed_password = authenticator.hash_password(info.password)
+    account = repo.create_user(info, hashed_password)
+    form = AccountForm(username=info.email, password=info.password)
+    token = await authenticator.login(response, request, form, repo)
+    return AccountToken(account=account, **token.dict())
+
+
+
+
+
+
+
 
 @router.get("/users", response_model=UsersList)
 def users_list(queries: UserQueries = Depends()):
