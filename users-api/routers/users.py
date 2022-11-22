@@ -57,9 +57,9 @@ def users_list(queries: UserQueries = Depends()):
 def get_user_by_id(user_id: int, queries: UserQueries = Depends()):
     return queries.get_one_user(user_id)
 
-# @router.post('/users', response_model=UserToken)
-# def post_user(user:UserIn, queries:UserQueries = Depends()):
-#     return queries.post_user(user)
+@router.post('/users', response_model=UserOut)
+def post_user(user:UserIn, queries:UserQueries = Depends()):
+    return queries.post_user(user)
 
 @router.delete("/user/{user_id}", response_model=bool)
 def delete_user(user_id: int, queries: UserQueries = Depends()):
