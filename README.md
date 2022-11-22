@@ -1,4 +1,4 @@
-# Module3 Project Gamma
+# Concerto
 
 ## Getting started
 
@@ -7,10 +7,43 @@ lists all of the deliverables that are due at the end of the
 week. Below is some guidance for getting started on the
 tasks for this week.
 
-## Install Extensions
+## Design - RJ
+Concerto is a full-stack web application for music lovers to search for concerts. It removes the friction between searching for concerts and moving to another application to sample music by an artist, by embedding a Spotify player within the browser window. 
 
-* Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
-* Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
+Concerts and Users are separate microservices. The microservices communicate via a poller. 
+
+### Wireframes - RJ
+![Login and Account Info](readme_images/Login_Account.png)
+![Landing and Detail Pages](readme_images/Landing_detail.png)
+![Favorite Concerts List Page](readme_images/Favourite_Concerts.png)
+
+## Concerts Microservice - RJ
+Users search for concerts in their area on the landing page. 
+
+## Users Microservice - RJ
+Users can create an account using (what kind of technology).
+Users are able to add concerts to their list of favorites. 
+
+## Third Party APIS - RJ
+Concerto implements two external APIs; Ticketmaster API and Spotify API. 
+
+### Tickermaster API - RJ
+
+The concerts microservice uses the ticketmaster API to show a list view of concerts. 
+For the purposes of Concerto, a request to ticketmaster API contains a location key and event type key. 
+This is an example request searching for music events in Los Angeles:
+https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&dmaId=324&apikey=btsaKZ8FElrG6RkY7eRLIRvqVfJ9P374
+
+The ticketmaster get request returns a JSON object as detailed below:
+![Ticketmaster Response Object](readme_images/tm_response.png)
+
+### Spotify API - RJ
+
+The Spotify API allows developers to embed a Spotify player into the browser. 
+The data is passed from the ticketmaster response into the Spotify API request. Using the artist name, the embedded Spotify player will be populated with songs from that artist.
+
+The data flow from Ticketmaster to Spotify is detailed below:
+![Ticketmaster to Spotify Data Flow](readme_images/tm_spotify_dataflow.png)
 
 ## Deliverables
 
