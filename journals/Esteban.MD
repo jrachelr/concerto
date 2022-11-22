@@ -8,4 +8,16 @@
 
 11/18/22
 
--Added POST, GET, PUT, and DELETE for users. They appear on FastAPI docs on localhost
+- Added POST, GET, PUT, and DELETE for users. They appear on FastAPI docs on localhost
+
+11/20/22
+
+- Pair programmed to get auth/users working
+
+11/21/22
+
+- Fixed all bugs with users endpoints.
+
+11/22/22
+
+- Working on setting up login/logout on react
