@@ -9,7 +9,7 @@ from fastapi import (
 from pydantic import BaseModel
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
-from queries.user_queries import UsersList, UserQueries, UserIn, UserOut
+from queries.user_queries import UsersList, UserQueries, UserIn, UserOut, User
 
 router = APIRouter()
 
@@ -56,6 +56,7 @@ def get_user_by_info(account: UserOut = Depends(authenticator.get_current_accoun
 @router.get("/users/{user_id}", response_model=UserOut)
 def get_user_by_id(user_id: int, queries: UserQueries = Depends()):
     return queries.get_one_user(user_id)
+
 
 @router.post('/users', response_model=UserOut)
 def post_user(user:UserIn, queries:UserQueries = Depends()):

@@ -25,3 +25,7 @@
 11/22/22
 
 - Working on setting up login/logout on react
+
+11/23/22
+
+- Fixed get user info router 

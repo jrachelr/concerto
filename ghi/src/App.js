@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
-import SearchComponent from "./SearchComponent";
-import "./App.css";
-import { useToken } from "./auth.js";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./index.css";
+import { AuthProvider } from "./auth";
+import LoginForm from "./Login";
+import Landing from "./Landing";
+import { token, useToken } from "./auth.js";
+// import { useEffect, useState } from "react";
 
 function GetToken() {
 	// Get token from JWT cookie (if already logged in)
@@ -10,11 +13,18 @@ function GetToken() {
 }
 
 function App() {
+	// const[token] = useToken()
+
 	return (
-		<>
-			<h1>Concerto</h1>
-			<SearchComponent />
-		</>
+		<AuthProvider>
+			<BrowserRouter>
+				<GetToken />
+				<Routes>
+					<Route path="/" element={<Landing />} />
+					<Route path="login/" element={<LoginForm />} />
+				</Routes>
+			</BrowserRouter>
+		</AuthProvider>
 	);
 }
 
