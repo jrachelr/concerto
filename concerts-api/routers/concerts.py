@@ -90,7 +90,10 @@ def delete_concert(concert_id: int, queries: ConcertQueries = Depends(get_curren
 url = "https://app.ticketmaster.com/discovery/v2/events"
 
 params = {"classificationName":"music",
-          "dmaId": "324",
+          "latlong": "34.0522342,-118.2436849",
+          "sort": "date,asc",
+          "locale": "*",
+          "startDateTime": "2022-11-21T16:10:00Z",
           "apikey": "cWcKvvPCgHDAZ3eGfT96AeQec01G8wsM" }
 
 response = requests.get(url, params=params)
@@ -108,10 +111,18 @@ def get_all_concerts(data: get_ticketmaster_concerts = Depends()):
     concerts=[]
     for event in events:
         concert = {}
+        try:
+            concert["artist_name"] = event['_embedded']['attractions'][0]['name']
+        except KeyError:
+            continue
+
         concert["concert_name"]= event['name']
-        concert["artist_name"] = event['_embedded']['attractions'][0]['name']
         concert["venue"] = event['_embedded']['venues'][0]['name']
         concert["date"] = event['dates']['start']['localDate']
+        try:
+            concert["spotify_url"] = event['_embedded']['attractions'][0]['externalLinks']['spotify'][0]['url']
+        except KeyError:
+            continue
         try:
             concert["min_price"] = event['priceRanges'][0]['min']
         except KeyError:
