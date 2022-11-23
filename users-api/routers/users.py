@@ -43,24 +43,19 @@ async def post_user(
 
 
 
-
-
-
-
-
 @router.get("/users", response_model=UsersList)
 def users_list(queries: UserQueries = Depends()):
     return {
         "users": queries.get_all_users(),
     }
+
+@router.get("/users/current", response_model=UserOut)
+def get_user_by_info(account: UserOut = Depends(authenticator.get_current_account_data)):
+    return account
+
 @router.get("/users/{user_id}", response_model=UserOut)
 def get_user_by_id(user_id: int, queries: UserQueries = Depends()):
     return queries.get_one_user(user_id)
-
-@router.get("/users/current", response_model=UserOut)
-def get_user_by_id():
-    account=authenticator.get_current_account_data()
-    return account
 
 @router.post('/users', response_model=UserOut)
 def post_user(user:UserIn, queries:UserQueries = Depends()):
