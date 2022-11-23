@@ -6,28 +6,28 @@ import SideBar from "./SidebarNav";
 import { useToken } from "./auth.js";
 
 function GetToken() {
-  // Get token from JWT cookie (if already logged in)
-  useToken();
-  return null;
+	// Get token from JWT cookie (if already logged in)
+	useToken();
+	return null;
 }
 
 function App() {
-  const [token, login] = useToken();
+	const [token, login] = useToken();
 
-  return (
-    <>
-      <GetToken />
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="sidebar/" element={<SideBar />} />
-        <Route
-          path="login/"
-          element={<LoginForm token={token} login={login} />}
-        />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </>
-  );
+	return (
+		<>
+			<GetToken />
+			<Routes>
+				<Route path="/" element={<Landing />} />
+				<Route path="sidebar/" element={<SideBar />} />
+				<Route
+					path="login/"
+					element={<LoginForm token={token} login={login} />}
+				/>
+				<Route path="*" element={<Navigate to="/" />} />
+			</Routes>
+		</>
+	);
 }
 
 export default App;

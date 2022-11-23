@@ -3,7 +3,7 @@ import usePlacesAutocomplete, {
 	getLatLng,
 } from "use-places-autocomplete";
 
-const SearchComponent = ({ getLocation }) => {
+const SearchComponent = () => {
 	const {
 		ready,
 		value,
@@ -31,10 +31,10 @@ const SearchComponent = ({ getLocation }) => {
 			clearSuggestions();
 
 			// Get latitude and longitude via utility functions
-			// getGeocode({ address: description }).then((results) => {
-			// 	const { lat, lng } = getLatLng(results[0]);
-			// 	console.log("📍 Coordinates: ", { lat, lng });
-			// });
+			getGeocode({ address: description }).then((results) => {
+				const { lat, lng } = getLatLng(results[0]);
+				console.log("Coordinates: ", { lat, lng });
+			});
 		};
 
 	const renderSuggestions = () =>
@@ -51,34 +51,10 @@ const SearchComponent = ({ getLocation }) => {
 			);
 		});
 
-	// const handleSubmit = async (event) => {
-	// 	event.preventDefault();
-
-	// 	const date_time = dateTime;
-	// 	const technician = selectedTechnician;
-
-	// 	const data = { vin, owner, date_time, technician, reason };
-
-	// 	const concertsUrl = "http://localhost:8000/concerts/";
-	// 	const fetchConfig = {
-	// 		method: "post",
-	// 		body: JSON.stringify(data),
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 		},
-	// 	};
-
-	// 	const response = await fetch(appointmentUrl, fetchConfig);
-	// 	if (response.ok) {
-	// 		event.target.reset();
-	// 		clearState();
-	// 	}
-	// };
-
 	return (
 		<div>
-			{/* <form id="search-location" onSubmit={handleSubmit}> */}
 			<input
+				id="autocomplete"
 				value={value}
 				onChange={handleInput}
 				disabled={!ready}
@@ -86,9 +62,6 @@ const SearchComponent = ({ getLocation }) => {
 			/>
 			{/* We can use the "status" to decide whether we should display the dropdown or not */}
 			{status === "OK" && <ul>{renderSuggestions()}</ul>}
-			<button onClick={() => getLocation(value)}>Click</button>
-			{/* </form> */}
-			<p>This is the {value}</p>
 		</div>
 	);
 };
