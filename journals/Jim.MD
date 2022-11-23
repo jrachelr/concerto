@@ -6,10 +6,14 @@
 
 - Started working on users microservice and was able to get users. We are now working on the post, put, and delete methods. + authentication
 
+
 11/18/22
 
 - Added POST, GET, PUT, and DELETE for users. They appear on FastAPI docs on localhost
 
+11/19/22
+
+- Starting to work on authentication for users
 11/20/22
 
 - Pair programmed to get auth/users working

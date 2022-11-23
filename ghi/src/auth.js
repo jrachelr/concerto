@@ -45,13 +45,15 @@ function handleErrorMessage(error) {
 export const AuthContext = createContext({
   token: null,
   setToken: () => null,
+  user:null, setUser: () => null,
 });
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
 
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
+    <AuthContext.Provider value={{ token, setToken, user, setUser }}>
       {children}
     </AuthContext.Provider>
   );
@@ -60,13 +62,18 @@ export const AuthProvider = ({ children }) => {
 export const useAuthContext = () => useContext(AuthContext);
 
 export function useToken() {
-  const { token, setToken } = useAuthContext();
+  const { token, setToken, user, setUser } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchToken() {
       const token = await getTokenInternal();
       setToken(token);
+    const response2 = await fetch(`${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`, {
+      method: "get",
+      credentials: "include",
+    });
+    setUser(await response2.json())
     }
     if (!token) {
       fetchToken();
@@ -79,6 +86,7 @@ export function useToken() {
       await fetch(url, { method: "delete", credentials: "include" });
       internalToken = null;
       setToken(null);
+      setUser(null);
       navigate("/");
     }
   }
@@ -93,6 +101,11 @@ export function useToken() {
       credentials: "include",
       body: form,
     });
+    const response2 = await fetch(`${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`, {
+      method: "get",
+      credentials: "include",
+    });
+    setUser(await response2.json())
     if (response.ok) {
       const token = await getTokenInternal();
       setToken(token);
@@ -144,5 +157,5 @@ export function useToken() {
     return false;
   }
 
-  return [token, login, logout, signup, update];
+  return [token, login, logout, signup, update, user];
 }
