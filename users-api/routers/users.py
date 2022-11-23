@@ -43,11 +43,6 @@ async def post_user(
 
 
 
-
-
-
-
-
 @router.get("/users", response_model=UsersList)
 def users_list(queries: UserQueries = Depends()):
     return {
@@ -55,8 +50,7 @@ def users_list(queries: UserQueries = Depends()):
     }
 
 @router.get("/users/current", response_model=UserOut)
-def get_user_info(account:UserOut = Depends(authenticator.get_current_account_data)):
-    # account=authenticator.get_current_account_data()
+def get_user_by_info(account: UserOut = Depends(authenticator.get_current_account_data)):
     return account
 
 @router.get("/users/{user_id}", response_model=UserOut)
