@@ -1,27 +1,30 @@
-import { useEffect, useState } from "react";
-import Construct from "./Construct.js";
-import ErrorNotification from "./ErrorNotification";
-import "./App.css";
-import { useToken } from "./auth.js";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./index.css";
+import { AuthProvider } from "./auth";
+import LoginForm from "./Login";
+import Landing from "./Landing";
+import { token, useToken } from "./auth.js";
+// import { useEffect, useState } from "react";
 
 function GetToken() {
-    // Get token from JWT cookie (if already logged in)
-    useToken();
-    return null
+  // Get token from JWT cookie (if already logged in)
+  useToken();
+  return null;
 }
 
-
 function App() {
-  const [launch_info, setLaunchInfo] = useState([]);
-  const [error, setError] = useState(null);
-
-  const[token] = useToken()
+  // const[token] = useToken()
 
   return (
-    <div>
-      <ErrorNotification error={error} />
-      <Construct info={launch_info} />
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <GetToken />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="login/" element={<LoginForm />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
