@@ -24,4 +24,6 @@ docker compose up
 
 ### 22 November
 -added localhost 8000 to cors allowed origins
+- starting building front-end. attempting to start with login. installed tailwind and not working.
+
 
