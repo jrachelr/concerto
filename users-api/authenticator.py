@@ -11,6 +11,7 @@ class MyAuthenticator(Authenticator):
         username: str,
         accounts: UserQueries,
     ):
+        print("Apples")
         # Use your repo to get the account based on the
         # username (which could be an email)
         return accounts.get_one_user_email(username)
