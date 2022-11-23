@@ -28,8 +28,8 @@ class MyAuthenticator(Authenticator):
         return account.hashed_password
 
     # def get_account_data_for_cookie(self, account: User):
-    #     # Return the username and the data for the cookie.
-    #     # You must return TWO values from this method.
+    #      # Return the username and the data for the cookie.
+    #      # You must return TWO values from this method.
     #     return account.email, UserOut(**account.dict())
 
 
