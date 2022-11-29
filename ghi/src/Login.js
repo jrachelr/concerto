@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useToken, login } from "./auth.js";
+import { useToken } from "./auth.js";
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
@@ -15,7 +15,7 @@ const LoginForm = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        await login(username, password); 
+        await login(username, password);
         console.log(username, "is logged in")
         navigate('/');
     };
@@ -27,25 +27,25 @@ const LoginForm = () => {
             <div>
                 <div>
                     <h1>Sign in</h1>
-                    <form 
-                    onSubmit={handleSubmit} 
+                    <form
+                    onSubmit={handleSubmit}
                     id="LoginForm">
                         <div>
                             <input onChange={e => setUsername(e.target.value)} placeholder="you@gmail.com" type="email" id="username" value={username} />
                             <label htmlFor="email">Email Address</label>
-                        </div> 
+                        </div>
                         <div>
                             <input onChange={e => setPassword(e.target.value)} placeholder="Password" type="password" id="password" value={password}/>
                             <label htmlFor="password">Password</label>
-                        </div> 
+                        </div>
                         <button onClick={login}>Log In</button>
                     </form>
                 </div>
             </div>
         </div>
-    
+
 
     </>
   )
-} 
+}
 export default LoginForm
