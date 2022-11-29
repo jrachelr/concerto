@@ -35,7 +35,7 @@ class ConcertLocation(BaseModel):
 class ConcertReceived(BaseModel):
     ok: bool
 
-callback_url = f'https://app.ticketmaster.com/discovery/v2/events'
+callback_url = 'https://app.ticketmaster.com/discovery/v2/events'
 
 
 @invoices_callback_router.get(
