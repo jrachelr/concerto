@@ -1,11 +1,12 @@
 from fastapi import APIRouter, Depends
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 from datetime import date
 from queries.concert_queries import ConcertIn, ConcertOut, ConcertsList, ConcertQueries
 import requests
 import json
 
 router = APIRouter()
+
 
 #add favorite concert
 @router.post("/concerts/favorites/{user_id}", response_model=ConcertOut)
@@ -40,25 +41,29 @@ def delete_concert(concert_id: int, queries: ConcertQueries = Depends()):
 
 url = "https://app.ticketmaster.com/discovery/v2/events?apikey=cWcKvvPCgHDAZ3eGfT96AeQec01G8wsM&locale=*&page=1&sort=date,asc&city=los%20angeles&classificationName=music"
 
-params = {"classificationName":"music",
-          "latlong": "34.0522342,-118.2436849",
-          "sort": "date,asc",
-          "locale": "*",
-          "startDateTime": "2022-11-21T16:10:00Z",
-          "apikey": "cWcKvvPCgHDAZ3eGfT96AeQec01G8wsM" }
+# params = {"classificationName":"music",
+#           "latlong": "34.0522342,-118.2436849",
+#           "sort": "date,asc",
+#           "locale": "*",
+#           "startDateTime": "2022-11-21T16:10:00Z",
+#           "apikey": "cWcKvvPCgHDAZ3eGfT96AeQec01G8wsM" }
 
-response = requests.get(url)
-content = json.loads(response.content)
 
-#get concerts from ticketmaster
 async def get_ticketmaster_concerts():
   response = requests.get(url)
   content = json.loads(response.content)
   return content
 
+class Concert(BaseModel):
+    location: str
+
+@router.post("/concerts")
+def create_concert(concert: Concert, callback_url: HttpUrl)
+
 @router.get("/concerts")
 def get_all_concerts(data: get_ticketmaster_concerts = Depends()):
-    events = content['_embedded']['events']
+
+    events = data['_embedded']['events']
     concerts=[]
     for event in events:
         concert = {}
@@ -89,3 +94,10 @@ def get_all_concerts(data: get_ticketmaster_concerts = Depends()):
             concert["max_price"] = "no maximum price range available"
         concerts.append(concert)
     return {"concerts": concerts}
+
+
+#react makes post request to concerts api with json body:
+    #latlong, startdate
+
+#concerts api takes data as parameter
+    #uses that information to make a get request to ticketmasterapi
