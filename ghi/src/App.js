@@ -5,11 +5,11 @@ import Landing from "./Landing";
 import SideBar from "./SidebarNav";
 import { useToken } from "./auth.js";
 
-function GetToken() {
-	// Get token from JWT cookie (if already logged in)
-	useToken();
-	return null;
-}
+// function GetToken() {
+// 	// Get token from JWT cookie (if already logged in)
+// 	useToken();
+// 	return null;
+// }
 
 function App() {
 	const [token, login] = useToken();
