@@ -1,7 +1,9 @@
 import "./index.css";
+import SideBar from "./SidebarNav";
 export default function Landing() {
   return (
     <>
+      <SideBar />
       {/* background */}
       <div className="bg-indigo-700 h-screen">
         {/* header and h2 */}
