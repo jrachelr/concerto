@@ -47,6 +47,10 @@ export const AuthContext = createContext({
 	setToken: () => null,
 	user: null,
 	setUser: () => null,
+	token: null,
+	setToken: () => null,
+	user: null,
+	setUser: () => null,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -83,6 +87,23 @@ export function useToken() {
 			fetchToken();
 		}
 	}, [setToken, token]);
+	useEffect(() => {
+		async function fetchToken() {
+			const token = await getTokenInternal();
+			setToken(token);
+			const response2 = await fetch(
+				`${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`,
+				{
+					method: "get",
+					credentials: "include",
+				}
+			);
+			setUser(await response2.json());
+		}
+		if (!token) {
+			fetchToken();
+		}
+	}, [setToken, token, setUser, user]);
 
 	async function logout() {
 		if (token) {
@@ -118,6 +139,34 @@ export function useToken() {
 			setToken(token);
 			return;
 		}
+		let error = await response.json();
+		return handleErrorMessage(error);
+	}
+	async function login(username, password) {
+		const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/token/`;
+		const form = new FormData();
+
+		form.append("username", username);
+		form.append("password", password);
+		const response = await fetch(url, {
+			method: "post",
+			credentials: "include",
+			body: form,
+		});
+		response.then((username) => console.log(username, "is logged in"));
+		// const response2 = await fetch(
+		//   `${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`,
+		//   {
+		//     method: "get",
+		//     credentials: "include",
+		//   }
+		// );
+		// setUser(await response2.json());
+		// if (response.ok) {
+		//   const token = await getTokenInternal();
+		//   setToken(token);
+		//   return;
+		// }
 		let error = await response.json();
 		return handleErrorMessage(error);
 	}

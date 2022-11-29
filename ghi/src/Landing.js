@@ -1,13 +1,10 @@
 import "./index.css";
-import SearchComponent from "./SearchComponent";
-import { useState } from "react";
 export default function Landing() {
 	const [location, setLocation] = useState("");
 
 	const getLocation = (value) => {
 		setLocation(value);
 	};
-
 	return (
 		<>
 			<div className="bg-indigo-700">
@@ -23,15 +20,13 @@ export default function Landing() {
 						className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-white px-5 py-3 text-base font-medium text-indigo-600 hover:bg-indigo-50 sm:w-auto">
 						Log In
 					</a>
-
-					<SearchComponent getLocation={getLocation} />
-
 					{/* <a
             href="signup/"
             className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-white px-5 py-3 text-base font-medium text-indigo-600 hover:bg-indigo-50 sm:w-auto"
           >
             Create Account
           </a> */}
+					<SearchComponent getLocation={getLocation} />
 				</div>
 			</div>
 		</>

@@ -1,10 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./index.css";
-import { AuthProvider } from "./auth";
-import LoginForm from "./Login";
+import LoginForm from "./Users/Login";
 import Landing from "./Landing";
-// import { token, useToken } from "./auth.js";
-// import { useEffect, useState } from "react";
+import SideBar from "./SidebarNav";
+import { useToken } from "./auth.js";
 
 // function GetToken() {
 // 	// Get token from JWT cookie (if already logged in)
@@ -14,17 +13,18 @@ import Landing from "./Landing";
 
 function App() {
 	// const[token] = useToken()
+	const [token, login] = useToken();
 
 	return (
-		// <AuthProvider>
-		<BrowserRouter>
-			{/* <GetToken /> */}
-			<Routes>
-				<Route path="/" element={<Landing />} />
-				<Route path="login/" element={<LoginForm />} />
-			</Routes>
-		</BrowserRouter>
-		// {/* </AuthProvider> */}
+		<AuthProvider>
+			<BrowserRouter>
+				<GetToken />
+				<Routes>
+					<Route path="/" element={<Landing />} />
+					<Route path="login/" element={<LoginForm />} />
+				</Routes>
+			</BrowserRouter>
+		</AuthProvider>
 	);
 }
 
