@@ -4,27 +4,31 @@ import LoginForm from "./Users/Login";
 import Landing from "./Landing";
 import SideBar from "./SidebarNav";
 import { useToken } from "./auth.js";
+import SearchComponent from "./SearchComponent";
 
-// function GetToken() {
-// 	// Get token from JWT cookie (if already logged in)
-// 	useToken();
-// 	return null;
-// }
+function GetToken() {
+	// Get token from JWT cookie (if already logged in)
+	useToken();
+	return null;
+}
 
 function App() {
-	// const[token] = useToken()
 	const [token, login] = useToken();
 
 	return (
-		<AuthProvider>
-			<BrowserRouter>
-				<GetToken />
-				<Routes>
-					<Route path="/" element={<Landing />} />
-					<Route path="login/" element={<LoginForm />} />
-				</Routes>
-			</BrowserRouter>
-		</AuthProvider>
+		<>
+			<GetToken />
+			<Routes>
+				<Route path="/" element={<Landing />} />
+				<Route path="sidebar/" element={<SideBar />} />
+				<Route
+					path="login/"
+					element={<LoginForm token={token} login={login} />}
+				/>
+				<Route path="*" element={<Navigate to="/" />} />
+				<Route path="search" element={<SearchComponent />} />
+			</Routes>
+		</>
 	);
 }
 
