@@ -8,7 +8,10 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         os.environ.get(
-            "CORS_HOST", "http://localhost:3000", "http://localhost:8000"
+            "CORS_HOST",
+            "http://localhost:3000",
+            "http://localhost:8000",
+            "http://localhost:8001",
         )
     ],
     allow_credentials=True,
