@@ -33,6 +33,7 @@ services:
     environment:
       DATABASE_URL: postgresql://concerts:password@postgres/concerts
       WAIT_HOSTS: postgres:5432
+      TICKETMASTER_API_KEY: ${TICKETMASTER_API_KEY}
     ports:
       - "8000:8000"
     volumes:

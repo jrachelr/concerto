@@ -4,53 +4,76 @@ from typing import Union
 from routers import concerts
 import requests
 import json
+from fastapi.middleware.cors import CORSMiddleware
+import os
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        os.environ.get(
+            "CORS_HOST",
+            "REACT_APP_ACCOUNTS_HOST",
+        ), "http://localhost:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 app.include_router(concerts.router)
 
 invoices_callback_router = APIRouter()
 
-url = "https://app.ticketmaster.com/discovery/v2/events?apikey=cWcKvvPCgHDAZ3eGfT96AeQec01G8wsM&locale=*&page=1&sort=date,asc&city=los%20angeles&classificationName=music"
+# url = "https://app.ticketmaster.com/discovery/v2/events/?apikey={key}&latlong={lat},{long}&locale=*&startDateTime=2022-11-28T17:58:00Z&sort=date,asc&classificationName=music"
 
-# # params = {"classificationName":"music",
-# #           "latlong": "34.0522342,-118.2436849",
-# #           "sort": "date,asc",
-# #           "locale": "*",
-# #           "startDateTime": "2022-11-21T16:10:00Z",
-# #           "apikey": "cWcKvvPCgHDAZ3eGfT96AeQec01G8wsM" }
-
-
-async def get_ticketmaster_concerts():
-  response = requests.get(url)
-  content = json.loads(response.content)
-  return content
-
-class ConcertLocation(BaseModel):
-    lat: str
-    long: str
+# # # params = {"classificationName":"music",
+# # #           "latlong": "34.0522342,-118.2436849",
+# # #           "sort": "date,asc",
+# # #           "locale": "*",
+# # #           "startDateTime": "2022-11-21T16:10:00Z",
+# # #           "apikey": "cWcKvvPCgHDAZ3eGfT96AeQec01G8wsM" }
 
 
-class ConcertReceived(BaseModel):
-    ok: bool
+# async def get_ticketmaster_concerts():
+#   response = requests.get(url)
+#   content = json.loads(response.content)
+#   return content
 
-callback_url = 'https://app.ticketmaster.com/discovery/v2/events'
+# # class ConcertLocation(BaseModel):
+# #     lat: str
+# #     long: str
 
+# # class ConcertReceived(BaseModel):
+# #     ok: bool
 
-@invoices_callback_router.get(
-    "{$callback_url}/?apikey=cWcKvvPCgHDAZ3eGfT96AeQec01G8wsM&latlong={$request.body.lat},{$request.body.long}&locale=*&startDateTime=2022-11-28T17:58:00Z&sort=date,asc&classificationName=music", response_model=ConcertReceived
-)
-def get_concerts():
-    pass
-
-@app.post("/concerts", callbacks=invoices_callback_router.routes)
-def create_concert(concert: ConcertLocation, callback_url: Union[HttpUrl, None] = None):
-    return {"msg": "Concert received"}
+# # callback_url = 'https://app.ticketmaster.com/discovery/v2/events'
 
 
-@app.get("/concerts")
-def get_all_concerts(data: get_ticketmaster_concerts = Depends()):
+
+
+# # @invoices_callback_router.get(
+# #     "https://app.ticketmaster.com/discovery/v2/events/?apikey={key}&latlong={$request.body.lat},{$request.body.long}&locale=*&startDateTime=2022-11-28T17:58:00Z&sort=date,asc&classificationName=music", response_model=ConcertReceived
+# # )
+# # def get_concerts():
+# #     pass
+
+# # @app.post("/concerts", callbacks=invoices_callback_router.routes)
+# # def create_concert(concert: ConcertLocation, callback_url: Union[HttpUrl, None] = None):
+# #     pass
+
+
+@app.get("/concerts/{lat},{long}")
+def get_all_concerts(lat, long):
+
+    key = os.environ.get("TICKETMASTER_API_KEY")
+
+    url = f"https://app.ticketmaster.com/discovery/v2/events/?apikey={key}&latlong={lat},{long}&locale=*&startDateTime=2022-11-28T17:58:00Z&sort=date,asc&classificationName=music"
+
+    response = requests.get(url)
+    data = json.loads(response.content)
 
     events = data['_embedded']['events']
     concerts=[]
