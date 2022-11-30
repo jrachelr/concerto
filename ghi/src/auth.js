@@ -7,7 +7,7 @@ export function getToken() {
 }
 
 export async function getTokenInternal() {
-  const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/me/token/`;
+  const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/token`;
   try {
     const response = await fetch(url, {
       credentials: "include",
@@ -106,7 +106,7 @@ export function useToken() {
       credentials: "include",
       body: form,
     });
-    response.then((username) => console.log(username, "is logged in"));
+    // response.then((username) => console.log(username, "is logged in"));
     const response2 = await fetch(
       `${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`,
       {
