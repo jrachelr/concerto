@@ -4,6 +4,7 @@ from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
+
 app = FastAPI()
 
 app.add_middleware(
@@ -19,6 +20,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 app.include_router(users.router)
 app.include_router(authenticator.router)
