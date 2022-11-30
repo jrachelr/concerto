@@ -2,8 +2,9 @@ import usePlacesAutocomplete, {
 	getGeocode,
 	getLatLng,
 } from "use-places-autocomplete";
+import { useState } from "react";
 
-const SearchComponent = ({ getLocation }) => {
+const SearchComponent = ({ getConcerts }) => {
 	const {
 		ready,
 		value,
@@ -16,6 +17,8 @@ const SearchComponent = ({ getLocation }) => {
 		},
 		debounce: 300,
 	});
+	const [lat, setLat] = useState("");
+	const [long, setLong] = useState("");
 
 	const handleInput = (e) => {
 		// Update the keyword of the input element
@@ -31,10 +34,13 @@ const SearchComponent = ({ getLocation }) => {
 			clearSuggestions();
 
 			// Get latitude and longitude via utility functions
-			// getGeocode({ address: description }).then((results) => {
-			// 	const { lat, lng } = getLatLng(results[0]);
-			// 	console.log("📍 Coordinates: ", { lat, lng });
-			// });
+			getGeocode({ address: description }).then((results) => {
+				const { lat, lng } = getLatLng(results[0]);
+				setLat(lat);
+				setLong(lng);
+
+				console.log("📍 Coordinates: ", { lat, lng });
+			});
 		};
 
 	const renderSuggestions = () =>
@@ -51,43 +57,24 @@ const SearchComponent = ({ getLocation }) => {
 			);
 		});
 
-	// const handleSubmit = async (event) => {
-	// 	event.preventDefault();
-
-	// 	const date_time = dateTime;
-	// 	const technician = selectedTechnician;
-
-	// 	const data = { vin, owner, date_time, technician, reason };
-
-	// 	const concertsUrl = "http://localhost:8000/concerts/";
-	// 	const fetchConfig = {
-	// 		method: "post",
-	// 		body: JSON.stringify(data),
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 		},
-	// 	};
-
-	// 	const response = await fetch(appointmentUrl, fetchConfig);
-	// 	if (response.ok) {
-	// 		event.target.reset();
-	// 		clearState();
-	// 	}
-	// };
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		getConcerts(lat, long);
+	};
 
 	return (
 		<div>
-			{/* <form id="search-location" onSubmit={handleSubmit}> */}
-			<input
-				value={value}
-				onChange={handleInput}
-				disabled={!ready}
-				placeholder="Where are you going?"
-			/>
-			{/* We can use the "status" to decide whether we should display the dropdown or not */}
-			{status === "OK" && <ul>{renderSuggestions()}</ul>}
-			<button onClick={() => getLocation(value)}>Click</button>
-			{/* </form> */}
+			<form id="search-location" onSubmit={handleSubmit}>
+				<input
+					value={value}
+					onChange={handleInput}
+					disabled={!ready}
+					placeholder="Where are you going?"
+				/>
+				{/* We can use the "status" to decide whether we should display the dropdown or not */}
+				{status === "OK" && <ul>{renderSuggestions()}</ul>}
+				<button>Click</button>
+			</form>
 			<p>This is the {value}</p>
 		</div>
 	);

@@ -13,3 +13,19 @@
 - Refactored concerts endpoints to include user_id
 - Added user_id to favorite_concerts table
 - Reviewed authentication
+
+11/21/22
+
+- Created basic search bar component
+- Used Google Places AutoComplete to enable autocomplete functionality within search bar component
+- Incorporated Google Geocoding API to get latlong from search bar input
+
+11/22/22
+
+- Pair programmed to h
+- Fixed Ticketmaster API request
+
+11/23/22
+
+- Pair programmed to fix authentication
+-

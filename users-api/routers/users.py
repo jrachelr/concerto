@@ -50,8 +50,7 @@ def users_list(queries: UserQueries = Depends()):
     }
 
 @router.get("/users/current", response_model=UserOut)
-def get_user_info(account:UserOut = Depends(authenticator.get_current_account_data)):
-    # account=authenticator.get_current_account_data()
+def get_user_by_info(account: UserOut = Depends(authenticator.get_current_account_data)):
     return account
 
 @router.get("/users/{user_id}", response_model=UserOut)
@@ -72,7 +71,6 @@ def update_user(
     user_id: int, user: UserIn, queries: UserQueries = Depends()
 ):
     return queries.update_user(user_id, user)
-
 
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
