@@ -14,6 +14,7 @@
 11/19/22
 
 - Starting to work on authentication for users
+
 11/20/22
 
 - Pair programmed to get auth/users working
@@ -28,4 +29,12 @@
 
 11/23/22
 
-- Fixed get user info router 
+- Fixed get user info router
+
+11/28/22
+- Pair programmed to try to fix issue regarding authing 2 microservices
+
+11/29/22
+- Waiting on lecture on 11/30 regarding auth to maybe fix issue
+
+11/30/22
