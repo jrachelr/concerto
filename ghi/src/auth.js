@@ -7,7 +7,7 @@ export function getToken() {
 }
 
 export async function getTokenInternal() {
-	const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/users/me/token/`;
+	const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/token/`;
 	try {
 		const response = await fetch(url, {
 			credentials: "include",
@@ -106,20 +106,19 @@ export function useToken() {
 			credentials: "include",
 			body: form,
 		});
-		response.then((username) => console.log(username, "is logged in"));
-		// const response2 = await fetch(
-		//   `${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`,
-		//   {
-		//     method: "get",
-		//     credentials: "include",
-		//   }
-		// );
-		// setUser(await response2.json());
-		// if (response.ok) {
-		//   const token = await getTokenInternal();
-		//   setToken(token);
-		//   return;
-		// }
+		const response2 = await fetch(
+			`${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`,
+			{
+				method: "get",
+				credentials: "include",
+			}
+		);
+		setUser(await response2.json());
+		if (response.ok) {
+			const token = await getTokenInternal();
+			setToken(token);
+			return;
+		}
 		let error = await response.json();
 		return handleErrorMessage(error);
 	}

@@ -4,7 +4,7 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import { useState } from "react";
 
-const SearchComponent = ({ getLocation }) => {
+const SearchComponent = ({ getConcerts }) => {
 	const {
 		ready,
 		value,
@@ -19,6 +19,7 @@ const SearchComponent = ({ getLocation }) => {
 	});
 	const [lat, setLat] = useState("");
 	const [long, setLong] = useState("");
+	const [concerts, setConcerts] = useState([]);
 
 	const handleInput = (e) => {
 		// Update the keyword of the input element
@@ -59,19 +60,7 @@ const SearchComponent = ({ getLocation }) => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		const concertsUrl = `http://localhost:8000/concerts/${lat},${long}`;
-		const fetchConfig = {
-			method: "get",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		};
-		const response = await fetch(concertsUrl, fetchConfig);
-		if (response.ok) {
-			event.target.reset();
-		} else {
-			console.log("ERROR");
-		}
+		getConcerts(lat, long);
 	};
 
 	return (
