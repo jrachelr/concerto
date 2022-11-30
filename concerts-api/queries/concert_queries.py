@@ -3,6 +3,14 @@ from psycopg_pool import ConnectionPool
 from datetime import date
 from pydantic import BaseModel
 
+class Concert(BaseModel):
+    id: int
+    concert_name: str
+    artist_name: str
+    start_date: date
+    min_price: int
+    max_price: int
+    user_id: int
 
 class ConcertIn(BaseModel):
     concert_name: str
