@@ -6,7 +6,7 @@ import SideBar from "./SidebarNav";
 import { useToken } from "./auth.js";
 import SearchComponent from "./SearchComponent";
 import ConcertList from "./ConcertList";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function GetToken() {
 	// Get token from JWT cookie (if already logged in)

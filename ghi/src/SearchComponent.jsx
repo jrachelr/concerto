@@ -19,7 +19,6 @@ const SearchComponent = ({ getConcerts }) => {
 	});
 	const [lat, setLat] = useState("");
 	const [long, setLong] = useState("");
-	const [concerts, setConcerts] = useState([]);
 
 	const handleInput = (e) => {
 		// Update the keyword of the input element
