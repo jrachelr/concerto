@@ -33,6 +33,7 @@ services:
     environment:
       DATABASE_URL: postgresql://concerts:password@postgres/concerts
       WAIT_HOSTS: postgres:5432
+      SIGNING_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
     ports:
       - "8000:8000"
     volumes:
