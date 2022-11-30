@@ -107,19 +107,20 @@ export function useToken() {
       body: form,
     });
     response.then((username) => console.log(username, "is logged in"));
-    // const response2 = await fetch(
-    //   `${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`,
-    //   {
-    //     method: "get",
-    //     credentials: "include",
-    //   }
-    // );
-    // setUser(await response2.json());
-    // if (response.ok) {
-    //   const token = await getTokenInternal();
-    //   setToken(token);
-    //   return;
-    // }
+    const response2 = await fetch(
+      `${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`,
+      {
+        method: "get",
+        credentials: "include",
+      }
+    );
+    setUser(await response2.json());
+    if (response.ok) {
+      const token = await getTokenInternal();
+      setToken(token);
+      console.log("token:", token);
+      return;
+    }
     let error = await response.json();
     return handleErrorMessage(error);
   }

@@ -6,6 +6,7 @@ import {
   InboxIcon,
   UsersIcon,
 } from "@heroicons/react/24/outline";
+import { NavLink } from "react-router-dom";
 
 const navigation = [
   { name: "Dashboard", icon: HomeIcon, href: "#", current: true },
@@ -63,6 +64,9 @@ export default function SideBar() {
               ) : null}
             </a>
           ))}
+          <div className="text-black top-0 right-0 w-16 h-10">
+            <NavLink to="logout">Logout</NavLink>
+          </div>
         </nav>
       </div>
     </div>
