@@ -86,3 +86,45 @@ def update_favorite_concert(
 @router.delete("/concerts/favorites/{user_id}/{concert_id}", response_model=bool)
 def delete_concert(concert_id: int, queries: ConcertQueries = Depends(get_current_user)):
     return queries.delete(concert_id)
+
+@router.get("/concerts/{lat},{long}")
+def get_all_concerts(lat, long):
+
+    key = os.environ.get("TICKETMASTER_API_KEY")
+
+    url = f"https://app.ticketmaster.com/discovery/v2/events/?apikey={key}&latlong={lat},{long}&locale=*&startDateTime=2022-11-28T17:58:00Z&sort=date,asc&classificationName=music"
+
+    response = requests.get(url)
+    data = json.loads(response.content)
+
+    events = data['_embedded']['events']
+    concerts=[]
+    for event in events:
+        concert = {}
+        try:
+            concert["artist_name"] = event['_embedded']['attractions'][0]['name']
+        except KeyError:
+            continue
+        concert["image_url"]= event["images"][1]["url"]
+        concert["concert_name"]= event['name']
+        try:
+            concert["venue"] = event['_embedded']['venues'][0]['name']
+        except:
+            concert["venue"] = "no venue"
+
+        concert["date"] = event['dates']['start']['localDate']
+        try:
+            concert["spotify_url"] = event['_embedded']['attractions'][0]['externalLinks']['spotify'][0]['url']
+        except KeyError:
+            continue
+        try:
+            concert["min_price"] = event['priceRanges'][0]['min']
+        except KeyError:
+            concert["min_price"] = "no minimum price range available"
+        concerts.append(concert)
+        try:
+            concert["max_price"] = event['priceRanges'][0]['max']
+        except KeyError:
+            concert["max_price"] = "no maximum price range available"
+        concerts.append(concert)
+    return {"concerts": concerts}
