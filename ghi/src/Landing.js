@@ -1,8 +1,33 @@
 import "./index.css";
 import { useState } from "react";
 import SideBar from "./SidebarNav";
+import SearchComponent from "./SearchComponent";
+import ConcertList from "./ConcertList";
 // import SearchComponent from "./SearchComponent";
 export default function Landing() {
+	const [concerts, setConcerts] = useState([]);
+	async function getConcerts(lat, long) {
+		const concertsUrl = `http://localhost:8000/concerts/${lat},${long}`;
+		const fetchConfig = {
+			method: "get",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+
+		const response = await fetch(concertsUrl, fetchConfig);
+		if (response.ok) {
+			const data = await response.json();
+			setConcerts(data.concerts);
+			console.log(concerts);
+		} else {
+			console.log("ERROR");
+
+			// const setLocation = (data) => {
+			// 	setConcerts(data);
+			// };
+		}
+	}
 	return (
 		<>
 			<SideBar />
@@ -41,6 +66,8 @@ export default function Landing() {
 							<button>Go</button>
 						</form>
 					</div>
+					<SearchComponent getConcerts={getConcerts} />
+					<ConcertList concerts={concerts} />
 
 					{/*  */}
 				</div>
