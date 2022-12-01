@@ -28,4 +28,8 @@
 
 11/23/22
 
-- Fixed get user info router 
+- Fixed get user info router
+
+11/30/22
+
+- Pair programmed to fix authentication and tested it to make sure it works for concerts and users
