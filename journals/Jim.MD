@@ -40,3 +40,7 @@
 11/30/22
 
 - Pair programmed to fix authentication and tested it to make sure it works for concerts and users
+
+12/01/22
+
+- Added passing unit tests for users microservice
