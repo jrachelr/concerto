@@ -29,6 +29,13 @@ class ConcertOut(BaseModel):
     max_price: int
     user_id: int
 
+class UserOut(BaseModel):
+    id: int
+    first_name: str
+    last_name: str
+    email: str
+    username: str
+
 
 class ConcertsList(BaseModel):
     concerts: list[ConcertOut]
@@ -64,7 +71,7 @@ class ConcertQueries:
                 old_data = concert.dict()
                 return ConcertOut(id=id, user_id=1, **old_data)
 
-    def get_all(self, user_id:int=None) -> ConcertOut:
+    def get_all(self, user_id:int=None) -> list[ConcertOut]:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 if user_id == None:
@@ -118,7 +125,7 @@ class ConcertQueries:
                 }
             return ConcertOut(**data)
 
-    def update(self, concert_id, user_id, concert: ConcertIn) -> ConcertOut:
+    def update(self, user_id, concert_id, concert: ConcertIn) -> ConcertOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -131,8 +138,7 @@ class ConcertQueries:
                     min_price = %s,
                     max_price = %s
 
-                    WHERE user_id = %s AND concert_id = %s
-
+                    WHERE user_id = %s AND id = %s
 
 
                     """,
@@ -142,23 +148,24 @@ class ConcertQueries:
                         concert.start_date,
                         concert.min_price,
                         concert.max_price,
-                        concert_id,
                         user_id,
+                        concert_id
+
                     ],
                 )
 
                 old_data = concert.dict()
                 print(old_data)
-                return ConcertOut(id=concert_id, **old_data)
+                return ConcertOut(id=concert_id, user_id = user_id, **old_data)
 
-    def delete(self, concert_id: int):
+    def delete(self, user_id: int, concert_id: int):
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
                     DELETE FROM favorite_concerts
-                    WHERE id = %s
+                    WHERE id = %s AND user_id = %s
                     """,
-                    [concert_id],
+                    [concert_id, user_id],
                 )
                 return True

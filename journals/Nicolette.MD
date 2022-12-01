@@ -31,8 +31,12 @@
 
 11/28/22
 
+- Started Concerts list component
+
 11/29/22
 
-- Able to use serach bar
+- Able to use search component to get latitude and longitude and then get concerts based on that data
 
 11/30/22
+
+- Pair programmed to fix authentication and tested it to make sure it works for concerts and user

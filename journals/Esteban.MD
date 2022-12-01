@@ -21,3 +21,7 @@
 11/22/22
 
 - Working on setting up login/logout on react
+
+11/30/22
+
+- Pair programmed to fix authentication and tested it to make sure it works for concerts and users
