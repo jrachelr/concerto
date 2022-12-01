@@ -15,6 +15,7 @@ const LoginForm = () => {
 		e.preventDefault();
 		await login(username, password);
 		console.log(username, "is logged in");
+		console.log("IS THIS WORKING", token);
 		navigate("/");
 	};
 

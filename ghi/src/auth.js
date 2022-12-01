@@ -115,6 +115,7 @@ export function useToken() {
 			}
 		);
 		setUser(await response2.json());
+
 		if (response.ok) {
 			const token = await getTokenInternal();
 			setToken(token);
