@@ -63,20 +63,28 @@ const SearchComponent = ({ getConcerts }) => {
 	};
 
 	return (
-		<div>
-			<form id="search-location" onSubmit={handleSubmit}>
+		<form id="search-location" onSubmit={handleSubmit}>
+			<div className="rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+				<label
+					htmlFor="name"
+					className="block text-xs font-medium text-gray-900">
+					Location
+				</label>
 				<input
 					value={value}
 					onChange={handleInput}
 					disabled={!ready}
 					placeholder="Where are you going?"
+					className="block w-full rounded-md bg-white opacity-100 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
 				/>
-				{/* We can use the "status" to decide whether we should display the dropdown or not */}
-				{status === "OK" && <ul>{renderSuggestions()}</ul>}
-				<button>Click</button>
-			</form>
-			<p>This is the {value}</p>
-		</div>
+			</div>
+			{status === "OK" && <ul>{renderSuggestions()}</ul>}
+			<div class="flex justify-center">
+				<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+					Button
+				</button>
+			</div>
+		</form>
 	);
 };
 
