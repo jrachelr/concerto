@@ -28,4 +28,11 @@
 11/23/22
 
 - Pair programmed to fix authentication
--
+
+11/28/22
+
+11/29/22
+
+- Able to use serach bar
+
+11/30/22

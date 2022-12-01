@@ -56,13 +56,13 @@ not_authorized = HTTPException(
 
 #add favorite concert
 @router.post("/concerts/favorites/{user_id}", response_model=ConcertOut)
-def post_favorite_concert(concert:ConcertIn, user_id: int, queries:ConcertQueries = Depends(), account: dict = Depends(get_current_user),  ):
+def post_favorite_concert(concert:ConcertIn, user_id: int, queries:ConcertQueries = Depends(), account: dict = Depends(get_current_user)):
     if account:
         return queries.create(concert, user_id)
 
 #get favorite concerts for all users
 @router.get('/concerts/favorites/', response_model=ConcertsList)
-def get_favorite_concerts(queries:ConcertQueries = Depends(), account: dict = Depends(get_current_user),):
+def get_favorite_concerts(queries:ConcertQueries = Depends(), account: dict = Depends(get_current_user)):
     print("THISISSSSSS SIS SITTTTTTT", account)
     if account:
         return {"concerts": queries.get_all()}
@@ -79,9 +79,9 @@ def get_favorite_concert_by_id(concert_id: int, user_id: int, queries: ConcertQu
 
 @router.put("/concerts/favorites/{user_id}/{concert_id}", response_model=ConcertOut)
 def update_favorite_concert(
-    concert_id: int, concert: ConcertIn, queries: ConcertQueries = Depends(get_current_user)
+    user_id: int, concert_id: int, concert: ConcertIn, queries: ConcertQueries = Depends(get_current_user)
 ):
-    return queries.update(concert_id, concert)
+    return queries.update(user_id, concert_id, concert)
 
 @router.delete("/concerts/favorites/{user_id}/{concert_id}", response_model=bool)
 def delete_concert(concert_id: int, queries: ConcertQueries = Depends(get_current_user)):

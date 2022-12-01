@@ -118,7 +118,7 @@ class ConcertQueries:
                 }
             return ConcertOut(**data)
 
-    def update(self, concert_id, concert: ConcertIn) -> ConcertOut:
+    def update(self, concert_id, user_id, concert: ConcertIn) -> ConcertOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -131,7 +131,8 @@ class ConcertQueries:
                     min_price = %s,
                     max_price = %s
 
-                    WHERE user_id = %s
+                    WHERE user_id = %s AND concert_id = %s
+
 
 
                     """,
@@ -142,6 +143,7 @@ class ConcertQueries:
                         concert.min_price,
                         concert.max_price,
                         concert_id,
+                        user_id,
                     ],
                 )
 
