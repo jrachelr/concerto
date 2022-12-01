@@ -89,31 +89,36 @@ def delete_concert(user_id: int, concert_id: int, queries: ConcertQueries = Depe
         return queries.delete(user_id, concert_id)
 
 
-url = "https://app.ticketmaster.com/discovery/v2/events"
+@router.get("/concerts/{lat},{long}")
+def get_all_concerts(lat, long):
 
-params = {"classificationName":"music",
-          "dmaId": "324",
-          "apikey": "cWcKvvPCgHDAZ3eGfT96AeQec01G8wsM" }
+    key = os.environ.get("TICKETMASTER_API_KEY")
 
-response = requests.get(url, params=params)
-content = json.loads(response.content)
+    url = f"https://app.ticketmaster.com/discovery/v2/events/?apikey={key}&latlong={lat},{long}&locale=*&startDateTime=2022-11-28T17:58:00Z&sort=date,asc&classificationName=music"
 
-#get concerts from ticketmaster
-async def get_ticketmaster_concerts():
-  response = requests.get(url, params=params)
-  content = json.loads(response.content)
-  return content
+    response = requests.get(url)
+    data = json.loads(response.content)
 
-@router.get("/concerts")
-def get_all_concerts(data: get_ticketmaster_concerts = Depends()):
-    events = content['_embedded']['events']
+    events = data['_embedded']['events']
     concerts=[]
     for event in events:
         concert = {}
+        try:
+            concert["artist_name"] = event['_embedded']['attractions'][0]['name']
+        except KeyError:
+            continue
+        concert["image_url"]= event["images"][1]["url"]
         concert["concert_name"]= event['name']
-        concert["artist_name"] = event['_embedded']['attractions'][0]['name']
-        concert["venue"] = event['_embedded']['venues'][0]['name']
+        try:
+            concert["venue"] = event['_embedded']['venues'][0]['name']
+        except:
+            concert["venue"] = "no venue"
+
         concert["date"] = event['dates']['start']['localDate']
+        try:
+            concert["spotify_url"] = event['_embedded']['attractions'][0]['externalLinks']['spotify'][0]['url']
+        except KeyError:
+            continue
         try:
             concert["min_price"] = event['priceRanges'][0]['min']
         except KeyError:
