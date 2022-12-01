@@ -4,7 +4,7 @@ import { useToken } from "../auth.js";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
-  const [, login] = useToken();
+  const [token, login] = useToken();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ const LoginForm = () => {
     login(username, password);
     console.log(username, "is logged in");
     navigate("/");
+    return token;
   };
 
   return (

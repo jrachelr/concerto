@@ -60,3 +60,7 @@ docker compose up
 -did sign up and logout
 
 - continue building front-end.
+
+### 1 December
+
+- adding bg image

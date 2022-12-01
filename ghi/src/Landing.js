@@ -8,8 +8,9 @@ import { useAuthContext } from "./auth";
 // import SearchComponent from "./SearchComponent";
 
 export default function Landing() {
-  const [concerts, setConcerts] = useState([]);
   const { token } = useAuthContext();
+  const [concerts, setConcerts] = useState([]);
+
   async function getConcerts(lat, long) {
     const concertsUrl = `http://localhost:8000/concerts/${lat},${long}`;
     const fetchConfig = {
@@ -35,7 +36,7 @@ export default function Landing() {
 
   return (
     <>
-      <div className="bg-indigo-700 h-screen">
+      <div className="bg-scroll bg-hero bg-cover bg-blend-overlay from-indigo-500">
         {token ? <SideBar /> : <Header />}
         <div className="mx-auto max-w-2xl py-16 px-4 text-center sm:py-20 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
