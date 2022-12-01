@@ -2,9 +2,9 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import "./index.css";
 import LoginForm from "./Users/Login";
 import Landing from "./Landing";
-import Homepage from "./Homepage";
 import Logout from "./Users/Logout";
 import SignupForm from "./Users/Signup";
+
 import { useToken } from "./auth.js";
 import SearchComponent from "./SearchComponent";
 import ConcertList from "./ConcertList";
@@ -17,7 +17,7 @@ function GetToken() {
 }
 
 function App() {
-  const [token, login] = useToken();
+  const [token, login, signup] = useToken();
   const [concerts, setConcerts] = useState([]);
 
   async function getConcerts(lat, long) {
@@ -48,11 +48,15 @@ function App() {
       <GetToken />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="sidebar/" element={<SideBar />} />
         <Route
           path="login/"
           element={<LoginForm token={token} login={login} />}
         />
+        <Route
+          path="signup/"
+          element={<SignupForm token={token} signup={signup} />}
+        />
+        <Route path="logout/" element={<Logout />} />
         <Route path="*" element={<Navigate to="/" />} />
         <Route
           path="search"

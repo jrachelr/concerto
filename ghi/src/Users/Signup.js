@@ -4,6 +4,7 @@ import { useToken } from "../auth.js";
 import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
+  // this destructuring has to be in the same order as in auth
   const [, login] = useToken();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");

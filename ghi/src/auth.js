@@ -82,7 +82,7 @@ export function useToken() {
     if (!token) {
       fetchToken();
     }
-  }, [setToken, token, setUser, user]);
+  }, [setToken, token, setUser]);
 
   async function logout() {
     if (token) {

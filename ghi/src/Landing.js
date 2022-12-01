@@ -1,12 +1,15 @@
 import "./index.css";
 import { useState } from "react";
-import SideBar from "./SidebarNav";
+import SideBar from "./Layout/SidebarNav";
 import SearchComponent from "./SearchComponent";
 import ConcertList from "./ConcertList";
-import { NavLink } from "react-router-dom";
+import Header from "./Layout/Header";
+import { useAuthContext } from "./auth";
 // import SearchComponent from "./SearchComponent";
+
 export default function Landing() {
   const [concerts, setConcerts] = useState([]);
+  const { token } = useAuthContext();
   async function getConcerts(lat, long) {
     const concertsUrl = `http://localhost:8000/concerts/${lat},${long}`;
     const fetchConfig = {
@@ -29,35 +32,11 @@ export default function Landing() {
       // };
     }
   }
+
   return (
     <>
-      <SideBar />
-      {/* background */}
       <div className="bg-indigo-700 h-screen">
-        <header className="bg-indigo-600">
-          <nav
-            className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
-            aria-label="Top"
-          >
-            <div className="flex w-full items-center justify-between border-b border-indigo-500 py-6 lg:border-none">
-              <div className="ml-10 space-x-4">
-                <NavLink
-                  to="login/"
-                  className="inline-block rounded-md border border-transparent bg-indigo-500 py-2 px-4 text-base font-medium text-white hover:bg-opacity-75"
-                >
-                  Sign in
-                </NavLink>
-                <NavLink
-                  to="signup/"
-                  className="inline-block rounded-md border border-transparent bg-white py-2 px-4 text-base font-medium text-indigo-600 hover:bg-indigo-50"
-                >
-                  Sign up
-                </NavLink>
-              </div>
-            </div>
-          </nav>
-        </header>
-        {/* header and h2 */}
+        {token ? <SideBar /> : <Header />}
         <div className="mx-auto max-w-2xl py-16 px-4 text-center sm:py-20 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             <span className="block">Concerto</span>

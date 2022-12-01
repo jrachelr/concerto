@@ -44,10 +44,6 @@ async def post_user(
     return AccountToken(account=account, **token.dict())
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 @router.get("/users", response_model=UsersList)
 def users_list(queries: UserQueries = Depends()):
     return {
@@ -56,14 +52,9 @@ def users_list(queries: UserQueries = Depends()):
 
 
 @router.get("/users/current", response_model=UserOut)
-<<<<<<< HEAD
-def get_user_info(
+def get_user_by_info(
     account: UserOut = Depends(authenticator.get_current_account_data),
 ):
-    # account=authenticator.get_current_account_data()
-=======
-def get_user_by_info(account: UserOut = Depends(authenticator.get_current_account_data)):
->>>>>>> main
     return account
 
 
@@ -86,18 +77,11 @@ def delete_user(user_id: int, queries: UserQueries = Depends()):
 def update_user(user_id: int, user: UserIn, queries: UserQueries = Depends()):
     return queries.update_user(user_id, user)
 
-<<<<<<< HEAD
 
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
     request: Request,
-    account: dict = Depends(authenticator.get_current_account_data),
-=======
-@router.get("/token", response_model=AccountToken | None)
-async def get_token(
-    request: Request,
-    account: dict = Depends(authenticator.get_current_account_data)
->>>>>>> main
+    account: dict = Depends(authenticator.try_get_current_account_data),
 ) -> AccountToken | None:
     if account and authenticator.cookie_name in request.cookies:
         return {

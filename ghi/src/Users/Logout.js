@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useToken } from "../auth.js";
 
 export default function Logout() {
-  const [, logout] = useToken();
+  const [, , logout] = useToken();
   const navigate = useNavigate();
 
   const signout = async (e) => {
