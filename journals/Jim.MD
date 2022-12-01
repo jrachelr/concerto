@@ -36,3 +36,7 @@
 
 11/29/22
 - Waiting on lecture on 11/30 regarding auth to maybe fix issue
+
+11/30/22
+
+- Pair programmed to fix authentication and tested it to make sure it works for concerts and users

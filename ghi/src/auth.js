@@ -77,7 +77,8 @@ export function useToken() {
 					credentials: "include",
 				}
 			);
-			setUser(await response2.json());
+      const response3 = await response2.json();
+			setUser(response3);
 		}
 		if (!token) {
 			fetchToken();
