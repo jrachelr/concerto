@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
   // this destructuring has to be in the same order as in auth
-  const [, login] = useToken();
+  const [, , , signup] = useToken();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
@@ -15,7 +15,7 @@ const SignupForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    login(username, password, email, firstName, lastName);
+    signup(username, password, email, firstName, lastName);
     console.log(username, "is logged in");
     navigate("/");
   };
