@@ -49,7 +49,10 @@ export default function Landing() {
 							Search concerts here:
 						</h3>
 					</div>
-					<SearchComponent getConcerts={getConcerts} />
+					<SearchComponent
+						getConcerts={getConcerts}
+						setConcerts={setConcerts}
+					/>
 					<div>
 						{concerts.length > 0 && <ConcertList concerts={concerts} />}
 					</div>

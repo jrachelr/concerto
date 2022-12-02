@@ -1,10 +1,7 @@
-import usePlacesAutocomplete, {
-	getGeocode,
-	getLatLng,
-} from "use-places-autocomplete";
+import usePlacesAutocomplete from "use-places-autocomplete";
 import { useState } from "react";
 
-const SearchComponent = ({ getConcerts }) => {
+const SearchComponent = ({ getConcerts, setConcerts }) => {
 	const {
 		ready,
 		value,
@@ -17,8 +14,8 @@ const SearchComponent = ({ getConcerts }) => {
 		},
 		debounce: 300,
 	});
-	const [lat, setLat] = useState("");
-	const [long, setLong] = useState("");
+	const [city, setCity] = useState("");
+	const [state, setState] = useState("");
 
 	const handleInput = (e) => {
 		// Update the keyword of the input element
@@ -28,19 +25,10 @@ const SearchComponent = ({ getConcerts }) => {
 	const handleSelect =
 		({ description }) =>
 		() => {
-			// When user selects a place, we can replace the keyword without request data from API
-			// by setting the second parameter to "false"
 			setValue(description, false);
 			clearSuggestions();
-
-			// Get latitude and longitude via utility functions
-			getGeocode({ address: description }).then((results) => {
-				const { lat, lng } = getLatLng(results[0]);
-				setLat(lat);
-				setLong(lng);
-
-				console.log("📍 Coordinates: ", { lat, lng });
-			});
+			setCity(description.split(",")[0].split(" ").join("%20"));
+			setState(description.split(",")[1]);
 		};
 
 	const renderSuggestions = () =>
@@ -59,7 +47,11 @@ const SearchComponent = ({ getConcerts }) => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		getConcerts(lat, long);
+		setConcerts([]);
+		getConcerts(city, state);
+		setCity("");
+		setState("");
+		event.target.reset();
 	};
 
 	return (
