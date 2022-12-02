@@ -119,7 +119,7 @@ def get_all_concerts(city, state):
         except:
             concert["venue"] = "TBD"
 
-        concert["date"] = event['dates']['start']['localDate']
+        concert["start_date"] = event['dates']['start']['localDate']
         try:
             concert["spotify_url"] = event['_embedded']['attractions'][0]['externalLinks']['spotify'][0]['url']
         except KeyError:
@@ -127,12 +127,12 @@ def get_all_concerts(city, state):
         try:
             concert["min_price"] = event['priceRanges'][0]['min']
         except KeyError:
-            concert["min_price"] = "$"
+            concert["min_price"] = 0
 
         try:
             concert["max_price"] = event['priceRanges'][0]['max']
         except KeyError:
-            concert["max_price"] = "$"
+            concert["max_price"] = 0
 
         if concert["artist_name"] not in artists:
             artists.append(concert["artist_name"])
