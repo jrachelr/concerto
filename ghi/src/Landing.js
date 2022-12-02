@@ -43,7 +43,7 @@ export default function Landing() {
 					</h2>
 				</div>
 				{/* search box */}
-				<div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 bg-white opacity-70 sm:rounded-lg p-8">
+				<div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 bg-white opacity-70 sm:rounded-lg p-8 overflow-x-scroll">
 					<div className="text-center">
 						<h3 className="text-base text-center tracking-tight text-black sm:text-4xl">
 							Search concerts here:
