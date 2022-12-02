@@ -89,30 +89,35 @@ def delete_concert(user_id: int, concert_id: int, queries: ConcertQueries = Depe
         return queries.delete(user_id, concert_id)
 
 
-@router.get("/concerts/{lat},{long}")
-def get_all_concerts(lat, long):
+@router.get("/concerts/{city},{state}")
+def get_all_concerts(city, state):
 
     key = os.environ.get("TICKETMASTER_API_KEY")
 
-    url = f"https://app.ticketmaster.com/discovery/v2/events/?apikey={key}&latlong={lat},{long}&locale=*&startDateTime=2022-11-28T17:58:00Z&sort=date,asc&classificationName=music"
+    url = f"https://app.ticketmaster.com/discovery/v2/events?apikey={key}&locale=*&startDateTime=2022-12-01T14:40:00Z&size=100&sort=date,asc&city={city}&stateCode={state}&classificationName=music"
 
+    print(url)
     response = requests.get(url)
     data = json.loads(response.content)
 
     events = data['_embedded']['events']
+
     concerts=[]
+    artists = []
+
     for event in events:
         concert = {}
         try:
             concert["artist_name"] = event['_embedded']['attractions'][0]['name']
-        except KeyError:
+        except KeyError :
             continue
+
         concert["image_url"]= event["images"][1]["url"]
         concert["concert_name"]= event['name']
         try:
             concert["venue"] = event['_embedded']['venues'][0]['name']
         except:
-            concert["venue"] = "no venue"
+            concert["venue"] = "TBD"
 
         concert["date"] = event['dates']['start']['localDate']
         try:
@@ -122,11 +127,20 @@ def get_all_concerts(lat, long):
         try:
             concert["min_price"] = event['priceRanges'][0]['min']
         except KeyError:
-            concert["min_price"] = "no minimum price range available"
-        concerts.append(concert)
+            concert["min_price"] = "$"
+
         try:
             concert["max_price"] = event['priceRanges'][0]['max']
         except KeyError:
-            concert["max_price"] = "no maximum price range available"
-        concerts.append(concert)
+            concert["max_price"] = "$"
+
+        if concert["artist_name"] not in artists:
+            artists.append(concert["artist_name"])
+            concerts.append(concert)
+        else:
+            continue
+
+
+    print(artists)
+
     return {"concerts": concerts}
