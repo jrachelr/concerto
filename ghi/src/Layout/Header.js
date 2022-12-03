@@ -21,12 +21,6 @@ export default function Header() {
               >
                 Sign up
               </NavLink>
-              <NavLink
-                to="logout/"
-                className="inline-block rounded-md border border-transparent bg-white py-2 px-4 text-base font-medium text-indigo-600 opacity-100 hover:bg-indigo-50"
-              >
-                Logout
-              </NavLink>
             </div>
           </div>
         </nav>

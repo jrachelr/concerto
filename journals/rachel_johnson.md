@@ -64,3 +64,4 @@ docker compose up
 ### 1 December
 
 - adding bg image
+- wokring on auth on front end still. fixed issue with tempalte data - was access_token not token. managed to get the token in the front end after login, and clear after logout. signup looks like it's posting a new user, but the funciton isn't passing through to login correctly.

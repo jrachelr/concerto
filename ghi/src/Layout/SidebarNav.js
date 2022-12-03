@@ -28,7 +28,7 @@ export default function SideBar() {
               My Account
             </span>
           </NavLink>
-          <NavLink href="logout/">
+          <NavLink to="logout/">
             <span className=" hover:bg-indigo-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-sm font-medium rounded-md ">
               Logout
             </span>

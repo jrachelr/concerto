@@ -157,9 +157,10 @@ export function useToken() {
       },
     });
     if (response.ok) {
-      await login(username, password);
+      await login(email, password);
     }
     console.log("respose:", response);
+    console.log("acc details:", email, username);
     return false;
   }
 
