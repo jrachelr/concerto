@@ -60,11 +60,11 @@ const ConcertList = ({ concerts, setConcerts }) => {
 
 	return (
 		<>
-			<div className="flex justify-center grid grid-cols-4 gap-4">
+			<div className="flex items-stretch justify-center grid grid-cols-4 gap-4">
 				{concerts.map((concert, count) => {
 					return (
 						<div key={count}>
-							<div className="rounded-lg shadow-lg bg-white max-w-sm">
+							<div className="rounded-lg shadow-lg bg-white max-w-sm h-full">
 								<a
 									href="#!"
 									data-mdb-ripple="true"
@@ -88,7 +88,7 @@ const ConcertList = ({ concerts, setConcerts }) => {
 									</p>
 									<button
 										type="button"
-										className="text-center inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+										className="text-center inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mt-auto"
 										onClick={() => handleDrawer(concert, count)}>
 										Details
 									</button>
