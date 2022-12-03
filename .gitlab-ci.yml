@@ -21,7 +21,6 @@ users-unit-test-job:
     - lint-test-job
   script:
     - cd users-api
-    - cd concerts-api
     - pip install -r requirements.txt
     - python -m pytest
 
