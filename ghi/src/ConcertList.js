@@ -14,7 +14,7 @@ const ConcertList = ({ concerts, setConcerts }) => {
 		if (concerts.length > 0) {
 			console.log(concerts);
 		}
-	}, [setConcerts]);
+	}, [concerts]);
 
 	const addFavorite = async (concert) => {
 		const favoriteUrl = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/concerts/favorites/${user.id}`;

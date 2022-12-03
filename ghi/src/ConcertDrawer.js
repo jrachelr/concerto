@@ -10,7 +10,7 @@ export default function ConcertModal({
 	addFavorite,
 	button,
 }) {
-	const [hidden, setHidden] = useState(false);
+	const [, setHidden] = useState(false);
 	const hideButton = () => {
 		addFavorite(selectedConcert, button);
 		setHidden(true);

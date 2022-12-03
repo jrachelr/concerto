@@ -9,6 +9,7 @@ const MusicPlayer = (spotifyUrl) => {
 			height="380"
 			frameBorder="0"
 			allowFullScreen=""
+			title={{ artistId }}
 			allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
 			loading="lazy"></iframe>
 	);
