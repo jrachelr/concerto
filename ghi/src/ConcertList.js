@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useAuthContext } from "./auth";
+import { useNavigate } from "react-router-dom";
+import ConcertModal from "./ConcertModal";
 
 const ConcertList = ({ concerts }) => {
 	const [open, setOpen] = useState(false);
 	const { token, user } = useAuthContext();
-	// const [showFavButton, setShowFaveButton] = useState(true);
+	const [selectedConcert, setSelectedConcert] = useState({});
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (concerts.length > 0) {
@@ -12,9 +15,7 @@ const ConcertList = ({ concerts }) => {
 		}
 	}, [concerts]);
 
-	const addFavorite = async (concert) => {
-		// take userID from user
-		// create a post request to add the favorite concert to that user's list
+	const addFavorite = async (concert, count) => {
 		const favoriteUrl = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/concerts/favorites/${user.id}`;
 
 		const data = {
@@ -37,8 +38,18 @@ const ConcertList = ({ concerts }) => {
 		const response = await fetch(favoriteUrl, fetchConfig);
 		if (response.ok) {
 			console.log("success!");
-			// setShowFaveButton(false);
+			const buttonElement = document.getElementById(`button${count}`);
+			buttonElement.style.visibility = "hidden";
 		}
+	};
+
+	const handleDrawer = (concert) => {
+		setOpen(true);
+		setSelectedConcert(concert);
+	};
+
+	const goToLogin = () => {
+		navigate("login/");
 	};
 
 	return (
@@ -46,7 +57,7 @@ const ConcertList = ({ concerts }) => {
 			<div className="flex justify-center grid grid-cols-4 gap-4">
 				{concerts.map((concert, count) => {
 					return (
-						<>
+						<div key={count}>
 							<div className="rounded-lg shadow-lg bg-white max-w-sm">
 								<a
 									href="#!"
@@ -72,21 +83,30 @@ const ConcertList = ({ concerts }) => {
 									<button
 										type="button"
 										className="text-center inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-										onClick={() => setOpen(true)}>
+										onClick={() => handleDrawer(concert)}>
 										Details
-									</button>{" "}
-									{/* {showFavButton ? ( */}
+									</button>
 									<button
+										id={`button${count}`}
 										type="button"
 										className="text-center inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-										onClick={(e) => addFavorite(concert)}>
+										onClick={
+											token
+												? () => addFavorite(concert, count)
+												: () => goToLogin()
+										}>
 										Favorite
 									</button>
-									{/* ) : null} */}
 								</div>
 							</div>
-							{/* <ConcertModal open={open} setOpen={setOpen} concert={concert} /> */}
-						</>
+							<ConcertModal
+								open={open}
+								setOpen={setOpen}
+								selectedConcert={selectedConcert}
+								addFavorite={addFavorite}
+								count={count}
+							/>
+						</div>
 					);
 				})}
 			</div>

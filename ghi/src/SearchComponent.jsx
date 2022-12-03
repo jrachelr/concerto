@@ -49,9 +49,9 @@ const SearchComponent = ({ getConcerts, setConcerts }) => {
 		event.preventDefault();
 		setConcerts([]);
 		getConcerts(city, state);
-		setCity("");
-		setState("");
-		event.target.reset();
+		// setCity("");
+		// setState("");
+		// // event.target.reset();
 	};
 
 	return (
