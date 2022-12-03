@@ -1,6 +1,5 @@
 const MusicPlayer = (spotifyUrl) => {
 	const artistId = spotifyUrl["spotifyUrl"].split("/").pop();
-	console.log(artistId);
 	return (
 		<iframe
 			style={{ borderRadius: 12 }}
@@ -9,7 +8,7 @@ const MusicPlayer = (spotifyUrl) => {
 			height="380"
 			frameBorder="0"
 			allowFullScreen=""
-			title={{ artistId }}
+			title="Artist IFRAME"
 			allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
 			loading="lazy"></iframe>
 	);
