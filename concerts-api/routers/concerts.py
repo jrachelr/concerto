@@ -1,18 +1,13 @@
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from datetime import date
-from queries.concert_queries import (
-    ConcertIn,
-    ConcertOut,
-    ConcertsList,
-    ConcertQueries,
-    UserOut,
-)
+from queries.concert_queries import ConcertIn, ConcertOut, ConcertsList, ConcertQueries, UserOut
 import requests
 import json
 import os
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+from jose import jwt, JWTError
 
 
 
@@ -20,8 +15,9 @@ router = APIRouter()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="localhost:8001/token")
 print("test outhhhhhhhhh", oauth2_scheme)
-SECRET_KEY = os.environ.get("SIGNING_KEY", "blah")
+SECRET_KEY = os.environ.get("SIGNING_KEY","blah")
 print("test striiiiing", SECRET_KEY)
+
 
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
@@ -33,7 +29,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     )
     try:
         payload = jwt.decode(token, SECRET_KEY)
-        print("tesitngggggggg")
+        print('tesitngggggggg')
         username: str = payload.get("sub")
         if username is None:
             print("niceeeeeee")
@@ -48,7 +44,6 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         raise credentials_exception
     return user
 
-
 not_authorized = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
     detail="Invalid authentication credentials",
@@ -56,7 +51,8 @@ not_authorized = HTTPException(
 )
 
 
-# add favorite concert
+
+#add favorite concert
 @router.post("/concerts/favorites/{user_id}", response_model=ConcertOut)
 def post_favorite_concert(concert:ConcertIn, user_id: int, queries:ConcertQueries = Depends(),
 account: dict = Depends(get_current_user)):
@@ -83,10 +79,7 @@ account: dict = Depends(get_current_user)):
     if account:
         return queries.get_one(concert_id, user_id)
 
-
-@router.put(
-    "/concerts/favorites/{user_id}/{concert_id}", response_model=ConcertOut
-)
+@router.put("/concerts/favorites/{user_id}/{concert_id}", response_model=ConcertOut)
 def update_favorite_concert(
     user_id: int, concert_id: int, concert: ConcertIn, queries: ConcertQueries = Depends(),
      account: dict = Depends(get_current_user)):
@@ -136,12 +129,12 @@ def get_all_concerts(city, state):
         except KeyError:
             continue
         try:
-            concert["min_price"] = event["priceRanges"][0]["min"]
+            concert["min_price"] = event['priceRanges'][0]['min']
         except KeyError:
             concert["min_price"] = 0
 
         try:
-            concert["max_price"] = event["priceRanges"][0]["max"]
+            concert["max_price"] = event['priceRanges'][0]['max']
         except KeyError:
             concert["max_price"] = 0
 
