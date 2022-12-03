@@ -160,7 +160,6 @@ export function useToken() {
       await login(email, password);
     }
     console.log("respose:", response);
-    console.log("acc details:", email, username);
     return false;
   }
 
