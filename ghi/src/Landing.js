@@ -1,13 +1,17 @@
 import "./index.css";
 import { useState } from "react";
-import SideBar from "./SidebarNav";
+import SideBar from "./Layout/SidebarNav";
 import SearchComponent from "./SearchComponent";
 import ConcertList from "./ConcertList";
+import Header from "./Layout/Header";
+import { useAuthContext } from "./auth";
 // import SearchComponent from "./SearchComponent";
+
 export default function Landing() {
+	const { token } = useAuthContext();
 	const [concerts, setConcerts] = useState([]);
-	async function getConcerts(lat, long) {
-		const concertsUrl = `http://localhost:8000/concerts/${lat},${long}`;
+	async function getConcerts(city, state) {
+		const concertsUrl = `http://localhost:8000/concerts/${city},${state}`;
 		const fetchConfig = {
 			method: "get",
 			headers: {
@@ -24,9 +28,10 @@ export default function Landing() {
 			console.log("ERROR");
 		}
 	}
+
 	return (
 		<>
-			<SideBar />
+			{token ? <SideBar /> : <Header />}
 			{/* background */}
 			<div className="bg-indigo-700 h-screen">
 				{/* header and h2 */}
@@ -39,7 +44,7 @@ export default function Landing() {
 					</h2>
 				</div>
 				{/* search box */}
-				<div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 bg-white opacity-70 sm:rounded-lg p-8 overflow-x-scroll">
+				<div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 bg-white opacity-70 sm:rounded-lg p-8">
 					<div className="text-center">
 						<h3 className="text-base text-center tracking-tight text-black sm:text-4xl">
 							Search concerts here:
