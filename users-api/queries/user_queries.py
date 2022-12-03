@@ -2,6 +2,7 @@ from pydantic import BaseModel
 import os
 from psycopg_pool import ConnectionPool
 
+
 class User(BaseModel):
     id: int
     first_name: str
@@ -10,12 +11,14 @@ class User(BaseModel):
     hashed_password: str
     username: str
 
+
 class UserIn(BaseModel):
     first_name: str
     last_name: str
     email: str
     password: str
     username: str
+
 
 class UserOut(BaseModel):
     id: int
@@ -24,27 +27,34 @@ class UserOut(BaseModel):
     email: str
     username: str
 
+
 class UsersList(BaseModel):
     users: list[UserOut]
 
+
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
+
 
 class UserQueries:
     def get_all_users(self):
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute("""
-                    SELECT id, first_name, last_name, email, hashed_password, username
+                    SELECT id,
+                    first_name,
+                    last_name,
+                    email,
+                    hashed_password,
+                    username
                     FROM user_info
                     ORDER BY last_name, first_name
                     """
-                )
-
+                            )
                 results = []
                 for row in cur.fetchall():
                     record = {}
                     for i, column in enumerate(cur.description):
-                        record[column.name] = row [i]
+                        record[column.name] = row[i]
                     results.append(record)
 
                 return results
@@ -54,7 +64,13 @@ class UserQueries:
             with conn.cursor() as cur:
                 result = cur.execute(
                     """
-                    SELECT u.id, u.first_name, u.last_name, u.email, u.hashed_password, u.last_name, u.username
+                    SELECT u.id,
+                    u.first_name,
+                    u.last_name,
+                    u.email,
+                    u.hashed_password,
+                    u.last_name,
+                    u.username
                     FROM user_info AS u
                     WHERE u.id = %s
                     """,
@@ -65,13 +81,13 @@ class UserQueries:
                 print(record)
                 if record is None:
                     return None
-                return User (
-                    id = record[0],
-                    first_name = record[1],
-                    last_name = record[2],
-                    email = record[3],
-                    hashed_password = record[4],
-                    username = record[5],
+                return User(
+                    id=record[0],
+                    first_name=record[1],
+                    last_name=record[2],
+                    email=record[3],
+                    hashed_password=record[4],
+                    username=record[5],
                 )
 
     def get_one_user_email(self, email: str) -> User:
@@ -79,7 +95,13 @@ class UserQueries:
             with conn.cursor() as cur:
                 result = cur.execute(
                     """
-                    SELECT u.id, u.first_name, u.last_name, u.email, u.hashed_password, u.last_name, u.username
+                    SELECT u.id,
+                    u.first_name,
+                    u.last_name,
+                    u.email,
+                    u.hashed_password,
+                    u.last_name,
+                    u.username
                     FROM user_info AS u
                     WHERE u.email = %s
                     """,
@@ -90,13 +112,13 @@ class UserQueries:
                 print(record)
                 if record is None:
                     return None
-                return User (
-                    id = record[0],
-                    first_name = record[1],
-                    last_name = record[2],
-                    email = record[3],
-                    hashed_password = record[4],
-                    username = record[5],
+                return User(
+                    id=record[0],
+                    first_name=record[1],
+                    last_name=record[2],
+                    email=record[3],
+                    hashed_password=record[4],
+                    username=record[5],
                 )
 
     def create_user(self, user: UserIn, hashed_password: str) -> User:
@@ -105,7 +127,11 @@ class UserQueries:
                 result = cur.execute(
                     """
                     INSERT INTO user_info
-                        (first_name, last_name, email, hashed_password, username)
+                        (first_name,
+                        last_name,
+                        email,
+                        hashed_password,
+                        username)
                     VALUES
                         (%s, %s, %s, %s, %s)
                     RETURNING id;
@@ -123,7 +149,12 @@ class UserQueries:
                 print(id)
                 # old_data = user.dict()
                 # print(old_data)
-                return User(id=id, first_name = user.first_name, last_name = user.last_name, email = user.email, hashed_password = hashed_password, username = user.username,)
+                return User(id=id,
+                            first_name=user.first_name,
+                            last_name=user.last_name,
+                            email=user.email,
+                            hashed_password=hashed_password,
+                            username=user.username,)
 
     def delete_user(self, user_id: int):
         with pool.connection() as conn:

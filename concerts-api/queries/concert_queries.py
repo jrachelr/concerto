@@ -3,6 +3,7 @@ from psycopg_pool import ConnectionPool
 from datetime import date
 from pydantic import BaseModel
 
+
 class Concert(BaseModel):
     id: int
     concert_name: str
@@ -11,6 +12,7 @@ class Concert(BaseModel):
     min_price: int
     max_price: int
     user_id: int
+
 
 class ConcertIn(BaseModel):
     concert_name: str
@@ -28,6 +30,7 @@ class ConcertOut(BaseModel):
     min_price: int
     max_price: int
     user_id: int
+
 
 class UserOut(BaseModel):
     id: int
@@ -52,7 +55,12 @@ class ConcertQueries:
                 result = cur.execute(
                     """
                     INSERT INTO favorite_concerts
-                        (concert_name, artist_name, start_date, min_price, max_price, user_id)
+                        (concert_name,
+                        artist_name,
+                        start_date,
+                        min_price,
+                        max_price,
+                        user_id)
                     VALUES
                         (%s, %s, %s, %s, %s, %s)
                     RETURNING id;
@@ -71,10 +79,10 @@ class ConcertQueries:
                 old_data = concert.dict()
                 return ConcertOut(id=id, user_id=1, **old_data)
 
-    def get_all(self, user_id:int=None) -> list[ConcertOut]:
+    def get_all(self, user_id: int = None) -> list[ConcertOut]:
         with pool.connection() as conn:
             with conn.cursor() as cur:
-                if user_id == None:
+                if user_id is None:
                     cur.execute(
                         """
                         SELECT *
@@ -156,7 +164,7 @@ class ConcertQueries:
 
                 old_data = concert.dict()
                 print(old_data)
-                return ConcertOut(id=concert_id, user_id = user_id, **old_data)
+                return ConcertOut(id=concert_id, user_id=user_id, **old_data)
 
     def delete(self, user_id: int, concert_id: int):
         with pool.connection() as conn:
