@@ -11,6 +11,9 @@ class Concert(BaseModel):
     min_price: int
     max_price: int
     user_id: int
+    spotify_url: str
+    image_url: str
+    favorite: bool
 
 class ConcertIn(BaseModel):
     concert_name: str
@@ -18,6 +21,9 @@ class ConcertIn(BaseModel):
     start_date: date
     min_price: int
     max_price: int
+    spotify_url: str
+    image_url: str
+    favorite: bool
 
 
 class ConcertOut(BaseModel):
@@ -28,6 +34,9 @@ class ConcertOut(BaseModel):
     min_price: int
     max_price: int
     user_id: int
+    spotify_url: str
+    image_url: str
+    favorite: bool
 
 class UserOut(BaseModel):
     id: int
@@ -52,9 +61,9 @@ class ConcertQueries:
                 result = cur.execute(
                     """
                     INSERT INTO favorite_concerts
-                        (concert_name, artist_name, start_date, min_price, max_price, user_id)
+                        (concert_name, artist_name, start_date, min_price, max_price, user_id, spotify_url, image_url, favorite)
                     VALUES
-                        (%s, %s, %s, %s, %s, %s)
+                        (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                     RETURNING id;
                     """,
                     [
@@ -63,13 +72,16 @@ class ConcertQueries:
                         concert.start_date,
                         concert.min_price,
                         concert.max_price,
-                        user_id
+                        user_id,
+                        concert.spotify_url,
+                        concert.image_url,
+                        concert.favorite
                     ],
                 )
 
                 id = result.fetchone()[0]
                 old_data = concert.dict()
-                return ConcertOut(id=id, user_id=1, **old_data)
+                return ConcertOut(id=id, user_id=user_id, **old_data)
 
     def get_all(self, user_id:int=None) -> list[ConcertOut]:
         with pool.connection() as conn:
@@ -121,7 +133,10 @@ class ConcertQueries:
                     "start_date": record[3],
                     "min_price": record[4],
                     "max_price": record[5],
-                    "user_id": record[6]
+                    "user_id": record[6],
+                    "spotify_url": record[7],
+                    "image_url": record[8],
+                    "favorite": record[9]
                 }
             return ConcertOut(**data)
 
@@ -136,7 +151,10 @@ class ConcertQueries:
                     artist_name = %s,
                     start_date = %s,
                     min_price = %s,
-                    max_price = %s
+                    max_price = %s,
+                    spotify_url = %s,
+                    image_url = %s,
+                    favorite = %s
 
                     WHERE user_id = %s AND id = %s
 
@@ -148,6 +166,9 @@ class ConcertQueries:
                         concert.start_date,
                         concert.min_price,
                         concert.max_price,
+                        concert.spotify_url,
+                        concert.image_url,
+                        concert.favorite,
                         user_id,
                         concert_id
 

@@ -1,10 +1,7 @@
-import usePlacesAutocomplete, {
-	getGeocode,
-	getLatLng,
-} from "use-places-autocomplete";
+import usePlacesAutocomplete from "use-places-autocomplete";
 import { useState } from "react";
 
-const SearchComponent = ({ getConcerts }) => {
+const SearchComponent = ({ getConcerts, setConcerts }) => {
 	const {
 		ready,
 		value,
@@ -17,8 +14,8 @@ const SearchComponent = ({ getConcerts }) => {
 		},
 		debounce: 300,
 	});
-	const [lat, setLat] = useState("");
-	const [long, setLong] = useState("");
+	const [city, setCity] = useState("");
+	const [state, setState] = useState("");
 
 	const handleInput = (e) => {
 		// Update the keyword of the input element
@@ -28,19 +25,10 @@ const SearchComponent = ({ getConcerts }) => {
 	const handleSelect =
 		({ description }) =>
 		() => {
-			// When user selects a place, we can replace the keyword without request data from API
-			// by setting the second parameter to "false"
 			setValue(description, false);
 			clearSuggestions();
-
-			// Get latitude and longitude via utility functions
-			getGeocode({ address: description }).then((results) => {
-				const { lat, lng } = getLatLng(results[0]);
-				setLat(lat);
-				setLong(lng);
-
-				console.log("📍 Coordinates: ", { lat, lng });
-			});
+			setCity(description.split(",")[0].split(" ").join("%20"));
+			setState(description.split(",")[1]);
 		};
 
 	const renderSuggestions = () =>
@@ -59,24 +47,33 @@ const SearchComponent = ({ getConcerts }) => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		getConcerts(lat, long);
+		setConcerts([]);
+		getConcerts(city, state);
 	};
 
 	return (
-		<div>
-			<form id="search-location" onSubmit={handleSubmit}>
+		<form id="search-location" onSubmit={handleSubmit}>
+			<div className="rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+				<label
+					htmlFor="name"
+					className="block text-xs font-medium text-gray-900">
+					Location
+				</label>
 				<input
 					value={value}
 					onChange={handleInput}
 					disabled={!ready}
 					placeholder="Where are you going?"
+					className="block w-full rounded-md bg-white opacity-100 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
 				/>
-				{/* We can use the "status" to decide whether we should display the dropdown or not */}
-				{status === "OK" && <ul>{renderSuggestions()}</ul>}
-				<button>Click</button>
-			</form>
-			<p>This is the {value}</p>
-		</div>
+			</div>
+			{status === "OK" && <ul>{renderSuggestions()}</ul>}
+			<div className="flex justify-center">
+				<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+					Search
+				</button>
+			</div>
+		</form>
 	);
 };
 
