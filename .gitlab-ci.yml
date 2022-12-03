@@ -14,7 +14,7 @@ lint-test-job:
     # - flake8 sample_service
 
 # Run the unit tests
-users-unit-test-job
+users-unit-test-job:
   image: python:3-bullseye
   stage: test
   needs:
