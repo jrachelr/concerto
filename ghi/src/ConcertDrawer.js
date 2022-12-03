@@ -1,14 +1,20 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import MusicPlayer from "./MusicPlayer";
 
 export default function ConcertModal({
 	open,
 	setOpen,
 	selectedConcert,
 	addFavorite,
-	count,
+	button,
 }) {
+	const [hidden, setHidden] = useState(false);
+	const hideButton = () => {
+		addFavorite(selectedConcert, button);
+		setHidden(true);
+	};
 	return (
 		<Transition.Root show={open} as={Fragment}>
 			<Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -66,11 +72,21 @@ export default function ConcertModal({
 																</div>
 															</div>
 															<div className="mt-5 flex flex-wrap space-y-3 sm:space-y-0 sm:space-x-3">
-																<button
-																	type="button"
-																	className="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:flex-1">
-																	Favorite
-																</button>
+																{selectedConcert.favorite ? (
+																	<button
+																		type="button"
+																		className="inline-flex w-full flex-1 items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+																		Concert Saved to Favorites!
+																	</button>
+																) : (
+																	<button
+																		id={`button${button}`}
+																		type="button"
+																		className="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:flex-1"
+																		onClick={() => hideButton()}>
+																		Favorite
+																	</button>
+																)}
 															</div>
 														</div>
 													</div>
@@ -83,7 +99,9 @@ export default function ConcertModal({
 															Spotify
 														</dt>
 														<dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
-															<p>SPOTIFY PLAYER HERE</p>
+															<MusicPlayer
+																spotifyUrl={selectedConcert.spotify_url}
+															/>
 														</dd>
 													</div>
 													<div>

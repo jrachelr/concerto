@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "./auth";
 import { useNavigate } from "react-router-dom";
-import ConcertModal from "./ConcertModal";
+import ConcertModal from "./ConcertDrawer";
 
-const ConcertList = ({ concerts }) => {
+const ConcertList = ({ concerts, setConcerts }) => {
 	const [open, setOpen] = useState(false);
 	const { token, user } = useAuthContext();
 	const [selectedConcert, setSelectedConcert] = useState({});
+	const [button, setButton] = useState("");
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (concerts.length > 0) {
 			console.log(concerts);
 		}
-	}, [concerts]);
+	}, [setConcerts]);
 
-	const addFavorite = async (concert, count) => {
+	const addFavorite = async (concert) => {
 		const favoriteUrl = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/concerts/favorites/${user.id}`;
 
 		const data = {
@@ -24,6 +25,9 @@ const ConcertList = ({ concerts }) => {
 			start_date: concert.start_date,
 			min_price: concert.min_price,
 			max_price: concert.max_price,
+			spotify_url: concert.spotify_url,
+			image_url: concert.image_url,
+			favorite: true,
 		};
 
 		const fetchConfig = {
@@ -38,14 +42,16 @@ const ConcertList = ({ concerts }) => {
 		const response = await fetch(favoriteUrl, fetchConfig);
 		if (response.ok) {
 			console.log("success!");
-			const buttonElement = document.getElementById(`button${count}`);
-			buttonElement.style.visibility = "hidden";
+			console.log(concert);
+			concert.favorite = true;
+			setConcerts([...concerts]);
 		}
 	};
 
-	const handleDrawer = (concert) => {
+	const handleDrawer = (concert, count) => {
 		setOpen(true);
 		setSelectedConcert(concert);
+		setButton(count);
 	};
 
 	const goToLogin = () => {
@@ -83,20 +89,29 @@ const ConcertList = ({ concerts }) => {
 									<button
 										type="button"
 										className="text-center inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-										onClick={() => handleDrawer(concert)}>
+										onClick={() => handleDrawer(concert, count)}>
 										Details
 									</button>
-									<button
-										id={`button${count}`}
-										type="button"
-										className="text-center inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-										onClick={
-											token
-												? () => addFavorite(concert, count)
-												: () => goToLogin()
-										}>
-										Favorite
-									</button>
+									{!concert.favorite ? (
+										<button
+											id={`button${count}`}
+											type="button"
+											className="text-center inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+											onClick={
+												token
+													? () => addFavorite(concert, count)
+													: () => goToLogin()
+											}>
+											Favorite
+										</button>
+									) : (
+										<button
+											id={`button${count}`}
+											type="button"
+											className="text-center inline-block px-6 py-2.5 bg-white-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+											Concert Saved to Favorites!
+										</button>
+									)}
 								</div>
 							</div>
 							<ConcertModal
@@ -104,7 +119,7 @@ const ConcertList = ({ concerts }) => {
 								setOpen={setOpen}
 								selectedConcert={selectedConcert}
 								addFavorite={addFavorite}
-								count={count}
+								button={button}
 							/>
 						</div>
 					);

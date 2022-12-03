@@ -22,10 +22,6 @@ export default function Landing() {
 			console.log(concerts);
 		} else {
 			console.log("ERROR");
-
-			// const setLocation = (data) => {
-			// 	setConcerts(data);
-			// };
 		}
 	}
 	return (
@@ -54,7 +50,9 @@ export default function Landing() {
 						setConcerts={setConcerts}
 					/>
 					<div>
-						{concerts.length > 0 && <ConcertList concerts={concerts} />}
+						{concerts.length > 0 && (
+							<ConcertList concerts={concerts} setConcerts={setConcerts} />
+						)}
 					</div>
 
 					{/*  */}

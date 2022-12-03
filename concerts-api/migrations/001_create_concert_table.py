@@ -9,7 +9,10 @@ steps = [
             start_date DATE NOT NULL,
             min_price INTEGER NOT NULL,
             max_price INTEGER NOT NULL,
-            user_id INTEGER NOT NULL
+            user_id INTEGER NOT NULL,
+            spotify_url VARCHAR(1000) NOT NULL,
+            image_url VARCHAR(1000) NOT NULL,
+            favorite BOOLEAN NOT NULL DEFAULT false
         );
         """,
         # "Down" SQL statement
