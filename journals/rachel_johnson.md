@@ -3,6 +3,16 @@ docker volume create postgres-data
 DOCKER_DEFAULT_PLATFORM=linux/amd64 docker-compose build
 docker compose up
 
+to rebuild and make migrations
+docker compose down
+docker system prune
+[delete docker volumes]
+docker volume create pg-admin
+docker volume create postgres-data
+DOCKER_DEFAULT_PLATFORM=linux/amd64 docker-compose build (for m1 users)
+[in concerts api container CLI] python -m migrations up
+[in users api container CLI] python -m migrations up
+
 ### 16 November
 
 - list concerts
