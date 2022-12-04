@@ -42,7 +42,6 @@ const ConcertList = ({ concerts, setConcerts }) => {
 		const response = await fetch(favoriteUrl, fetchConfig);
 		if (response.ok) {
 			console.log("success!");
-			console.log(concert);
 			concert.favorite = true;
 			setConcerts([...concerts]);
 		}
