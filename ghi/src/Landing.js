@@ -2,7 +2,7 @@ import "./index.css";
 import { useState } from "react";
 import SideBar from "./Layout/SidebarNav";
 import SearchComponent from "./SearchComponent";
-import ConcertList from "./ConcertList";
+import ConcertList from "./ConcertComponents/ConcertList";
 import Header from "./Layout/Header";
 import { useAuthContext } from "./auth";
 // import SearchComponent from "./SearchComponent";

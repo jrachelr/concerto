@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuthContext } from "./auth";
+import { useAuthContext } from "../auth";
 import { useNavigate } from "react-router-dom";
 import ConcertModal from "./ConcertDrawer";
 
@@ -88,7 +88,7 @@ const ConcertList = ({ concerts, setConcerts }) => {
 									</p>
 									<button
 										type="button"
-										className="text-center inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mt-auto"
+										className="text-center inline-block px-6 mb-2 w-full py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mt-auto"
 										onClick={() => handleDrawer(concert, count)}>
 										Details
 									</button>
@@ -96,7 +96,7 @@ const ConcertList = ({ concerts, setConcerts }) => {
 										<button
 											id={`button${count}`}
 											type="button"
-											className="text-center inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+											className="text-center w-full inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
 											onClick={
 												token
 													? () => addFavorite(concert, count)
@@ -108,7 +108,7 @@ const ConcertList = ({ concerts, setConcerts }) => {
 										<button
 											id={`button${count}`}
 											type="button"
-											className="text-center inline-block px-6 py-2.5 bg-white-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-white-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-white-800 active:shadow-lg transition duration-150 ease-in-out">
+											className="text-center w-full inline-block px-6 py-2.5 bg-white-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-white-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-white-800 active:shadow-lg transition duration-150 ease-in-out">
 											Concert Saved to Favorites!
 										</button>
 									)}
