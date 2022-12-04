@@ -3,7 +3,7 @@ import { useAuthContext } from "../auth";
 import { useNavigate } from "react-router-dom";
 import ConcertModal from "./ConcertDrawer";
 
-const ConcertList = ({ concerts, setConcerts }) => {
+const ConcertList = ({ concerts, setConcerts, success }) => {
 	const [open, setOpen] = useState(false);
 	const { token, user } = useAuthContext();
 	const [selectedConcert, setSelectedConcert] = useState({});
@@ -69,7 +69,7 @@ const ConcertList = ({ concerts, setConcerts }) => {
 									data-mdb-ripple="true"
 									data-mdb-ripple-color="light">
 									<img
-										className="rounded-t-lg"
+										className="rounded-t-lg w-full"
 										src={concert.image_url}
 										alt=""
 									/>
@@ -78,13 +78,9 @@ const ConcertList = ({ concerts, setConcerts }) => {
 									<h5 className="text-gray-900 text-xl font-medium mb-2">
 										{concert.artist_name}
 									</h5>
-									<p className="text-gray-700 text-base mb-4">
-										<li>{concert.start_date}</li>
-										<li>
-											${concert.min_price}-${concert.max_price}
-										</li>
-										<li>{concert.venue}</li>
-									</p>
+									<h6 className="text-gray-700 text-base mb-4">
+										{concert.start_date}
+									</h6>
 									<button
 										type="button"
 										className="text-center inline-block px-6 mb-2 w-full py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mt-auto"

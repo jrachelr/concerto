@@ -63,13 +63,13 @@ const SearchComponent = ({ getConcerts, setConcerts }) => {
 					value={value}
 					onChange={handleInput}
 					disabled={!ready}
-					placeholder="Where are you going?"
+					placeholder="City, State"
 					className="block w-full rounded-md bg-white opacity-100 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
 				/>
 			</div>
 			{status === "OK" && <ul>{renderSuggestions()}</ul>}
 			<div className="flex justify-center">
-				<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+				<button className="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
 					Search
 				</button>
 			</div>
