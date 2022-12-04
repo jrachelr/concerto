@@ -10,6 +10,7 @@ import ConcertList from "./ConcertList";
 import { useState } from "react";
 import Header from "./Layout/Header";
 import SideBar from "./Layout/SidebarNav";
+import Favorites from "./ConcertFavorites";
 
 function GetToken() {
   // Get token from JWT cookie (if already logged in)
@@ -52,6 +53,7 @@ function App() {
           <Route path="/" element={<Landing />} token={token} />
           <Route path="header/" element={<Header />} token={token} />
           <Route path="sidebar/" element={<SideBar />} token={token} />
+          <Route path="myconcerts/" element={<Favorites />} token={token} />
           <Route
             path="login/"
             element={<LoginForm token={token} login={login} />}

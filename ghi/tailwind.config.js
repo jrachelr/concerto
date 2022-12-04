@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-const { blue } = require("tailwindcss/colors");
 
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
@@ -8,10 +7,10 @@ module.exports = {
       backgroundImage: {
         hero: "url('/public/background.jpg')",
       },
-      colors: {
-        primary: blue,
-      },
     },
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/aspect-ratio"),
+  ],
 };

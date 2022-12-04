@@ -18,7 +18,7 @@ export default function SideBar() {
           className="mt-5 flex-1 space-y-1 px-2 text-white"
           aria-label="Sidebar"
         >
-          <NavLink href="myconcerts/">
+          <NavLink to="myconcerts/">
             <span className=" hover:bg-indigo-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-sm font-medium rounded-md ">
               My Concerts
             </span>

@@ -31,7 +31,7 @@ export default function Landing() {
 
   return (
     <>
-      <div className="bg-scroll bg-hero bg-cover bg-blend-overlay from-indigo-500 h-screen">
+      <div className="bg-scroll bg-hero bg-cover h-screen">
         {token ? <SideBar /> : <Header />}
         {/* background */}
         <div>
