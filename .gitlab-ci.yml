@@ -22,6 +22,7 @@ users-unit-test-job:
   script:
     - cd users-api
     - pip install -r requirements.txt
+    - docker exec 8b0d4c7afdf9
     - python -m pytest
 
 # # Build the React/JavaScript front-end
