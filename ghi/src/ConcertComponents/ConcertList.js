@@ -11,9 +11,9 @@ const ConcertList = ({ concerts, setConcerts, success }) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (concerts.length > 0) {
-			console.log(concerts);
-		}
+		// if (concerts.length > 0) {
+		console.log(concerts);
+		// }
 	}, [concerts]);
 
 	const addFavorite = async (concert) => {

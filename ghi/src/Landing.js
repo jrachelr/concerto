@@ -1,5 +1,5 @@
 import "./index.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import SideBar from "./Layout/SidebarNav";
 import SearchComponent from "./SearchComponent";
 import ConcertList from "./ConcertComponents/ConcertList";
@@ -12,11 +12,26 @@ export default function Landing() {
 	const [concerts, setConcerts] = useState([]);
 	const [success, setSuccess] = useState(true);
 	const myRef = useRef(null);
+	const [city, setCity] = useState("");
+	const [state, setState] = useState("");
+	const [page, setPage] = useState(1);
+
+	useEffect(() => {
+		console.log("Page is now: ", page);
+	}, [page]);
+
+	useEffect(() => {
+		console.log("City is now: ", city);
+	}, [city]);
+
+	useEffect(() => {
+		console.log("State is now: ", state);
+	}, [state]);
 
 	const executeScroll = () => myRef.current.scrollIntoView();
 
-	async function getConcerts(city, state) {
-		const concertsUrl = `http://localhost:8000/concerts/${city},${state}`;
+	async function getConcerts() {
+		const concertsUrl = `http://localhost:8000/concerts/${city},${state}/${page}`;
 		const fetchConfig = {
 			method: "get",
 			headers: {
@@ -31,7 +46,7 @@ export default function Landing() {
 				throw new Error("Something went wrong");
 			})
 			.then((responseJson) => {
-				setConcerts(responseJson.concerts);
+				setConcerts(concerts.concat(responseJson.concerts));
 				setSuccess(true);
 			})
 			.catch((error) => {
@@ -47,6 +62,13 @@ export default function Landing() {
 		// 	console.log("ERROR");
 		// }
 	}
+	const loadMoreConcerts = () => {
+		handlePage();
+		getConcerts();
+	};
+	const handlePage = (e) => {
+		setPage((prevPage) => prevPage + 1);
+	};
 
 	return (
 		<>
@@ -75,6 +97,10 @@ export default function Landing() {
 						<SearchComponent
 							getConcerts={getConcerts}
 							setConcerts={setConcerts}
+							setPage={setPage}
+							setCity={setCity}
+							setState={setState}
+							page={page}
 						/>
 						<div>
 							{concerts.length > 0 && (
@@ -82,8 +108,16 @@ export default function Landing() {
 									concerts={concerts}
 									setConcerts={setConcerts}
 									success={success}
+									page={page}
 								/>
 							)}
+						</div>
+						<div className="flex justify-center">
+							<button
+								className="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+								onClick={loadMoreConcerts}>
+								Load More Concerts
+							</button>
 						</div>
 						{!success && (
 							<div
@@ -112,7 +146,7 @@ export default function Landing() {
 							aria-hidden="true"
 							focusable="false"
 							data-prefix="fas"
-							class="w-4 h-4"
+							className="w-4 h-4"
 							role="img"
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 448 512">

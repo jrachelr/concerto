@@ -34,7 +34,6 @@ function App() {
 		if (response.ok) {
 			const data = await response.json();
 			setConcerts(data.concerts);
-			console.log(concerts);
 		} else {
 			console.log("SOS");
 

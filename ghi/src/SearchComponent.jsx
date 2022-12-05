@@ -1,7 +1,14 @@
 import usePlacesAutocomplete from "use-places-autocomplete";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const SearchComponent = ({ getConcerts, setConcerts }) => {
+const SearchComponent = ({
+	getConcerts,
+	setConcerts,
+	setPage,
+	page,
+	setCity,
+	setState,
+}) => {
 	const {
 		ready,
 		value,
@@ -14,8 +21,12 @@ const SearchComponent = ({ getConcerts, setConcerts }) => {
 		},
 		debounce: 300,
 	});
-	const [city, setCity] = useState("");
-	const [state, setState] = useState("");
+
+	useEffect(() => {
+		// if (concerts.length > 0) {
+		console.log(page);
+		// }
+	}, [page]);
 
 	const handleInput = (e) => {
 		// Update the keyword of the input element
@@ -48,9 +59,9 @@ const SearchComponent = ({ getConcerts, setConcerts }) => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		setConcerts([]);
-		getConcerts(city, state);
+		setPage(1);
+		getConcerts();
 	};
-
 	return (
 		<form id="search-location" onSubmit={handleSubmit}>
 			<div className="rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
