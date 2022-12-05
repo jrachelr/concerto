@@ -69,7 +69,7 @@ const ConcertList = ({ concerts, setConcerts, success }) => {
 									data-mdb-ripple="true"
 									data-mdb-ripple-color="light">
 									<img
-										className="rounded-t-lg w-full"
+										className="rounded-t-lg w-full h-28"
 										src={concert.image_url}
 										alt=""
 									/>
