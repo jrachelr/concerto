@@ -18,7 +18,7 @@ users-unit-test-job:
   image: python:3-bullseye
   stage: test
   environment:
-    DATABASE_URL: ${postgresql://concerts:password@postgres/concerts}
+  DATABASE_URL: ${postgresql://concerts:password@postgres/concerts}
   # needs:
   script:
     - cd users-api
