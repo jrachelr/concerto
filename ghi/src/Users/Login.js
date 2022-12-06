@@ -3,11 +3,32 @@ import { useState } from "react";
 import { useToken } from "../auth.js";
 import { useNavigate } from "react-router-dom";
 
+
+
 const LoginForm = () => {
   const [, login] = useToken();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  // const [errorMessages, setErrorMessages] = useState({});
+  // const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
+  // const database = [
+  //   {
+  //     username: "string@gmail.com",
+  //     password: "password"
+  //   },
+  //   {
+  //     username: "user2@gmail.com",
+  //     password: "pass2"
+  //   }
+  // ];
+  // const errors = {
+  //   uname: "invalid username",
+  //   pass: "invalid password"
+  // };
+
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,6 +78,7 @@ const LoginForm = () => {
                     type="email"
                     autoComplete="email"
                     required
+                    // onInvalid={(e)=>{e.target.setCustomValidity("error message: Wrong Email")}}
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -78,6 +100,7 @@ const LoginForm = () => {
                     type="password"
                     autoComplete="current-password"
                     required
+                    // onInvalid={(e)=>{e.target.setCustomValidity("error message: Wrong Password")}}
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -98,4 +121,5 @@ const LoginForm = () => {
     </>
   );
 };
+
 export default LoginForm;

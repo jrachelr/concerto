@@ -13,12 +13,26 @@ const LoginForm = () => {
 
 
 
+
+
     const handleSubmit = async e => {
         e.preventDefault();
         await login(username, password);
         console.log(username, "is logged in")
         navigate('/');
-    };
+
+    //     if (LoginForm) {
+    //         if (LoginForm.password !== pass.value) {
+    //             setErrorMessages({name: "pass", message: errors.pass});
+    //         } else {
+    //             setIsSubmitted(true);
+    //         }
+    //         } else {
+    //             setErrorMessages({name: "uname", message: errors.uname})
+    //         }
+    //     }
+    // };
+
 
 
   return (
