@@ -17,9 +17,9 @@ lint-test-job:
 users-unit-test-job:
   image: python:3-bullseye
   stage: test
-  environment:
-  DATABASE_URL: ${postgresql://concerts:password@postgres/concerts}
-  # needs:
+  # environment:
+  # DATABASE_URL: ${postgresql://concerts:password@postgres/concerts}
+  needs: lint-test-job
   script:
     - cd users-api
     - pip install -r requirements.txt
