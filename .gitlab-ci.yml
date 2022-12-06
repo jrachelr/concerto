@@ -1,7 +1,7 @@
 stages:
   - test
   - build
-  # - deploy
+  - deploy
 
 # Run flake8 to check for code quality
 lint-test-job:
@@ -48,18 +48,18 @@ build-front-end-job:
     paths:
       - ghi/build/
 
-# # Deploy the React/JavaScript front-end to GitLab pages
-# pages:
-#   stage: deploy
-# throw feature branch wheere $CI_DEFAULT_BRANCH IS AND PUT IT BACK TO HOW IT WAS AFTER
-#   rules:
-#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-#   dependencies:
-#     - build-front-end-job
-#   needs:
-#     - build-front-end-job
-#   script:
-#     - mv ghi/build/ public
-#   artifacts:
-#     paths:
-#       - public
+# Deploy the React/JavaScript front-end to GitLab pages
+pages:
+  stage: deploy
+# throw feature branch where $CI_DEFAULT_BRANCH IS AND PUT IT BACK TO HOW IT WAS AFTER
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  dependencies:
+    - build-front-end-job
+  needs:
+    - build-front-end-job
+  script:
+    - mv ghi/build/ public
+  artifacts:
+    paths:
+      - public
