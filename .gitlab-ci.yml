@@ -26,27 +26,27 @@ users-unit-test-job:
     - pip install -r requirements.txt
     - python -m pytest
 
-# # Build the React/JavaScript front-end
-# build-front-end-job:
-#   stage: build
-#   image: node:lts-bullseye
-#   needs:
-#     - lint-test-job
-#   variables:
-#     # If either of these variables is defined in the GitLab
-#     # CI/CD variables, that value will override the value here.
-#     # You need to substitute in your real values for
-#     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
-#     PUBLIC_URL: https://GROUP_NAME.gitlab.io/PROJECT_NAME/
-#     REACT_APP_SAMPLE_SERVICE_API_HOST: https://WEBSERVICE_NAME.onrender.com
-#   script:
-#     - cd ghi
-#     - npm install
-#     - npm run build
-#     - cp build/index.html build/404.html
-#   artifacts:
-#     paths:
-#       - ghi/build/
+# Build the React/JavaScript front-end
+build-front-end-job:
+  stage: build
+  image: node:lts-bullseye
+  needs:
+    - lint-test-job
+  variables:
+    # If either of these variables is defined in the GitLab
+    # CI/CD variables, that value will override the value here.
+    # You need to substitute in your real values for
+    # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
+    PUBLIC_URL: https://gitlab.com/the-jerney/concerto
+    REACT_APP_SAMPLE_SERVICE_API_HOST: https://concerto-service.onrender.com/
+  script:
+    - cd ghi
+    - npm install
+    - npm run build
+    - cp build/index.html build/404.html
+  artifacts:
+    paths:
+      - ghi/build/
 
 # # Deploy the React/JavaScript front-end to GitLab pages
 # pages:
