@@ -48,7 +48,7 @@ build-front-end-job:
     paths:
       - ghi/build/
 
-# Deploy the React/JavaScript front-end to GitLab pages
+Deploy the React/JavaScript front-end to GitLab pages:
 pages:
   stage: deploy
 # throw feature branch where $CI_DEFAULT_BRANCH IS AND PUT IT BACK TO HOW IT WAS AFTER
