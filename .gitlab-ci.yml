@@ -17,6 +17,8 @@ lint-test-job:
 users-unit-test-job:
   image: python:3-bullseye
   stage: test
+  variables:
+    DATABASE_URL: ${DATABASE_URL}
   needs:
   script:
     - cd users-api
