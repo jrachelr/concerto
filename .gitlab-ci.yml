@@ -1,6 +1,6 @@
 stages:
   - test
-  # - build
+  - build
   # - deploy
 
 # Run flake8 to check for code quality
