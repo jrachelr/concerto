@@ -18,7 +18,6 @@ users-unit-test-job:
   image: python:3-bullseye
   stage: test
   needs:
-    - lint-test-job
   script:
     - cd users-api
     - pip install -r requirements.txt
