@@ -33,8 +33,6 @@ export default function Favorites() {
     getFavoriteConcerts();
   }, [token, user, concerts]);
 
-  // identify concert from selection
-
   async function removeFavorite(concert) {
     const removeURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/concerts/favorites/${user.id}/${concert.id}`;
     const fetchConfig = {
@@ -89,9 +87,9 @@ export default function Favorites() {
                       {concert.venue}
                     </p>
                     <button
-                      id={concert.id}
+                      concert={concert.id}
                       className="text-center inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800"
-                      onClick={removeFavorite}
+                      onClick={() => removeFavorite(concert)}
                     >
                       Remove from Favorites
                     </button>
