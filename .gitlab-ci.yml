@@ -19,6 +19,7 @@ users-unit-test-job:
   stage: test
   variables:
     DATABASE_URL: ${DATABASE_URL}
+    SIGNING_KEY: ${SIGNING_KEY}
   needs:
   script:
     - cd users-api
