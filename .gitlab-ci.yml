@@ -1,7 +1,7 @@
 stages:
   - test
-  - build
-  - deploy
+  # - build
+  # - deploy
 
 # Run flake8 to check for code quality
 lint-test-job:
@@ -17,7 +17,7 @@ lint-test-job:
 users-unit-test-job:
   image: python:3-bullseye
   stage: test
-  needs:
+  needs: lint-test-job
   script:
     - cd users-api
     - pip install -r requirements.txt
