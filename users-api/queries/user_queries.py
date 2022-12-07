@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 import os
-from psycopg_pool import ConnectionPool
+#from psycopg_pool import ConnectionPool
 from psycopg import connect
 
 keepalive_kwargs = {
@@ -35,7 +35,7 @@ class UserOut(BaseModel):
 class UsersList(BaseModel):
     users: list[UserOut]
 
-pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
+#pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 conn = connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)
 
 class UserQueries:
