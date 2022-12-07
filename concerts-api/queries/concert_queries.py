@@ -16,6 +16,7 @@ class Concert(BaseModel):
     image_url: str
     favorite: bool
 
+
 class ConcertIn(BaseModel):
     concert_name: str
     artist_name: str
@@ -38,7 +39,8 @@ class ConcertOut(BaseModel):
     spotify_url: str
     image_url: str
     favorite: bool
-    
+
+
 class UserOut(BaseModel):
     id: int
     first_name: str
@@ -62,7 +64,15 @@ class ConcertQueries:
                 result = cur.execute(
                     """
                     INSERT INTO favorite_concerts
-                        (concert_name, artist_name, start_date, min_price, max_price, user_id, spotify_url, image_url, favorite)
+                        (concert_name,
+                        artist_name,
+                        start_date,
+                        min_price,
+                        max_price,
+                        user_id,
+                        spotify_url,
+                        image_url,
+                        favorite)
                     VALUES
                         (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                     RETURNING id;

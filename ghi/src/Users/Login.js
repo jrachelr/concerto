@@ -2,39 +2,32 @@ import React from "react";
 import { useState } from "react";
 import { useToken } from "../auth.js";
 import { useNavigate } from "react-router-dom";
-
+// import {login} from "../auth.js"
 
 
 const LoginForm = () => {
   const [, login] = useToken();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [errorMessages, setErrorMessages] = useState({});
-  // const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
-  // const database = [
-  //   {
-  //     username: "string@gmail.com",
-  //     password: "password"
-  //   },
-  //   {
-  //     username: "user2@gmail.com",
-  //     password: "pass2"
-  //   }
-  // ];
-  // const errors = {
-  //   uname: "invalid username",
-  //   pass: "invalid password"
-  // };
-
-
+  const [showError, setShowError] = useState(false);
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // try {
+    //   await login(username, password);
+    //   navigate("/")
+    // } catch (error) {
+    //   setShowError(true);
+    //   return;
+    // }
     login(username, password);
     navigate("/");
   };
+
+
+
 
   return (
     <>
