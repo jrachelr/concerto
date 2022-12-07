@@ -1,6 +1,7 @@
 import { useAuthContext } from "./auth";
 import { useState, useEffect } from "react";
 import SideBar from "./Layout/SidebarNav";
+import AccountInfo from "./Users/Account";
 
 // stop continuous loop
 // add remove button
@@ -53,9 +54,7 @@ export default function Favorites() {
   return (
     <>
       <SideBar />
-      <h2 className="pt-8 text-center text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
-        Your favorites:
-      </h2>
+      <AccountInfo />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <div className="bg-white">

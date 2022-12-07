@@ -81,3 +81,12 @@ DOCKER_DEFAULT_PLATFORM=linux/amd64 docker-compose build (for m1 users)
 - fixed signup to login issue - had to update login funciton in auth to pass in email and password instead of username.
 - felt super sick and feverish so slept most of the day :(
 - login, logout and signup now working correctly and header / sidebar
+
+### 5 December
+
+- created skeleton of user favorites page. got it working but needs styling and addition of remove from favorite button.
+
+### 6 December
+
+- added remove favorite button. adding user info to page
+- starting tests
