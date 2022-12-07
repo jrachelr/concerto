@@ -70,15 +70,15 @@ export function useToken() {
 		async function fetchToken() {
 			const token = await getTokenInternal();
 			setToken(token);
-			// const response2 = await fetch(
-			// 	`${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`,
-			// 	{
-			// 		method: "get",
-			// 		credentials: "include",
-			// 	}
-			// );
-			// const response3 = await response2.json();
-			// setUser(response3);
+			const response2 = await fetch(
+				`${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`,
+				{
+					method: "get",
+					credentials: "include",
+				}
+			);
+			const response3 = await response2.json();
+			setUser(response3);
 		}
 		if (!token) {
 			fetchToken();
