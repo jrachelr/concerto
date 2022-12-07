@@ -26,7 +26,7 @@ const SignupForm = () => {
     <>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="w-screen flex flex-wrap flex-row place-items-center">
-          <div className="mx-auto h-12 w-auto text-indigo-600 place-content-center text-5xl">
+          <div className="m`x-auto h-12 w-auto text-indigo-600 place-content-center text-5xl">
             <GiHarp />
           </div>
         </div>
