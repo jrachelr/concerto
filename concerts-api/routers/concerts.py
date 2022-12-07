@@ -127,12 +127,12 @@ def delete_concert(
         return queries.delete(user_id, concert_id)
 
 
-@router.get("/concerts/{city},{state}")
-def get_all_concerts(city, state):
+@router.get("/concerts/{city},{state}/{page}")
+def get_all_concerts(city, state, page):
 
     key = os.environ.get("TICKETMASTER_API_KEY")
 
-    url = f"https://app.ticketmaster.com/discovery/v2/events?apikey={key}&locale=*&startDateTime=2022-12-01T14:40:00Z&size=100&sort=date,asc&city={city}&stateCode={state}&classificationName=music"
+    url = f"https://app.ticketmaster.com/discovery/v2/events?apikey={key}&locale=*&startDateTime=2022-12-15T14:40:00Z&page={page}&sort=date,asc&city={city}&stateCode={state}&classificationName=music"
 
     print(url)
     response = requests.get(url)

@@ -1,7 +1,13 @@
 import usePlacesAutocomplete from "use-places-autocomplete";
-import { useState } from "react";
 
-const SearchComponent = ({ getConcerts, setConcerts }) => {
+const SearchComponent = ({
+	getConcerts,
+	setConcerts,
+	setPage,
+	setCity,
+	setState,
+	setSubmitted,
+}) => {
 	const {
 		ready,
 		value,
@@ -14,8 +20,6 @@ const SearchComponent = ({ getConcerts, setConcerts }) => {
 		},
 		debounce: 300,
 	});
-	const [city, setCity] = useState("");
-	const [state, setState] = useState("");
 
 	const handleInput = (e) => {
 		// Update the keyword of the input element
@@ -45,12 +49,12 @@ const SearchComponent = ({ getConcerts, setConcerts }) => {
 			);
 		});
 
-	const handleSubmit = async (event) => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
 		setConcerts([]);
-		getConcerts(city, state);
+		setSubmitted(true);
+		setPage(1);
 	};
-
 	return (
 		<form id="search-location" onSubmit={handleSubmit}>
 			<div className="rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
@@ -60,16 +64,17 @@ const SearchComponent = ({ getConcerts, setConcerts }) => {
 					Location
 				</label>
 				<input
+					required
 					value={value}
 					onChange={handleInput}
 					disabled={!ready}
-					placeholder="Where are you going?"
+					placeholder="City, State"
 					className="block w-full rounded-md bg-white opacity-100 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
 				/>
 			</div>
 			{status === "OK" && <ul>{renderSuggestions()}</ul>}
 			<div className="flex justify-center">
-				<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+				<button className="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
 					Search
 				</button>
 			</div>
