@@ -22,12 +22,6 @@ const SearchComponent = ({
 		debounce: 300,
 	});
 
-	useEffect(() => {
-		// if (concerts.length > 0) {
-		console.log(page);
-		// }
-	}, [page]);
-
 	const handleInput = (e) => {
 		// Update the keyword of the input element
 		setValue(e.target.value);
@@ -59,8 +53,7 @@ const SearchComponent = ({
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		setConcerts([]);
-		setPage(1);
-		getConcerts();
+		getConcerts(1);
 	};
 	return (
 		<form id="search-location" onSubmit={handleSubmit}>

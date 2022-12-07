@@ -16,21 +16,9 @@ export default function Landing() {
 	const [state, setState] = useState("");
 	const [page, setPage] = useState(1);
 
-	useEffect(() => {
-		console.log("Page is now: ", page);
-	}, [page]);
-
-	useEffect(() => {
-		console.log("City is now: ", city);
-	}, [city]);
-
-	useEffect(() => {
-		console.log("State is now: ", state);
-	}, [state]);
-
 	const executeScroll = () => myRef.current.scrollIntoView();
 
-	async function getConcerts() {
+	async function getConcerts(page) {
 		const concertsUrl = `http://localhost:8000/concerts/${city},${state}/${page}`;
 		const fetchConfig = {
 			method: "get",
@@ -39,35 +27,18 @@ export default function Landing() {
 			},
 		};
 		fetch(concertsUrl, fetchConfig)
-			.then((response) => {
-				if (response.ok) {
-					return response.json();
-				}
-				throw new Error("Something went wrong");
-			})
-			.then((responseJson) => {
-				setConcerts(concerts.concat(responseJson.concerts));
+			.then((response) => response.json())
+			.then((data) => {
+				setConcerts(concerts.concat(data.concerts));
 				setSuccess(true);
 			})
 			.catch((error) => {
 				setSuccess(false);
 			});
-
-		// const response = await fetch(concertsUrl, fetchConfig);
-		// if (response.ok) {
-		// 	const data = await response.json();
-		// 	setConcerts(data.concerts);
-		// 	console.log(concerts);
-		// } else {
-		// 	console.log("ERROR");
-		// }
 	}
 	const loadMoreConcerts = () => {
-		handlePage();
-		getConcerts();
-	};
-	const handlePage = (e) => {
 		setPage((prevPage) => prevPage + 1);
+		getConcerts(page);
 	};
 
 	return (
@@ -112,13 +83,15 @@ export default function Landing() {
 								/>
 							)}
 						</div>
-						<div className="flex justify-center">
-							<button
-								className="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-								onClick={loadMoreConcerts}>
-								Load More Concerts
-							</button>
-						</div>
+						{concerts.length > 0 && (
+							<div className="flex justify-center">
+								<button
+									className="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+									onClick={loadMoreConcerts}>
+									Load More Concerts
+								</button>
+							</div>
+						)}
 						{!success && (
 							<div
 								className="mt-4 flex items-center bg-red-100 border border-red-400 text-red-700 text-sm font-bold px-4 py-3"
