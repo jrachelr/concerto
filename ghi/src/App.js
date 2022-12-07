@@ -11,7 +11,7 @@ import { useState } from "react";
 import Header from "./Layout/Header";
 import SideBar from "./Layout/SidebarNav";
 import Favorites from "./Users/ConcertFavorites";
-import AccountInfo from "./Users/Account";
+//import AccountInfo from "./Users/Account";
 
 function GetToken() {
 	// Get token from JWT cookie (if already logged in)
