@@ -3,12 +3,6 @@ import { useState, useEffect } from "react";
 import SideBar from "./Layout/SidebarNav";
 import AccountInfo from "./Users/Account";
 
-// stop continuous loop
-// add remove button
-// insert logic if no concerts infavorites
-// add 'hello user'
-// styling
-
 export default function Favorites() {
   const { token, user } = useAuthContext();
   const [concerts, setConcerts] = useState([]);
