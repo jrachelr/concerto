@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { useToken } from "../auth.js";
 
 export default function Logout() {
@@ -24,7 +24,7 @@ export default function Logout() {
                   Are you sure you want to sign out?
                 </h3>
                 <div className="mt-2 sm:flex sm:items-start sm:justify-between">
-                  <div className="mt-5 sm:mt-0 sm:ml-6 sm:flex sm:flex-shrink-0 sm:items-center">
+                  <div className="flex space-x-4 mt-5 sm:mt-0 sm:ml-6 sm:flex sm:flex-shrink-0 sm:items-center">
                     <button
                       onClick={signout}
                       type="button"
@@ -32,6 +32,14 @@ export default function Logout() {
                     >
                       Sign out
                     </button>
+                    <NavLink to="/">
+                      <button
+                        type="button"
+                        className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
+                      >
+                        Back
+                      </button>
+                    </NavLink>
                   </div>
                 </div>
               </div>
