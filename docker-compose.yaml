@@ -31,7 +31,7 @@ services:
       context: ./concerts-api
       dockerfile: ./Dockerfile.dev
     environment:
-      DATABASE_URL: postgres://ypgdrqhk:IFcjScpvrsEBoyqWVolfB6mKWpLuTYr9@arjuna.db.elephantsql.com/ypgdrqhk
+      DATABASE_URL: postgresql://concerts:password@postgres/concerts
       WAIT_HOSTS: postgres:5432
       SIGNING_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
       TICKETMASTER_API_KEY: ${TICKETMASTER_API_KEY}
@@ -44,7 +44,7 @@ services:
       context: ./users-api
       dockerfile: ./Dockerfile.dev
     environment:
-      DATABASE_URL: postgres://gmdhwhkk:0aMxS-RRJfaZnoGa4cgenGnsw8rhsSnw@arjuna.db.elephantsql.com/gmdhwhkk
+      DATABASE_URL: postgresql://users:password@postgres/users
       WAIT_HOSTS: postgres:5432
       SIGNING_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
     ports:
