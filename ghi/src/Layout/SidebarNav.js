@@ -5,7 +5,7 @@ export default function SideBar() {
   return (
     <div
       className="fixed top-0 left-0 w-30
-     min-h-0 flex-1 flex-col bg-indigo-700"
+     min-h-0 flex-1 flex-col bg-indigo-900"
     >
       <div className="flex flex-1 flex-col h-screen overflow-y-auto pt-5 pb-4">
         <nav
