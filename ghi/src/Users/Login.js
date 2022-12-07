@@ -33,8 +33,6 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     login(username, password);
-
-    console.log(username, "is logged in");
     navigate("/");
   };
 
