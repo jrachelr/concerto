@@ -119,7 +119,6 @@ export function useToken() {
 		if (response.ok) {
 			const token = await getTokenInternal();
 			setToken(token);
-			console.log(token);
 			return;
 		}
 		let error = await response.json();
