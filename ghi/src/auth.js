@@ -14,7 +14,7 @@ export async function getTokenInternal() {
 		});
 		if (response.ok) {
 			const data = await response.json();
-			internalToken = data.access_token;
+			internalToken = data.token;
 			return internalToken;
 		}
 	} catch (e) {}
@@ -77,7 +77,7 @@ export function useToken() {
 					credentials: "include",
 				}
 			);
-			const response3 = await response2.json();
+      const response3 = await response2.json();
 			setUser(response3);
 		}
 		if (!token) {
@@ -87,7 +87,7 @@ export function useToken() {
 
 	async function logout() {
 		if (token) {
-			const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/token/`;
+			const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/token/refresh/logout/`;
 			await fetch(url, { method: "delete", credentials: "include" });
 			internalToken = null;
 			setToken(null);
@@ -97,7 +97,7 @@ export function useToken() {
 	}
 
 	async function login(username, password) {
-		const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/token`;
+		const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/token/`;
 		const form = new FormData();
 
 		form.append("username", username);
@@ -115,11 +115,9 @@ export function useToken() {
 			}
 		);
 		setUser(await response2.json());
-
 		if (response.ok) {
 			const token = await getTokenInternal();
 			setToken(token);
-			console.log(token);
 			return;
 		}
 		let error = await response.json();
@@ -127,7 +125,7 @@ export function useToken() {
 	}
 
 	async function signup(username, password, email, firstName, lastName) {
-		const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/users`;
+		const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
 		const response = await fetch(url, {
 			method: "post",
 			body: JSON.stringify({
@@ -142,9 +140,8 @@ export function useToken() {
 			},
 		});
 		if (response.ok) {
-			await login(email, password);
+			await login(username, password);
 		}
-		console.log("respose:", response);
 		return false;
 	}
 
