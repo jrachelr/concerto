@@ -1,7 +1,15 @@
 import os
-from psycopg_pool import ConnectionPool
+#from psycopg_pool import ConnectionPool
 from datetime import date
+from psycopg import connect
 from pydantic import BaseModel
+
+keepalive_kwargs = {
+   "keepalives": 1,
+   "keepalives_idle": 60,
+   "keepalives_interval": 10,
+   "keepalives_count": 5
+  }
 
 class Concert(BaseModel):
     id: int
@@ -50,13 +58,14 @@ class ConcertsList(BaseModel):
     concerts: list[ConcertOut]
 
 
-pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
+#pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
+conn = connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)
 
 
 # need to fix so it can return the id as well
 class ConcertQueries:
     def create(self, concert: ConcertIn, user_id: int) -> ConcertOut:
-        with pool.connection() as conn:
+        #with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
                     """
@@ -84,7 +93,7 @@ class ConcertQueries:
                 return ConcertOut(id=id, user_id=user_id, **old_data)
 
     def get_all(self, user_id:int=None) -> list[ConcertOut]:
-        with pool.connection() as conn:
+        #with pool.connection() as conn:
             with conn.cursor() as cur:
                 if user_id == None:
                     cur.execute(
@@ -113,7 +122,7 @@ class ConcertQueries:
                 return results
 
     def get_one(self, concert_id: int, user_id: int) -> ConcertOut:
-        with pool.connection() as conn:
+        #with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
                     """
@@ -141,7 +150,7 @@ class ConcertQueries:
             return ConcertOut(**data)
 
     def update(self, user_id, concert_id, concert: ConcertIn) -> ConcertOut:
-        with pool.connection() as conn:
+        #with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
@@ -180,7 +189,7 @@ class ConcertQueries:
                 return ConcertOut(id=concert_id, user_id = user_id, **old_data)
 
     def delete(self, user_id: int, concert_id: int):
-        with pool.connection() as conn:
+        #with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
