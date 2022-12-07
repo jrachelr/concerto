@@ -1,6 +1,14 @@
 from pydantic import BaseModel
 import os
 from psycopg_pool import ConnectionPool
+from psycopg import connect
+
+keepalive_kwargs = {
+   "keepalives": 1,
+   "keepalives_idle": 60,
+   "keepalives_interval": 10,
+   "keepalives_count": 5
+  }
 
 class User(BaseModel):
     id: int
@@ -28,10 +36,11 @@ class UsersList(BaseModel):
     users: list[UserOut]
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
+conn = connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)
 
 class UserQueries:
     def get_all_users(self):
-        with pool.connection() as conn:
+        #with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute("""
                     SELECT id, first_name, last_name, email, hashed_password, username
@@ -50,7 +59,7 @@ class UserQueries:
                 return results
 
     def get_one_user(self, user_id: int) -> User:
-        with pool.connection() as conn:
+        #with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
                     """
@@ -75,7 +84,7 @@ class UserQueries:
                 )
 
     def get_one_user_email(self, email: str) -> User:
-        with pool.connection() as conn:
+        #with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
                     """
@@ -100,7 +109,7 @@ class UserQueries:
                 )
 
     def create_user(self, user: UserIn, hashed_password: str) -> User:
-        with pool.connection() as conn:
+        #with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
                     """
@@ -126,7 +135,7 @@ class UserQueries:
                 return User(id=id, first_name = user.first_name, last_name = user.last_name, email = user.email, hashed_password = hashed_password, username = user.username,)
 
     def delete_user(self, user_id: int):
-        with pool.connection() as conn:
+        #with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
@@ -138,7 +147,7 @@ class UserQueries:
                 return True
 
     def update_user(self, user_id, user: UserIn) -> UserOut:
-        with pool.connection() as conn:
+        #with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
