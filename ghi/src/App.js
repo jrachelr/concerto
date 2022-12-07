@@ -10,7 +10,7 @@ import SearchComponent from "./SearchComponent";
 import { useState } from "react";
 import Header from "./Layout/Header";
 import SideBar from "./Layout/SidebarNav";
-import Favorites from "./ConcertFavorites";
+import Favorites from "./Users/ConcertFavorites";
 import AccountInfo from "./Users/Account";
 
 function GetToken() {

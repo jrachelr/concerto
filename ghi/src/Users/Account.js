@@ -28,10 +28,10 @@ export default function AccountInfo() {
 
   return (
     <>
-      <h1 className="pt-8 text-center text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
+      <h1 className="pt-8 text-center text-3xl font-bold leading-8 tracking-tight text-white sm:text-4xl">
         Hi {userInfo.first_name}!
       </h1>
-      <h3 className="mt-4 text-lg  text-indigo-800 text-center">
+      <h3 className="mt-4 text-lg  text-white text-center pb-10">
         Your favorite concerts
       </h3>
     </>

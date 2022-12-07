@@ -69,7 +69,7 @@ export default function Landing() {
             </h2>
           </div>
           {/* search box */}
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 bg-white opacity-90 sm:rounded-lg p-8">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 bg-white sm:rounded-lg p-8">
             <div className="text-center">
               <h3 className="text-base text-center tracking-tight text-black sm:text-4xl">
                 Search concerts here:
@@ -95,7 +95,7 @@ export default function Landing() {
             {concerts.length > 0 && (
               <div className="flex justify-center">
                 <button
-                  className="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  className="my-4 bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded"
                   onClick={loadMoreConcerts}
                 >
                   Load More Concerts
@@ -124,7 +124,7 @@ export default function Landing() {
             type="button"
             data-mdb-ripple="true"
             data-mdb-ripple-color="light"
-            className="fixed inline-block p-3 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out bottom-5 right-5"
+            className="fixed inline-block p-3 bg-indigo-700 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-indigo-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out bottom-5 right-5"
             id="btn-back-to-top"
             onClick={executeScroll}
           >

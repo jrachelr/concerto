@@ -78,7 +78,7 @@ const ConcertList = ({ concerts, setConcerts, success }) => {
                   </h6>
                   <button
                     type="button"
-                    className="text-center inline-block px-6 mb-2 w-full py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mt-auto"
+                    className="text-center inline-block px-6 mb-2 w-full py-2.5 bg-indigo-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-indigo-600 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out mt-auto"
                     onClick={() => handleDrawer(concert, count)}
                   >
                     Details
@@ -87,7 +87,7 @@ const ConcertList = ({ concerts, setConcerts, success }) => {
                     <button
                       id={`button${count}`}
                       type="button"
-                      className="text-center w-full inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                      className="text-center w-full inline-block px-6 py-2.5 bg-indigo-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
                       onClick={
                         token
                           ? () => addFavorite(concert, count)
@@ -100,7 +100,7 @@ const ConcertList = ({ concerts, setConcerts, success }) => {
                     <button
                       id={`button${count}`}
                       type="button"
-                      className="text-center w-full inline-block px-6 py-2.5 bg-white-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-white-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-white-800 active:shadow-lg transition duration-150 ease-in-out"
+                      className="text-center w-full inline-block px-6 py-2.5 bg-white-600 text-indigo-600 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-white-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-white-800 active:shadow-lg transition duration-150 ease-in-out"
                     >
                       Concert Saved to Favorites!
                     </button>

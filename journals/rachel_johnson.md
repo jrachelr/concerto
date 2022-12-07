@@ -89,4 +89,5 @@ DOCKER_DEFAULT_PLATFORM=linux/amd64 docker-compose build (for m1 users)
 ### 6 December
 
 - added remove favorite button. adding user info to page
-- starting tests
+- starting unit testing
+- MVP FINISHEDDDD
