@@ -8,6 +8,7 @@ const SearchComponent = ({
 	page,
 	setCity,
 	setState,
+	setSubmitted,
 }) => {
 	const {
 		ready,
@@ -50,10 +51,11 @@ const SearchComponent = ({
 			);
 		});
 
-	const handleSubmit = async (event) => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
 		setConcerts([]);
-		getConcerts(1);
+		setSubmitted(true);
+		setPage(1);
 	};
 	return (
 		<form id="search-location" onSubmit={handleSubmit}>
@@ -64,6 +66,7 @@ const SearchComponent = ({
 					Location
 				</label>
 				<input
+					required
 					value={value}
 					onChange={handleInput}
 					disabled={!ready}

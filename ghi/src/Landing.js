@@ -5,7 +5,6 @@ import SearchComponent from "./SearchComponent";
 import ConcertList from "./ConcertComponents/ConcertList";
 import Header from "./Layout/Header";
 import { useAuthContext } from "./auth";
-// import SearchComponent from "./SearchComponent";
 
 export default function Landing() {
 	const { token } = useAuthContext();
@@ -14,11 +13,18 @@ export default function Landing() {
 	const myRef = useRef(null);
 	const [city, setCity] = useState("");
 	const [state, setState] = useState("");
-	const [page, setPage] = useState(1);
+	const [page, setPage] = useState(0);
+	const [submitted, setSubmitted] = useState(false);
 
 	const executeScroll = () => myRef.current.scrollIntoView();
 
-	async function getConcerts(page) {
+	useEffect(() => {
+		if (page > 0) {
+			getConcerts(page);
+		}
+	}, [page, submitted]);
+
+	const getConcerts = (page) => {
 		const concertsUrl = `http://localhost:8000/concerts/${city},${state}/${page}`;
 		const fetchConfig = {
 			method: "get",
@@ -34,11 +40,13 @@ export default function Landing() {
 			})
 			.catch((error) => {
 				setSuccess(false);
+				console.log("SOS");
+				setPage(0);
+				setSubmitted(false);
 			});
-	}
+	};
 	const loadMoreConcerts = () => {
 		setPage((prevPage) => prevPage + 1);
-		getConcerts(page);
 	};
 
 	return (
@@ -72,6 +80,7 @@ export default function Landing() {
 							setCity={setCity}
 							setState={setState}
 							page={page}
+							setSubmitted={setSubmitted}
 						/>
 						<div>
 							{concerts.length > 0 && (
