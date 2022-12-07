@@ -44,3 +44,15 @@
 12/01/22
 
 - Added passing unit tests for users microservice
+
+12/2/22
+
+- Attempted CI/CD
+
+12/5/22
+
+- In the process of making it so a user cannot access the homepage if invalid credentials are entered
+
+12/6/22
+
+- Successfully built front end jobs, not working on deploying
