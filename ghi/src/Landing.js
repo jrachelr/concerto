@@ -22,6 +22,7 @@ export default function Landing() {
 		if (page > 0) {
 			getConcerts(page);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page, submitted]);
 
 	const getConcerts = (page) => {
@@ -79,7 +80,6 @@ export default function Landing() {
 							setPage={setPage}
 							setCity={setCity}
 							setState={setState}
-							page={page}
 							setSubmitted={setSubmitted}
 						/>
 						<div>
@@ -88,7 +88,6 @@ export default function Landing() {
 									concerts={concerts}
 									setConcerts={setConcerts}
 									success={success}
-									page={page}
 								/>
 							)}
 						</div>

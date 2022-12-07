@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuthContext } from "../auth";
 import { useNavigate } from "react-router-dom";
 import ConcertModal from "./ConcertDrawer";

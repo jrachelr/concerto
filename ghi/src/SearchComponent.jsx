@@ -1,11 +1,9 @@
 import usePlacesAutocomplete from "use-places-autocomplete";
-import { useState, useEffect } from "react";
 
 const SearchComponent = ({
 	getConcerts,
 	setConcerts,
 	setPage,
-	page,
 	setCity,
 	setState,
 	setSubmitted,
