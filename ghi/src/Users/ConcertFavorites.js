@@ -8,17 +8,17 @@ export default function Favorites() {
 	const [concerts, setConcerts] = useState([]);
 	const [submitted, setSubmitted] = useState(false);
 
-	useEffect(() => {
-		async function getFavoriteConcerts() {
-			const favoritesURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/concerts/favorites/${user.id}`;
+  useEffect(() => {
+    async function getFavoriteConcerts() {
+      const favoritesURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/concerts/favorites/${user.id}`;
 
-			const fetchConfig = {
-				method: "get",
-				headers: {
-					Authorization: "Bearer " + token,
-					"Content-Type": "application/json",
-				},
-			};
+      const fetchConfig = {
+        method: "get",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      };
 
 			const response = await fetch(favoritesURL, fetchConfig);
 			if (response.ok) {

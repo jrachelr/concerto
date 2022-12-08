@@ -1,9 +1,9 @@
-from fastapi import FastAPI, APIRouter, Depends
-from pydantic import BaseModel, HttpUrl
-from typing import Union
+from fastapi import FastAPI
+# from pydantic import BaseModel, HttpUrl
+# from typing import Union
 from routers import concerts
-import requests
-import json
+# import requests
+# import json
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
