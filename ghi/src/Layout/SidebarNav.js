@@ -18,12 +18,12 @@ export default function SideBar() {
             </span>
           </NavLink>
 
-          <NavLink to="myconcerts/">
+          <NavLink to="/myconcerts/">
             <span className=" hover:bg-indigo-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-base font-medium rounded-md ">
               My Concerts
             </span>
           </NavLink>
-          <NavLink to="logout/">
+          <NavLink to="/logout/">
             <span className=" hover:bg-indigo-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-base font-medium rounded-md ">
               Logout
             </span>

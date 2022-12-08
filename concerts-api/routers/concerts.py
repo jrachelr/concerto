@@ -19,13 +19,10 @@ from jose import jwt, JWTError
 router = APIRouter()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="localhost:8001/token")
-print("test outhhhhhhhhh", oauth2_scheme)
 SECRET_KEY = os.environ.get("SIGNING_KEY", "blah")
-print("test striiiiing", SECRET_KEY)
 
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
-    print("current_user")
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -41,7 +38,6 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         raise credentials_exception
     user = UserOut(**payload.get("account"))
     if user is None:
-        print("yesssssss")
         raise credentials_exception
     return user
 
@@ -134,7 +130,6 @@ def get_all_concerts(city, state, page):
 
     url = f"https://app.ticketmaster.com/discovery/v2/events?apikey={key}&locale=*&startDateTime=2022-12-15T14:40:00Z&page={page}&sort=date,asc&city={city}&stateCode={state}&classificationName=music"
 
-    print(url)
     response = requests.get(url)
     data = json.loads(response.content)
 
