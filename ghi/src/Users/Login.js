@@ -3,14 +3,12 @@ import { useState } from "react";
 import { useAuthContext, useToken } from "../auth.js";
 import { useNavigate } from "react-router-dom";
 import { GiHarp } from "react-icons/gi";
-import { AuthContext } from "../auth.js";
 
 const LoginForm = () => {
-	const [token, login] = useToken();
+	const [, login] = useToken();
 	const { isLoggedIn } = useAuthContext();
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -88,7 +86,7 @@ const LoginForm = () => {
 										Log In
 									</button>
 								</div>
-								{isLoggedIn == false && (
+								{isLoggedIn === false && (
 									<div
 										className="mt-4 flex items-center bg-red-100 border border-red-400 text-red-700 text-sm font-bold px-4 py-3"
 										role="alert">
