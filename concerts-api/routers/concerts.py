@@ -19,10 +19,7 @@ from jose import jwt, JWTError
 router = APIRouter()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="localhost:8001/token")
-print("test outhhhhhhhhh", oauth2_scheme)
 SECRET_KEY = os.environ.get("SIGNING_KEY", "blah")
-print("test striiiiing", SECRET_KEY)
-
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
     print("current_user")
@@ -41,7 +38,6 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         raise credentials_exception
     user = UserOut(**payload.get("account"))
     if user is None:
-        print("yesssssss")
         raise credentials_exception
     return user
 
