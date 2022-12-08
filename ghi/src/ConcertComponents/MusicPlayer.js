@@ -3,7 +3,7 @@ const MusicPlayer = (spotifyUrl) => {
 	return (
 		<iframe
 			style={{ borderRadius: 12 }}
-			src={`https://open.spotify.com/embed/artist/${artistId}?utm_source=generator`}
+			src={`https://open.spotify.com/embed/artist/${artistId}?utm_source=oembed`}
 			width="100%"
 			height="380"
 			frameBorder="0"

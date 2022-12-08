@@ -31,8 +31,6 @@ export default function Favorites() {
 		}
 		if (user) {
 			getFavoriteConcerts();
-		} else {
-			console.log("NO WORK");
 		}
 	}, [token, user, setConcerts, submitted]);
 
