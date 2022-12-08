@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends
-from pydantic import BaseModel
-from datetime import date
+from fastapi import APIRouter
+# from pydantic import BaseModel
+# from datetime import date
 from queries.concert_queries import (
     ConcertIn,
     ConcertOut,
@@ -128,7 +128,13 @@ def get_all_concerts(city, state, page):
 
     key = os.environ.get("TICKETMASTER_API_KEY")
 
-    url = f"https://app.ticketmaster.com/discovery/v2/events?apikey={key}&locale=*&startDateTime=2022-12-15T14:40:00Z&page={page}&sort=date,asc&city={city}&stateCode={state}&classificationName=music"
+    url = (
+          f"https://app.ticketmaster.com/discovery/v2/events?"
+          f"apikey={key}&locale=*&startDateTime=2022-12-01T14:40:00Z&size=100"
+          f"sort=date,asc&city={city}&stateCode={state}"
+          f"classificationName=music"
+
+          )
 
     print(url)
     response = requests.get(url)
@@ -152,7 +158,7 @@ def get_all_concerts(city, state, page):
         concert["concert_name"] = event["name"]
         try:
             concert["venue"] = event["_embedded"]["venues"][0]["name"]
-        except:
+        except KeyError:
             concert["venue"] = "TBD"
 
         concert["start_date"] = event["dates"]["start"]["localDate"]

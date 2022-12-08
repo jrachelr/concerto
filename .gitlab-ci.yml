@@ -9,18 +9,22 @@ lint-test-job:
   stage: test
   script:
     - pip install flake8
+    - flake8 concerts-api
+    - flake8 users-api
     # - flake8 sample_service
 
 # Run the unit tests
-# api-unit-test-job:
-#   image: python:3-bullseye
-#   stage: test
-#   needs:
-#     - lint-test-job
-#   script:
-#     - cd sample_service
-#     - pip install -r requirements.txt
-#     - python -m pytest
+users-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  variables:
+    USERS_DATABASE_URL: postgres://gmdhwhkk:0aMxS-RRJfaZnoGa4cgenGnsw8rhsSnw@arjuna.db.elephantsql.com/gmdhwhkk
+    SIGNING_KEY: ${SIGNING_KEY}
+  needs:
+  script:
+    - cd users-api
+    - pip install -r requirements.txt
+    - python -m pytest
 
 # Build the React/JavaScript front-end
 build-front-end-job:
@@ -33,8 +37,9 @@ build-front-end-job:
     # CI/CD variables, that value will override the value here.
     # You need to substitute in your real values for
     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
-    PUBLIC_URL: https://GROUP_NAME.gitlab.io/PROJECT_NAME/
-    REACT_APP_SAMPLE_SERVICE_API_HOST: https://WEBSERVICE_NAME.onrender.com
+    PUBLIC_URL: https://the-jerney.gitlab.io/concerto
+    REACT_APP_CONCERTS_SERVICE_API_HOST: https://concerts-service.onrender.com
+    REACT_APP_USERS_SERVICE_API_HOST: https://users-service-xg88.onrender.com
   script:
     - cd ghi
     - npm install
@@ -44,11 +49,12 @@ build-front-end-job:
     paths:
       - ghi/build/
 
-# Deploy the React/JavaScript front-end to GitLab pages
+# Deploy-the-React-JavaScript-front-end-to-GitLab-pages:
 pages:
   stage: deploy
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  # throw feature branch where $CI_DEFAULT_BRANCH IS AND PUT IT BACK TO HOW IT WAS AFTER
+  # rules:
+  #   - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   dependencies:
     - build-front-end-job
   needs:
