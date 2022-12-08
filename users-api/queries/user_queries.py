@@ -41,7 +41,7 @@ class UsersList(BaseModel):
 
 
 # pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
-conn = connect(conninfo=os.environ["USERS_DATABASE_URL"], **keepalive_kwargs)
+conn = connect(conninfo=os.environ.get("USERS_DATABASE_URL"), **keepalive_kwargs)
 
 
 class UserQueries:
