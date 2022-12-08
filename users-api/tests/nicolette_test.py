@@ -1,9 +1,9 @@
 from main import app
 from fastapi.testclient import TestClient
-from queries.user_queries import UserQueries, UserOut
 from authenticator import authenticator
 
 client = TestClient(app)
+
 
 def test_get_current_user():
     account = {

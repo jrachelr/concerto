@@ -21,40 +21,51 @@ export async function getTokenInternal() {
 	return false;
 }
 
-function handleErrorMessage(error) {
-	if ("error" in error) {
-		error = error.error;
-		try {
-			error = JSON.parse(error);
-			if ("__all__" in error) {
-				error = error.__all__;
-			}
-		} catch {}
-	}
-	if (Array.isArray(error)) {
-		error = error.join("<br>");
-	} else if (typeof error === "object") {
-		error = Object.entries(error).reduce(
-			(acc, x) => `${acc}<br>${x[0]}: ${x[1]}`,
-			""
-		);
-	}
-	return error;
-}
+// function handleErrorMessage(error) {
+// 	if ("error" in error) {
+// 		error = error.error;
+// 		try {
+// 			error = JSON.parse(error);
+// 			if ("__all__" in error) {
+// 				error = error.__all__;
+// 			}
+// 		} catch {}
+// 	}
+// 	if (Array.isArray(error)) {
+// 		error = error.join("<br>");
+// 	} else if (typeof error === "object") {
+// 		error = Object.entries(error).reduce(
+// 			(acc, x) => `${acc}<br>${x[0]}: ${x[1]}`,
+// 			""
+// 		);
+// 	}
+// 	return error;
+// }
 
 export const AuthContext = createContext({
 	token: null,
 	setToken: () => null,
 	user: null,
 	setUser: () => null,
+	isLoggedIn: null,
+	setIsLoggedIn: () => null,
 });
 
 export const AuthProvider = ({ children }) => {
 	const [token, setToken] = useState(null);
 	const [user, setUser] = useState(null);
+	const [isLoggedIn, setIsLoggedIn] = useState(null);
 
 	return (
-		<AuthContext.Provider value={{ token, setToken, user, setUser }}>
+		<AuthContext.Provider
+			value={{
+				token,
+				setToken,
+				user,
+				setUser,
+				isLoggedIn,
+				setIsLoggedIn,
+			}}>
 			{children}
 		</AuthContext.Provider>
 	);
@@ -63,7 +74,7 @@ export const AuthProvider = ({ children }) => {
 export const useAuthContext = () => useContext(AuthContext);
 
 export function useToken() {
-	const { token, setToken, user, setUser } = useAuthContext();
+	const { token, setToken, user, setUser, setIsLoggedIn } = useAuthContext();
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -77,19 +88,19 @@ export function useToken() {
 	}, [setToken, token, setUser]);
 
 	useEffect(() => {
-		async function fetchToken() {
-			const response2 = await fetch(
+		async function fetchUsers() {
+			const response = await fetch(
 				`${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`,
 				{
 					method: "get",
 					credentials: "include",
 				}
 			);
-			const response3 = await response2.json();
-			setUser(response3);
+			const data = await response.json();
+			setUser(data);
 		}
 		if (token) {
-			fetchToken();
+			fetchUsers();
 		}
 	}, [setToken, token, setUser]);
 
@@ -100,6 +111,7 @@ export function useToken() {
 			internalToken = null;
 			setToken(null);
 			setUser(null);
+			setIsLoggedIn(null);
 			navigate("/");
 		}
 	}
@@ -127,10 +139,12 @@ export function useToken() {
 		if (response.ok) {
 			const token = await getTokenInternal();
 			setToken(token);
+			setIsLoggedIn(true);
+			navigate("/");
 			return;
+		} else {
+			setIsLoggedIn(false);
 		}
-		let error = await response.json();
-		return handleErrorMessage(error);
 	}
 
 	async function signup(username, password, email, firstName, lastName) {
