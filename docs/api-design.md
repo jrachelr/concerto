@@ -1,3 +1,107 @@
+# APIs
+
+## Users
+
+- **Method**: `POST`, `GET`, `GET`, `PUT`, `DELETE`
+- **PATH**: `/users`, `/users/{user_id}`, `/users/current`
+
+Input:
+
+```json
+{
+  "first_name": str,
+  "last_name": str,
+  "email": str,
+  "password": str,
+  "username": str,
+}
+```
+
+Output:
+
+```json
+{
+  "id": int,
+  "first_name": str,
+  "last_name": str,
+  "email": str,
+  "password": str,
+  "username": str,
+  "hashed_password": str
+}
+```
+
+Creating a new user will create generate an id and hashed password in combination with the first_name, last_name, email, password, username inputs. The hashed password is generated to grant accessability within the application such as; updating your favorite concerts list, and viewing your account.
+
+## Concerts
+
+- **Method**: `POST`, `GET`, `GET`, `PUT`, `DELETE`
+- **PATH**: `/concerts/favorites/`, `/concerts/favorites/{user_id}`, `/concerts/favorites/{user_id}/{concert_id}`
+
+Input:
+
+```json
+{
+  "user_id": int,
+  "concert_id": int,
+}
+```
+
+Output:
+
+```json
+{
+  "id": int,
+  "concert_name": str,
+  "artist_name": str,
+  "start_date": str,
+  "min_price": int,
+  "max_price": int,
+  "user_id": int,
+  "spotify_url": str,
+  "image_url": str,
+  "favorite": bool
+}
+```
+
+The concerts microservice takes a signed in user and assigns their individual user_id to particular concerts when they select the favorite option. This way we are able to generate a list of particular concerts that the user is interested in.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Log in
 
 - Endpoint path: /token

@@ -1,10 +1,10 @@
 # Concerto
 
 ## Group 4 Members
--Esteban Chirinos
--Rachel Johnson
--Nicolette Mabeza
--Jimmy Nguyen
+- Esteban Chirinos
+- Rachel Johnson
+- Nicolette Mabeza
+- Jimmy Nguyen
 
 ## Design
 - [API design]
