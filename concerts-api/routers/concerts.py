@@ -18,7 +18,9 @@ from jose import jwt, JWTError
 
 router = APIRouter()
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="localhost:8001/token")
+usersURL = os.environ.get("USERS_API_URL", "localhost:8001")
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl= f"{usersURL}/token")
 SECRET_KEY = os.environ.get("SIGNING_KEY", "blah")
 
 
