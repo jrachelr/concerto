@@ -1,7 +1,5 @@
 from fastapi import (
     Depends,
-    HTTPException,
-    status,
     Response,
     APIRouter,
     Request,
@@ -9,7 +7,8 @@ from fastapi import (
 from pydantic import BaseModel
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
-from queries.user_queries import UsersList, UserQueries, UserIn, UserOut, User
+from queries.user_queries import UsersList, UserQueries, UserIn, UserOut
+
 
 router = APIRouter()
 
@@ -61,11 +60,6 @@ def get_user_by_info(
 @router.get("/users/{user_id}", response_model=UserOut)
 def get_user_by_id(user_id: int, queries: UserQueries = Depends()):
     return queries.get_one_user(user_id)
-
-
-@router.post("/users", response_model=UserOut)
-def post_user(user: UserIn, queries: UserQueries = Depends()):
-    return queries.post_user(user)
 
 
 @router.delete("/user/{user_id}", response_model=bool)
