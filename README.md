@@ -7,7 +7,7 @@
 - Jimmy Nguyen
 
 ## Design
-- [API design]
+- [API design](docs/api-design.md)
 - [Data Model]
 - [GHI]
 - [Integrations]
