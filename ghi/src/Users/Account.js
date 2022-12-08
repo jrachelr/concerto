@@ -23,7 +23,9 @@ export default function AccountInfo() {
 				setUserInfo(data);
 			}
 		}
-		getUserInfo();
+		if (token) {
+			getUserInfo();
+		}
 	}, [token]);
 
 	return (
@@ -31,9 +33,6 @@ export default function AccountInfo() {
 			<h1 className="pt-8 text-center text-3xl font-bold leading-8 tracking-tight text-white sm:text-4xl">
 				Hi {userInfo.first_name}!
 			</h1>
-			<h3 className="mt-4 text-lg  text-white text-center pb-10">
-				Your favorite concerts
-			</h3>
 		</>
 	);
 }

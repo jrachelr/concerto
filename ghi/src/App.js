@@ -5,13 +5,9 @@ import Landing from "./Landing";
 import Logout from "./Users/Logout";
 import SignupForm from "./Users/Signup";
 import { useToken, AuthProvider } from "./auth.js";
-import ConcertList from "./ConcertComponents/ConcertList";
-import SearchComponent from "./SearchComponent";
-import { useState } from "react";
 import Header from "./Layout/Header";
 import SideBar from "./Layout/SidebarNav";
 import Favorites from "./Users/ConcertFavorites";
-//import AccountInfo from "./Users/Account";
 
 function GetToken() {
 	// Get token from JWT cookie (if already logged in)
@@ -20,26 +16,6 @@ function GetToken() {
 }
 
 function App() {
-	const [concerts, setConcerts] = useState([]);
-
-	async function getConcerts(city, state) {
-		const concertsUrl = `http://localhost:8000/concerts/${city},${state}`;
-		const fetchConfig = {
-			method: "get",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		};
-
-		const response = await fetch(concertsUrl, fetchConfig);
-		if (response.ok) {
-			const data = await response.json();
-			setConcerts(data.concerts);
-		} else {
-			console.log("SOS");
-		}
-	}
-
 	return (
 		<>
 			<AuthProvider>
@@ -53,14 +29,6 @@ function App() {
 					<Route path="signup/" element={<SignupForm />} />
 					<Route path="logout/" element={<Logout />} />
 					<Route path="*" element={<Navigate to="/" />} />
-					<Route
-						path="search"
-						element={<SearchComponent getConcerts={getConcerts} />}
-					/>
-					<Route
-						path="concerts"
-						element={<ConcertList concerts={concerts} />}
-					/>
 				</Routes>
 			</AuthProvider>
 		</>
