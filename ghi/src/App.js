@@ -8,6 +8,7 @@ import { useToken, AuthProvider } from "./auth.js";
 import Header from "./Layout/Header";
 import SideBar from "./Layout/SidebarNav";
 import Favorites from "./Users/ConcertFavorites";
+import { useAuthContext } from "./auth.js";
 function GetToken() {
 	// Get token from JWT cookie (if already logged in)
 	useToken();
@@ -15,6 +16,8 @@ function GetToken() {
 }
 
 function App() {
+	const { token } = useAuthContext();
+	console.log(token);
 	return (
 		<>
 			<AuthProvider>

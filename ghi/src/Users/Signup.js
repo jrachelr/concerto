@@ -56,6 +56,7 @@ const SignupForm = () => {
 				setEmailTaken(false);
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [username, email]);
 
 	const handleSubmit = async (e) => {
