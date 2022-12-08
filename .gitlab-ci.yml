@@ -13,7 +13,7 @@ lint-test-job:
     - flake8 users-api
     # - flake8 sample_service
 
-# Run the unit tests
+# Run the user unit tests
 users-unit-test-job:
   image: python:3-bullseye
   stage: test
@@ -23,6 +23,19 @@ users-unit-test-job:
   needs:
   script:
     - cd users-api
+    - pip install -r requirements.txt
+    - python -m pytest
+
+# Run the concert unit tests
+concerts-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  variables:
+    CONCERT_DATABASE_URL: postgres://ypgdrqhk:IFcjScpvrsEBoyqWVolfB6mKWpLuTYr9@arjuna.db.elephantsql.com/ypgdrqhk
+    SIGNING_KEY: ${SIGNING_KEY}
+  needs:
+  script:
+    - cd concerts-api
     - pip install -r requirements.txt
     - python -m pytest
 

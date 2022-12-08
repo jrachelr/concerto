@@ -129,7 +129,7 @@ def get_all_concerts(city, state, page):
 
     key = os.environ.get("TICKETMASTER_API_KEY")
 
-    url = f"https://app.ticketmaster.com/discovery/v2/events?apikey={key}&locale=*&startDateTime=2022-12-15T14:40:00Z&page={page}&sort=date,asc&city={city}&stateCode={state}&classificationName=music"
+    url = f"https://app.ticketmaster.com/discovery/v2/events?apikey={key}&locale=*&startDateTime=2022-12-15T14:40:00Z&page={page}&sort=date,asc&city={city}&stateCode={state}&classificationName=music" # noqa
 
     response = requests.get(url)
     data = json.loads(response.content)
