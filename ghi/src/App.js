@@ -8,7 +8,6 @@ import { useToken, AuthProvider } from "./auth.js";
 import Header from "./Layout/Header";
 import SideBar from "./Layout/SidebarNav";
 import Favorites from "./Users/ConcertFavorites";
-
 function GetToken() {
 	// Get token from JWT cookie (if already logged in)
 	useToken();

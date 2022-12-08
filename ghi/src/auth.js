@@ -47,8 +47,6 @@ export const AuthContext = createContext({
 	setToken: () => null,
 	user: null,
 	setUser: () => null,
-	userList: null,
-	setUserList: () => null,
 	isLoggedIn: null,
 	setIsLoggedIn: () => null,
 });
@@ -56,7 +54,6 @@ export const AuthContext = createContext({
 export const AuthProvider = ({ children }) => {
 	const [token, setToken] = useState(null);
 	const [user, setUser] = useState(null);
-	const [userList, setUserList] = useState(null);
 	const [isLoggedIn, setIsLoggedIn] = useState(null);
 
 	return (
@@ -66,8 +63,6 @@ export const AuthProvider = ({ children }) => {
 				setToken,
 				user,
 				setUser,
-				userList,
-				setUserList,
 				isLoggedIn,
 				setIsLoggedIn,
 			}}>
@@ -108,21 +103,6 @@ export function useToken() {
 			fetchUsers();
 		}
 	}, [setToken, token, setUser]);
-
-	useEffect(() => {
-		async function fetchUserList() {
-			const response = await fetch(
-				`${process.env.REACT_APP_ACCOUNTS_HOST}/users`,
-				{
-					method: "get",
-					credentials: "include",
-				}
-			);
-			const data = await response.json();
-			console.log(data);
-		}
-		fetchUserList();
-	}, []);
 
 	async function logout() {
 		if (token) {
