@@ -1,8 +1,13 @@
-from fastapi import APIRouter
-# from pydantic import BaseModel
-# from datetime import date
-from queries.concert_queries import ConcertIn, ConcertOut
-from queries.concert_queries import ConcertsList, ConcertQueries, UserOut
+from fastapi import APIRouter, Depends
+from pydantic import BaseModel
+from datetime import date
+from queries.concert_queries import (
+    ConcertIn,
+    ConcertOut,
+    ConcertsList,
+    ConcertQueries,
+    UserOut,
+)
 import requests
 import json
 import os
@@ -14,13 +19,10 @@ from jose import jwt, JWTError
 router = APIRouter()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="localhost:8001/token")
-print("test outhhhhhhhhh", oauth2_scheme)
 SECRET_KEY = os.environ.get("SIGNING_KEY", "blah")
-print("test striiiiing", SECRET_KEY)
-
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
-    print("fjdsakfldjsflkjlk")
+    print("current_user")
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -28,20 +30,17 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     )
     try:
         payload = jwt.decode(token, SECRET_KEY)
-        print('tesitngggggggg')
         username: str = payload.get("sub")
         if username is None:
-            print("niceeeeeee")
             raise credentials_exception
 
     except JWTError:
         raise credentials_exception
-        print("another one")
     user = UserOut(**payload.get("account"))
     if user is None:
-        print("yesssssss")
         raise credentials_exception
     return user
+
 
 not_authorized = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
@@ -109,8 +108,8 @@ def delete_concert(user_id: int,
         return queries.delete(user_id, concert_id)
 
 
-@router.get("/concerts/{city},{state}")
-def get_all_concerts(city, state):
+@router.get("/concerts/{city},{state}/{page}")
+def get_all_concerts(city, state, page):
 
     key = os.environ.get("TICKETMASTER_API_KEY")
 
@@ -126,7 +125,7 @@ def get_all_concerts(city, state):
     response = requests.get(url)
     data = json.loads(response.content)
 
-    events = data['_embedded']['events']
+    events = data["_embedded"]["events"]
 
     concerts = []
     artists = []
@@ -146,19 +145,19 @@ def get_all_concerts(city, state):
         except KeyError:
             concert["venue"] = "TBD"
 
-        concert["start_date"] = event['dates']['start']['localDate']
+        concert["start_date"] = event["dates"]["start"]["localDate"]
         try:
             concert["spotify_url"] = event['_embedded']['attractions'][0]
             ['externalLinks']['spotify'][0]['url']
         except KeyError:
             continue
         try:
-            concert["min_price"] = event['priceRanges'][0]['min']
+            concert["min_price"] = event["priceRanges"][0]["min"]
         except KeyError:
             concert["min_price"] = 0
 
         try:
-            concert["max_price"] = event['priceRanges'][0]['max']
+            concert["max_price"] = event["priceRanges"][0]["max"]
         except KeyError:
             concert["max_price"] = 0
 

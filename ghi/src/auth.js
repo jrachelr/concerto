@@ -70,6 +70,14 @@ export function useToken() {
 		async function fetchToken() {
 			const token = await getTokenInternal();
 			setToken(token);
+		}
+		if (!token) {
+			fetchToken();
+		}
+	}, [setToken, token, setUser]);
+
+	useEffect(() => {
+		async function fetchToken() {
 			const response2 = await fetch(
 				`${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`,
 				{
@@ -80,7 +88,7 @@ export function useToken() {
 			const response3 = await response2.json();
 			setUser(response3);
 		}
-		if (!token) {
+		if (token) {
 			fetchToken();
 		}
 	}, [setToken, token, setUser]);
@@ -119,7 +127,6 @@ export function useToken() {
 		if (response.ok) {
 			const token = await getTokenInternal();
 			setToken(token);
-			console.log(token);
 			return;
 		}
 		let error = await response.json();
