@@ -47,14 +47,30 @@ export const AuthContext = createContext({
 	setToken: () => null,
 	user: null,
 	setUser: () => null,
+	userList: null,
+	setUserList: () => null,
+	isLoggedIn: null,
+	setIsLoggedIn: () => null,
 });
 
 export const AuthProvider = ({ children }) => {
 	const [token, setToken] = useState(null);
 	const [user, setUser] = useState(null);
+	const [userList, setUserList] = useState(null);
+	const [isLoggedIn, setIsLoggedIn] = useState(null);
 
 	return (
-		<AuthContext.Provider value={{ token, setToken, user, setUser }}>
+		<AuthContext.Provider
+			value={{
+				token,
+				setToken,
+				user,
+				setUser,
+				userList,
+				setUserList,
+				isLoggedIn,
+				setIsLoggedIn,
+			}}>
 			{children}
 		</AuthContext.Provider>
 	);
@@ -63,7 +79,8 @@ export const AuthProvider = ({ children }) => {
 export const useAuthContext = () => useContext(AuthContext);
 
 export function useToken() {
-	const { token, setToken, user, setUser } = useAuthContext();
+	const { token, setToken, user, setUser, isLoggedIn, setIsLoggedIn } =
+		useAuthContext();
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -77,21 +94,36 @@ export function useToken() {
 	}, [setToken, token, setUser]);
 
 	useEffect(() => {
-		async function fetchToken() {
-			const response2 = await fetch(
+		async function fetchUsers() {
+			const response = await fetch(
 				`${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`,
 				{
 					method: "get",
 					credentials: "include",
 				}
 			);
-			const response3 = await response2.json();
-			setUser(response3);
+			const data = await response.json();
+			setUser(data);
 		}
 		if (token) {
-			fetchToken();
+			fetchUsers();
 		}
 	}, [setToken, token, setUser]);
+
+	useEffect(() => {
+		async function fetchUserList() {
+			const response = await fetch(
+				`${process.env.REACT_APP_ACCOUNTS_HOST}/users`,
+				{
+					method: "get",
+					credentials: "include",
+				}
+			);
+			const data = await response.json();
+			console.log(data);
+		}
+		fetchUserList();
+	}, []);
 
 	async function logout() {
 		if (token) {
@@ -100,6 +132,7 @@ export function useToken() {
 			internalToken = null;
 			setToken(null);
 			setUser(null);
+			setIsLoggedIn(null);
 			navigate("/");
 		}
 	}
@@ -127,10 +160,12 @@ export function useToken() {
 		if (response.ok) {
 			const token = await getTokenInternal();
 			setToken(token);
+			setIsLoggedIn(true);
+			navigate("/");
 			return;
+		} else {
+			setIsLoggedIn(false);
 		}
-		let error = await response.json();
-		return handleErrorMessage(error);
 	}
 
 	async function signup(username, password, email, firstName, lastName) {
