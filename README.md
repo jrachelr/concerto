@@ -15,11 +15,11 @@
 ## Getting started - JN
 
 clone the repository
-cd into the new project directory
-docker volume create pg-admin
-docker volume create postgres-data
-docker compose build
-docker compose up
+- cd into the new project directory
+- docker volume create pg-admin
+- docker volume create postgres-data
+- docker compose build
+- docker compose up
 
 ## Design - RJ
 Concerto is a full-stack web application for music lovers to search for concerts. It removes the friction between searching for concerts and moving to another application to sample music by an artist, by embedding a Spotify player within the browser window.

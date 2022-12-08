@@ -195,9 +195,9 @@ class ConcertQueries:
                 ],
             )
 
-                old_data = concert.dict()
-                print(old_data)
-                return ConcertOut(id=concert_id, user_id=user_id, **old_data)
+            old_data = concert.dict()
+            print(old_data)
+            return ConcertOut(id=concert_id, user_id=user_id, **old_data)
 
     def delete(self, user_id: int, concert_id: int):
         # with pool.connection() as conn:
