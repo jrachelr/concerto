@@ -41,7 +41,7 @@ class UsersList(BaseModel):
 
 
 # pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
-conn = connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)
+conn = connect(conninfo = "postgres://gmdhwhkk:0aMxS-RRJfaZnoGa4cgenGnsw8rhsSnw@arjuna.db.elephantsql.com/gmdhwhkk", **keepalive_kwargs)
 
 
 class UserQueries:
