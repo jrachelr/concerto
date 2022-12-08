@@ -25,7 +25,9 @@ export default function Favorites() {
 				setConcerts(data.concerts);
 			}
 		}
-		getFavoriteConcerts();
+		if (user) {
+			getFavoriteConcerts();
+		}
 	}, [token, user]);
 
 	const removeFavorite = async (concert) => {
