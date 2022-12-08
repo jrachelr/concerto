@@ -8,7 +8,7 @@
 
 ## Design
 - [API design](docs/api-design.md)
-- [Data Model]
+- [Data Model](docs/data-model.md)
 - [GHI]
 - [Integrations]
 
