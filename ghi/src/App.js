@@ -5,13 +5,9 @@ import Landing from "./Landing";
 import Logout from "./Users/Logout";
 import SignupForm from "./Users/Signup";
 import { useToken, AuthProvider } from "./auth.js";
-import ConcertList from "./ConcertComponents/ConcertList";
-import SearchComponent from "./SearchComponent";
-import { useState, useEffect } from "react";
 import Header from "./Layout/Header";
 import SideBar from "./Layout/SidebarNav";
 import Favorites from "./Users/ConcertFavorites";
-import { useAuthContext } from "./auth.js";
 
 function GetToken() {
 	// Get token from JWT cookie (if already logged in)
