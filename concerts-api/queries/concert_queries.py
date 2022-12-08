@@ -62,7 +62,7 @@ class ConcertsList(BaseModel):
 
 
 # pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
-conn = connect(conninfo=os.environ.get("CONCERT_DATABASE_URL"), **keepalive_kwargs)
+conn = connect(conninfo=os.environ.get("CONCERT_DATABASE_URL"), **keepalive_kwargs) # noqa
 
 
 # need to fix so it can return the id as well
