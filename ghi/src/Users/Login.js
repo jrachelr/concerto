@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useToken } from "../auth.js";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 // import {login} from "../auth.js"
 
 
@@ -10,24 +10,72 @@ const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  // const [showError, setShowError] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
+  // const [formValues, setFormValues] = useState(
+  //     {
+  //       username: "",
+  //       password: "",
+  //     }
+  // );
 
+  // const handleUsernameChange = (e) => {
+  //   setLoggedIn(false);
+  //   setFormValues((entries) => ({
+  //     ...entries,
+  //     username: e.target.value,
+  //   }));
+  // }
+
+  // const handlePasswordChange = (e) => {
+  //   setLoggedIn(false);
+  //   setFormValues((entries) => ({
+  //     ...entries,
+  //     password: e.target.value
+  //   })
+  //   )
+  // }
+
+
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   const url = `${process.env.REACT_APP_USERS_API_HOST}/token`
+  //   const form = new FormData();
+  //   form.append("username", formValues["username"])
+  //   form.append("password", formValues["password"])
+
+  //   const response = await fetch(url, {
+  //     method: "post",
+  //     credentials: "include",
+  //     body: form,
+  //   });
+  //   if (response.ok) {
+  //       const tokenURL = `${process.env.REACT_APP_USERS_API_HOST}/token`;
+
+  //     try {
+  //       const response = await fetch(tokenURL, {
+  //           credentials: "include",
+  //       });
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         const token = data.token;
+  //         setLoggedIn(true)
+  //         console.log(token)
+  //       }
+  //       } catch (e) {}
+  //       return false;
+  // }
+  // let error = await response.json();
+  // console.log(error)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // try {
-    //   await login(username, password);
-    //   navigate("/")
-    // } catch (error) {
-    //   setShowError(true);
-    //   return;
-    // }
+    await login(username, password);
     login(username, password);
     navigate("/");
   };
 
 
-
+  
 
   return (
     <>
@@ -44,6 +92,13 @@ const LoginForm = () => {
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+          {/* {loggedIn ?
+          <div className="py-2">
+            <NavLink to="/">
+              <div className="alert alert-success">Login Successful!</div>
+            </NavLink>
+          </div>
+          : null} */}
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form
               onSubmit={handleSubmit}

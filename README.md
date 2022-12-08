@@ -1,16 +1,34 @@
 # Concerto
 
-## Getting started
+## Group 4 Members
+-Esteban Chirinos
+-Rachel Johnson
+-Nicolette Mabeza
+-Jimmy Nguyen
 
-You have a project repository, now what? The next section
-lists all of the deliverables that are due at the end of the
-week. Below is some guidance for getting started on the
-tasks for this week.
+## Design
+- [API design]
+- [Data Model]
+- [GHI]
+- [Integrations]
+
+## Getting started - JN
+
+clone the repository
+cd into the new project directory
+docker volume create pg-admin
+docker volume create postgres-data
+docker compose build
+docker compose up
 
 ## Design - RJ
-Concerto is a full-stack web application for music lovers to search for concerts. It removes the friction between searching for concerts and moving to another application to sample music by an artist, by embedding a Spotify player within the browser window. 
+Concerto is a full-stack web application for music lovers to search for concerts. It removes the friction between searching for concerts and moving to another application to sample music by an artist, by embedding a Spotify player within the browser window.
 
-Concerts and Users are separate microservices. The microservices communicate via a poller. 
+Concerts and Users are separate microservices. The microservices communicate via a poller.
+
+## Functionality - JN
+- Visitors to the site can search for local entertainment based off whatever location/destination as they please.
+- Concerts will
 
 ### Wireframes - RJ
 ![Login and Account Info](readme_images/Login_Account.png)
@@ -18,19 +36,19 @@ Concerts and Users are separate microservices. The microservices communicate via
 ![Favorite Concerts List Page](readme_images/Favourite_Concerts.png)
 
 ## Concerts Microservice - RJ
-Users search for concerts in their area on the landing page. 
+Users search for concerts in their area on the landing page.
 
 ## Users Microservice - RJ
 Users can create an account using (what kind of technology).
-Users are able to add concerts to their list of favorites. 
+Users are able to add concerts to their list of favorites.
 
 ## Third Party APIS - RJ
-Concerto implements two external APIs; Ticketmaster API and Spotify API. 
+Concerto implements two external APIs; Ticketmaster API and Spotify API.
 
 ### Tickermaster API - RJ
 
-The concerts microservice uses the ticketmaster API to show a list view of concerts. 
-For the purposes of Concerto, a request to ticketmaster API contains a location key and event type key. 
+The concerts microservice uses the ticketmaster API to show a list view of concerts.
+For the purposes of Concerto, a request to ticketmaster API contains a location key and event type key.
 This is an example request searching for music events in Los Angeles:
 https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&dmaId=324&apikey=btsaKZ8FElrG6RkY7eRLIRvqVfJ9P374
 
@@ -39,7 +57,7 @@ The ticketmaster get request returns a JSON object as detailed below:
 
 ### Spotify API - RJ
 
-The Spotify API allows developers to embed a Spotify player into the browser. 
+The Spotify API allows developers to embed a Spotify player into the browser.
 The data is passed from the ticketmaster response into the Spotify API request. Using the artist name, the embedded Spotify player will be populated with songs from that artist.
 
 The data flow from Ticketmaster to Spotify is detailed below:
@@ -47,10 +65,10 @@ The data flow from Ticketmaster to Spotify is detailed below:
 
 ## Deliverables
 
-* [ ] Wire-frame diagrams
-* [ ] API documentation
+* [*] Wire-frame diagrams
+* [*] API documentation
 * [ ] Project is deployed to Render.com/GitLab-pages
-* [ ] GitLab issue board is setup and in use
+* [*] GitLab issue board is setup and in use
 * [ ] Journals
 
 ## Project layout
@@ -129,7 +147,7 @@ deployment, but it just consists of these steps:
 * make sure this project is in a group. If it isn't, stop
   now and move it to a GitLab group
 * remove the fork relationship: In GitLab go to:
-  
+
   Settings -> General -> Advanced -> Remove fork relationship
 
 * add these GitLab CI/CD variables:
