@@ -18,7 +18,7 @@ users-unit-test-job:
   image: python:3-bullseye
   stage: test
   variables:
-    DATABASE_URL: ${DATABASE_URL}
+    DATABASE_URL: https://users-service-xg88.onrender.com
     SIGNING_KEY: ${SIGNING_KEY}
   needs:
   script:
