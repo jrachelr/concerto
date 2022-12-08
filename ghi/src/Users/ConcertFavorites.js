@@ -6,6 +6,7 @@ import AccountInfo from "./Account";
 export default function Favorites() {
   const { token, user } = useAuthContext();
   const [concerts, setConcerts] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     async function getFavoriteConcerts() {
@@ -23,10 +24,15 @@ export default function Favorites() {
       if (response.ok) {
         const data = await response.json();
         setConcerts(data.concerts);
+        setSubmitted(false);
+      } else {
+        console.log("error");
       }
     }
-    getFavoriteConcerts();
-  }, [token, user]);
+    if (user) {
+      getFavoriteConcerts();
+    }
+  }, [token, user, setConcerts, submitted]);
 
   const removeFavorite = async (concert) => {
     const removeURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/concerts/favorites/${user.id}/${concert.id}`;
@@ -39,8 +45,8 @@ export default function Favorites() {
     };
     const response = await fetch(removeURL, fetchConfig);
     if (response.ok) {
-      console.log(response);
       setConcerts([...concerts]);
+      setSubmitted(true);
     }
   };
 
