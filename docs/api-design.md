@@ -31,12 +31,12 @@ Output:
 }
 ```
 
-Creating a new user will create generate an id and hashed password in combination with the first_name, last_name, email, password, username inputs. The hashed password is generated to grant accessability within the application such as; updating your favorite concerts list, and viewing your account.
+Creating a new user will create generate an id and hashed password in combination with the first_name, last_name, email, password, username inputs. The hashed password is generated and passed through to the user to grant accessability within the application such as; updating your favorite concerts list, and viewing your account.
 
 ## Concerts
 
-- **Method**: `POST`, `GET`, `GET`, `PUT`, `DELETE`
-- **PATH**: `/concerts/favorites/`, `/concerts/favorites/{user_id}`, `/concerts/favorites/{user_id}/{concert_id}`
+- **Method**: `POST`, `GET`, `PUT`, `DELETE`
+- **PATH**: `/concerts/favorites/`, `/concerts/favorites/{user_id}`, `/concerts/favorites/{user_id}/{concert_id}`, `/concerts/{city},{state}`
 
 Input:
 
@@ -44,6 +44,8 @@ Input:
 {
   "user_id": int,
   "concert_id": int,
+  "city": str,
+  "state": str,
 }
 ```
 
@@ -66,36 +68,23 @@ Output:
 
 The concerts microservice takes a signed in user and assigns their individual user_id to particular concerts when they select the favorite option. This way we are able to generate a list of particular concerts that the user is interested in.
 
+<!-- ## Token
+
+- **Method**: `POST`, `GET`, `DELETE`
+- **PATH**: `/token`
+
+Input:
+
+```json
+{
+  "session_getter": query,
+  "fastapi_token": string,
+}
+```
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ -->
 
 
 
