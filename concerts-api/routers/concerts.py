@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends
-from pydantic import BaseModel
-from datetime import date
+from fastapi import APIRouter
+# from pydantic import BaseModel
+# from datetime import date
 from queries.concert_queries import (
     ConcertIn,
     ConcertOut,
@@ -141,7 +141,7 @@ def get_all_concerts(city, state, page):
         concert["image_url"] = event["images"][1]["url"]
         concert["concert_name"] = event['name']
         try:
-            concert["venue"] = event['_embedded']['venues'][0]['name']
+            concert["venue"] = event["_embedded"]["venues"][0]["name"]
         except KeyError:
             concert["venue"] = "TBD"
 

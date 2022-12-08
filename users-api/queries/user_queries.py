@@ -2,7 +2,6 @@ from pydantic import BaseModel
 import os
 from psycopg_pool import ConnectionPool
 
-
 class User(BaseModel):
     id: int
     first_name: str
@@ -12,12 +11,14 @@ class User(BaseModel):
     username: str
 
 
+
 class UserIn(BaseModel):
     first_name: str
     last_name: str
     email: str
     password: str
     username: str
+
 
 
 class UserOut(BaseModel):
@@ -57,7 +58,7 @@ class UserQueries:
                         record[column.name] = row[i]
                     results.append(record)
 
-                return results
+            return results
 
     def get_one_user(self, user_id: int) -> User:
         with pool.connection() as conn:
@@ -157,39 +158,39 @@ class UserQueries:
                             username=user.username,)
 
     def delete_user(self, user_id: int):
-        with pool.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    DELETE FROM user_info
-                    WHERE id = %s
-                    """,
-                    [user_id],
+        # with pool.connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                DELETE FROM user_info
+                WHERE id = %s
+                """,
+                [user_id],
                 )
-                return True
+            return True
 
     def update_user(self, user_id, user: UserIn) -> UserOut:
-        with pool.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    UPDATE user_info
-                    SET
-                    first_name = %s,
-                    last_name = %s,
-                    email = %s,
-                    username = %s
+        # with pool.connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                UPDATE user_info
+                SET
+                first_name = %s,
+                last_name = %s,
+                email = %s,
+                username = %s
 
 
-                    """,
-                    [
-                        user.first_name,
-                        user.last_name,
-                        user.email,
-                        user.username,
-                    ],
+                """,
+                [
+                    user.first_name,
+                    user.last_name,
+                    user.email,
+                    user.username,
+                ],
                 )
 
-                old_data = user.dict()
-                print(old_data)
-                return UserOut(id=user_id, **old_data)
+            old_data = user.dict()
+            print(old_data)
+            return UserOut(id=user_id, **old_data)

@@ -37,8 +37,9 @@ build-front-end-job:
     # CI/CD variables, that value will override the value here.
     # You need to substitute in your real values for
     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
-    PUBLIC_URL: https://gitlab.com/the-jerney/concerto
-    REACT_APP_SAMPLE_SERVICE_API_HOST: https://concerto-service.onrender.com/
+    PUBLIC_URL: https://the-jerney.gitlab.io/concerto
+    REACT_APP_CONCERTS_SERVICE_API_HOST: https://concerts-service.onrender.com
+    REACT_APP_USERS_SERVICE_API_HOST: https://users-service-xg88.onrender.com
   script:
     - cd ghi
     - npm install
@@ -51,9 +52,9 @@ build-front-end-job:
 # Deploy-the-React-JavaScript-front-end-to-GitLab-pages:
 pages:
   stage: deploy
-# throw feature branch where $CI_DEFAULT_BRANCH IS AND PUT IT BACK TO HOW IT WAS AFTER
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  # throw feature branch where $CI_DEFAULT_BRANCH IS AND PUT IT BACK TO HOW IT WAS AFTER
+  # rules:
+  #   - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   dependencies:
     - build-front-end-job
   needs:
