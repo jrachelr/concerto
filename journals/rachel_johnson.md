@@ -91,3 +91,12 @@ DOCKER_DEFAULT_PLATFORM=linux/amd64 docker-compose build (for m1 users)
 - added remove favorite button. adding user info to page
 - starting unit testing
 - MVP FINISHEDDDD
+
+### 7 Decemver
+
+- added back button to sign out page
+- fetched user info to populate faveorites page with user's name
+
+### 8 December
+
+-

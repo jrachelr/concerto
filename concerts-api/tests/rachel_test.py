@@ -1,50 +1,51 @@
 from main import app
 from fastapi.testclient import TestClient
 from queries.concert_queries import ConcertQueries
-from fastapi.security import OAuth2
+from routers import concerts
 
 client = TestClient(app)
 
-reusable_oauth2 = OAuth2(
-    flows={
-        "password": {
-            "tokenUrl": "token",
-            "scopes": {},
-        }
+
+async def override_get_fake_user():
+    return {
+        "id": 1,
+        "first_name": "rachel",
+        "last_name": "johnson",
+        "email": "rachel@gmail.com",
+        "username": "rachel",
     }
-)
 
-test_concert = {
-    "id": 1,
-    "concert_name": str,
-    "artist_name": str,
-    "user_id": int,
-}
 
-test_user = {
-    "id": int,
-    "first_name": str,
-    "last_name": str,
-    "email": str,
-    "username": str,
-}
+test_concert_list_by_user = [
+    {
+        "id": 1,
+        "concert_name": "ooga",
+        "artist_name": "booga",
+        "start_date": "2022-12-08",
+        "min_price": 30,
+        "max_price": 35,
+        "user_id": 1,
+        "spotify_url": "spotify.com",
+        "image_url": "image.com",
+        "favorite": True,
+    }
+]
 
 
 class EmptyConcertQueries:
-    def get_concerts_by_user(self, user_id: int):
-        return []
+    def get_all(self, user_id: int):
+        return test_concert_list_by_user
 
 
-async def override_dependency(reusable_oauth2):
-    return {}
-
-
-def test_concerts_by_user():
-    app.dependency_overrides[ConcertQueries] = EmptyConcertQueries
-
+def test_not_authorized_user():
     response = client.get("/concerts/favorites/1")
+    assert response.status_code == 401
 
-    app.dependency_overrides = override_dependency
 
-    assert response.status_code == 200
-    assert response.json() == {"concerts": []}
+def test_concerts_by_user_id():
+    app.dependency_overrides[
+        concerts.get_current_user
+    ] = override_get_fake_user
+    app.dependency_overrides[ConcertQueries] = EmptyConcertQueries
+    response = client.get("/concerts/favorites/1")
+    assert {"concerts": test_concert_list_by_user} == response.json()
