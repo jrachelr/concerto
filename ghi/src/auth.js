@@ -127,25 +127,41 @@ export function useToken() {
 			credentials: "include",
 			body: form,
 		});
-		const response2 = await fetch(
-			`${process.env.REACT_APP_USERS_API_HOST}/users/current`,
-			{
-				method: "get",
-				credentials: "include",
-			}
-		);
-		setUser(await response2.json());
 
 		if (response.ok) {
 			const token = await getTokenInternal();
 			setToken(token);
-			setIsLoggedIn(true);
-			navigate("/");
-			return;
-		} else {
-			setIsLoggedIn(false);
+
+			const userResponse = await fetch(
+				`${process.env.REACT_APP_USERS_API_HOST}/users/current`,
+				{
+					method: "get",
+					credentials: "include",
+				}
+			);
+
+			if (response.ok) {
+				const userData = await userResponse.json();
+				setUser(userData);
+				setIsLoggedIn(true);
+				navigate("/");
+				return;
+			} else {
+				setIsLoggedIn(false);
+			}
 		}
 	}
+
+	// 	if (response.ok) {
+	// 		const token = await getTokenInternal();
+	// 		setToken(token);
+	// 		setIsLoggedIn(true);
+	// 		navigate("/");
+	// 		return;
+	// 	} else {
+	// 		setIsLoggedIn(false);
+	// 	}
+	// }
 
 	async function signup(username, password, email, firstName, lastName) {
 		const url = `${process.env.REACT_APP_USERS_API_HOST}/users`;
