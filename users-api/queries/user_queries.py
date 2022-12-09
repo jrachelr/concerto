@@ -43,7 +43,7 @@ class UsersList(BaseModel):
 # pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 kwargs = {"autocommit": True}
 
-conn = psycopg.connect(conninfo=os.environ["CONCERTS_DATABASE_URL"], **kwargs)
+conn = psycopg.connect(conninfo=os.environ["USERS_DATABASE_URL"], **kwargs)
 
 
 class UserQueries:
