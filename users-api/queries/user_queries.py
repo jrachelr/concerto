@@ -1,15 +1,6 @@
 from pydantic import BaseModel
 import os
-# from psycopg_pool import ConnectionPool
-import psycopg
-
-keepalive_kwargs = {
-   "keepalives": 1,
-   "keepalives_idle": 60,
-   "keepalives_interval": 10,
-   "keepalives_count": 5
-  }
-
+from psycopg_pool import ConnectionPool
 
 class User(BaseModel):
     id: int
@@ -42,10 +33,7 @@ class UsersList(BaseModel):
     users: list[UserOut]
 
 
-# pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
-kwargs = {"autocommit": True}
-
-conn = psycopg.connect(conninfo=os.environ["USERS_DATABASE_URL"], **kwargs)
+pool = ConnectionPool(conninfo=os.environ["USERS_DATABASE_URL"])
 
 
 class UserQueries:

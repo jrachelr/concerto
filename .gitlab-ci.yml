@@ -31,7 +31,7 @@ concerts-unit-test-job:
   image: python:3-bullseye
   stage: test
   variables:
-    CONCERTS_DATABASE_URL: postgres://ypgdrqhk:IFcjScpvrsEBoyqWVolfB6mKWpLuTYr9@arjuna.db.elephantsql.com/ypgdrqhk
+    CONCERT_DATABASE_URL: postgres://ypgdrqhk:IFcjScpvrsEBoyqWVolfB6mKWpLuTYr9@arjuna.db.elephantsql.com/ypgdrqhk
     SIGNING_KEY: ${SIGNING_KEY}
   needs:
   script:
@@ -51,8 +51,8 @@ build-front-end-job:
     # You need to substitute in your real values for
     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
     PUBLIC_URL: https://the-jerney.gitlab.io/concerto
-    REACT_APP_CONCERTS_API_HOST: https://concerts-service.onrender.com
-    REACT_APP_USERS_API_HOST: https://users-service-xg88.onrender.com
+    REACT_APP_CONCERTS_SERVICE_API_HOST: https://concerts-service.onrender.com
+    REACT_APP_USERS_SERVICE_API_HOST: https://users-service-xg88.onrender.com
   script:
     - cd ghi
     - npm install

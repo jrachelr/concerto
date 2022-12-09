@@ -18,9 +18,7 @@ from jose import jwt, JWTError
 
 router = APIRouter()
 
-usersURL = os.environ.get("REACT_APP_USERS_API_HOST", "localhost:8001")
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{usersURL}/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="localhost:8001/token")
 SECRET_KEY = os.environ.get("SIGNING_KEY", "blah")
 
 

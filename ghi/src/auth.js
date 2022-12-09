@@ -7,7 +7,7 @@ export function getToken() {
 }
 
 export async function getTokenInternal() {
-	const url = `${process.env.REACT_APP_USERS_API_HOST}/token/`;
+	const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/token/`;
 	try {
 		const response = await fetch(url, {
 			credentials: "include",
@@ -90,7 +90,7 @@ export function useToken() {
 	useEffect(() => {
 		async function fetchUsers() {
 			const response = await fetch(
-				`${process.env.REACT_APP_USERS_API_HOST}/users/current`,
+				`${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`,
 				{
 					method: "get",
 					credentials: "include",
@@ -106,7 +106,7 @@ export function useToken() {
 
 	async function logout() {
 		if (token) {
-			const url = `${process.env.REACT_APP_USERS_API_HOST}/token/`;
+			const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/token/`;
 			await fetch(url, { method: "delete", credentials: "include" });
 			internalToken = null;
 			setToken(null);
@@ -117,7 +117,7 @@ export function useToken() {
 	}
 
 	async function login(username, password) {
-		const url = `${process.env.REACT_APP_USERS_API_HOST}/token`;
+		const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/token`;
 		const form = new FormData();
 
 		form.append("username", username);
@@ -128,7 +128,7 @@ export function useToken() {
 			body: form,
 		});
 		const response2 = await fetch(
-			`${process.env.REACT_APP_USERS_API_HOST}/users/current`,
+			`${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`,
 			{
 				method: "get",
 				credentials: "include",
@@ -148,7 +148,7 @@ export function useToken() {
 	}
 
 	async function signup(username, password, email, firstName, lastName) {
-		const url = `${process.env.REACT_APP_USERS_API_HOST}/users`;
+		const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/users`;
 		const response = await fetch(url, {
 			method: "post",
 			body: JSON.stringify({
@@ -164,15 +164,13 @@ export function useToken() {
 		});
 		if (response.ok) {
 			await login(email, password);
-		} else {
-			console.log("ERROR");
 		}
 		console.log("respose:", response);
 		return false;
 	}
 
 	async function update(username, password, email, firstName, lastName) {
-		const url = `${process.env.REACT_APP_USERS_API_HOST}/api/accounts/`;
+		const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
 		const response = await fetch(url, {
 			method: "post",
 			body: JSON.stringify({

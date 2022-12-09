@@ -26,7 +26,7 @@ export default function Landing() {
 	}, [page, submitted]);
 
 	const getConcerts = (page) => {
-		const concertsUrl = `${process.env.REACT_APP_CONCERTS_API_HOST}/concerts/${city},${state}/${page}`;
+		const concertsUrl = `http://localhost:8000/concerts/${city},${state}/${page}`;
 		const fetchConfig = {
 			method: "get",
 			headers: {
@@ -38,7 +38,6 @@ export default function Landing() {
 			.then((data) => {
 				setConcerts(concerts.concat(data.concerts));
 				setSuccess(true);
-				setSubmitted(false);
 			})
 			.catch((error) => {
 				setSuccess(false);

@@ -7,7 +7,7 @@ export default function AccountInfo() {
 
 	useEffect(() => {
 		async function getUserInfo() {
-			const userURL = `${process.env.REACT_APP_USERS_API_HOST}/users/current`;
+			const userURL = `${process.env.REACT_APP_ACCOUNTS_HOST}/users/current`;
 
 			const fetchConfig = {
 				method: "get",
