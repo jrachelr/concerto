@@ -51,8 +51,8 @@ build-front-end-job:
     # You need to substitute in your real values for
     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
     PUBLIC_URL: https://the-jerney.gitlab.io/concerto
-    REACT_APP_SAMPLE_SERVICE_API_HOST: https://concerts-service.onrender.com
-    REACT_APP_ACCOUNTS_HOST: https://users-service-xg88.onrender.com
+    CONCERTS_API_HOST: https://concerts-service.onrender.com
+    USERS_API_HOST: https://users-service-xg88.onrender.com
   script:
     - cd ghi
     - npm install
