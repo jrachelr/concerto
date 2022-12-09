@@ -127,8 +127,7 @@ def get_all_concerts(city, state, page):
     for event in events:
         concert = {}
         try:
-            concert["artist_name"] = event['_embedded']
-            ['attractions'][0]['name']
+            concert["artist_name"] = event['_embedded']['attractions'][0]['name']
         except KeyError:
             continue
 
@@ -136,13 +135,12 @@ def get_all_concerts(city, state, page):
         concert["concert_name"] = event['name']
         try:
             concert["venue"] = event["_embedded"]["venues"][0]["name"]
-        except KeyError:
+        except:
             concert["venue"] = "TBD"
 
         concert["start_date"] = event["dates"]["start"]["localDate"]
         try:
-            concert["spotify_url"] = event['_embedded']['attractions'][0]
-            ['externalLinks']['spotify'][0]['url']
+            concert["spotify_url"] = event['_embedded']['attractions'][0]['externalLinks']['spotify'][0]['url']
         except KeyError:
             continue
         try:

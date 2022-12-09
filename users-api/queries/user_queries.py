@@ -33,7 +33,7 @@ class UsersList(BaseModel):
     users: list[UserOut]
 
 
-pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
+pool = ConnectionPool(conninfo=os.environ["USERS_DATABASE_URL"])
 
 
 class UserQueries:
