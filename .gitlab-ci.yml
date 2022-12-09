@@ -31,7 +31,7 @@ concerts-unit-test-job:
   image: python:3-bullseye
   stage: test
   variables:
-    CONCERT_DATABASE_URL: postgres://ypgdrqhk:IFcjScpvrsEBoyqWVolfB6mKWpLuTYr9@arjuna.db.elephantsql.com/ypgdrqhk
+    CONCERTS_DATABASE_URL: postgres://ypgdrqhk:IFcjScpvrsEBoyqWVolfB6mKWpLuTYr9@arjuna.db.elephantsql.com/ypgdrqhk
     SIGNING_KEY: ${SIGNING_KEY}
   needs:
   script:
