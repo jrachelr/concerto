@@ -9,7 +9,7 @@
 ## Design
 - [API design](docs/api-design.md)
 - [Data Model](docs/data-model.md)
-- [GHI]
+- [GHI](docs/ghi.md)
 - [Integrations]
 
 ## Getting started - JN
