@@ -26,7 +26,7 @@ export default function Landing() {
 	}, [page, submitted]);
 
 	const getConcerts = (page) => {
-		const concertsUrl = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/concerts/${city},${state}/${page}`;
+		const concertsUrl = `${process.env.REACT_APP_CONCERTS_API_HOST}/concerts/${city},${state}/${page}`;
 		const fetchConfig = {
 			method: "get",
 			headers: {
