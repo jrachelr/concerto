@@ -74,35 +74,35 @@ conn = psycopg.connect(conninfo=os.environ["CONCERTS_DATABASE_URL"], **kwargs)
 
 class ConcertQueries:
     def create(self, concert: ConcertIn, user_id: int) -> ConcertOut:
-        with pool.connection() as conn:
-            with conn.cursor() as cur:
-                result = cur.execute(
-                    """
-                    INSERT INTO favorite_concerts
-                        (concert_name,
-                        artist_name,
-                        start_date,
-                        min_price,
-                        max_price,
-                        user_id,
-                        spotify_url,
-                        image_url,
-                        favorite)
-                    VALUES
-                        (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                    RETURNING id;
-                    """,
-                    [
-                        concert.concert_name,
-                        concert.artist_name,
-                        concert.start_date,
-                        concert.min_price,
-                        concert.max_price,
-                        user_id,
-                        concert.spotify_url,
-                        concert.image_url,
-                        concert.favorite
-                    ],
+        # with pool.connection() as conn:
+        with conn.cursor() as cur:
+            result = cur.execute(
+                """
+                INSERT INTO favorite_concerts
+                    (concert_name,
+                    artist_name,
+                    start_date,
+                    min_price,
+                    max_price,
+                    user_id,
+                    spotify_url,
+                    image_url,
+                    favorite)
+                VALUES
+                      (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                RETURNING id;
+                """,
+                [
+                     concert.concert_name,
+                     concert.artist_name,
+                     concert.start_date,
+                     concert.min_price,
+                     concert.max_price,
+                     user_id,
+                     concert.spotify_url,
+                     concert.image_url,
+                     concert.favorite
+                ],
                 )
 
             id = result.fetchone()[0]
@@ -110,24 +110,24 @@ class ConcertQueries:
             return ConcertOut(id=id, user_id=user_id, **old_data)
 
     def get_all(self, user_id: int = None) -> list[ConcertOut]:
-        with pool.connection() as conn:
-            with conn.cursor() as cur:
-                if user_id is None:
-                    cur.execute(
-                        """
-                        SELECT *
-                        FROM favorite_concerts
-                        """
-                    )
-                else:
-                    cur.execute(
-                        """
-                        SELECT *
-                        FROM favorite_concerts
-                        WHERE user_id = %s
-                        """,
-                        [user_id]
-                    )
+        # with pool.connection() as conn:
+        with conn.cursor() as cur:
+            if user_id is None:
+                cur.execute(
+                    """
+                    SELECT *
+                    FROM favorite_concerts
+                    """
+                )
+            else:
+                cur.execute(
+                    """
+                    SELECT *
+                    FROM favorite_concerts
+                    WHERE user_id = %s
+                    """,
+                    [user_id]
+                )
 
                 results = []
                 for row in cur.fetchall():
