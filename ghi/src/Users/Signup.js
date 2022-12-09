@@ -12,7 +12,6 @@ const SignupForm = () => {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const navigate = useNavigate();
 	const [usernameList, setUsernameList] = useState(null);
 	const [emailList, setEmailList] = useState(null);
 	const [usernameTaken, setUsernameTaken] = useState(false);
