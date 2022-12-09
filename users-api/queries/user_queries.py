@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 import os
 # from psycopg_pool import ConnectionPool
-from psycopg import connect
+import psycopg
 
 keepalive_kwargs = {
    "keepalives": 1,
@@ -41,7 +41,9 @@ class UsersList(BaseModel):
 
 
 # pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
-conn = connect(conninfo=os.environ.get("USERS_DATABASE_URL"), **keepalive_kwargs) # noqa
+kwargs = {"autocommit": True}
+
+conn = psycopg.connect(conninfo=os.environ["CONCERTS_DATABASE_URL"], **kwargs)
 
 
 class UserQueries:
