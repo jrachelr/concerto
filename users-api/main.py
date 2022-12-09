@@ -15,6 +15,7 @@ app.add_middleware(
             "REACT_APP_SAMPLE_SERVICE_API_HOST",
         ),
         "http://localhost:3000",
+        "https://the-jerney.gitlab.io/",
     ],
     allow_credentials=True,
     allow_methods=["*"],
