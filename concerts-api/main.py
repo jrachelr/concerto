@@ -10,7 +10,7 @@ app.add_middleware(
     allow_origins=[
         os.environ.get(
             "CORS_HOST",
-            "USERS_API_HOST",
+            "REACT_APP_USERS_API_HOST",
         ), "http://localhost:3000",
         "https://the-jerney.gitlab.io/",
     ],

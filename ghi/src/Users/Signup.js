@@ -20,10 +20,13 @@ const SignupForm = () => {
 
 	useEffect(() => {
 		async function fetchUserList() {
-			const response = await fetch(`${process.env.USERS_API_HOST}/users`, {
-				method: "get",
-				credentials: "include",
-			});
+			const response = await fetch(
+				`${process.env.REACT_APP_USERS_API_HOST}/users`,
+				{
+					method: "get",
+					credentials: "include",
+				}
+			);
 			const data = await response.json();
 
 			const usernames = [];
