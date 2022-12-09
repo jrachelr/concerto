@@ -7,6 +7,8 @@
 - Jimmy Nguyen
 
 ## Design
+Concerto is a full-stack web application for music lovers to search for concerts. It removes the friction between searching for concerts and moving to another application to sample music by an artist, by embedding a Spotify player within the browser window.
+
 - [API design](docs/api-design.md)
 - [Data Model](docs/data-model.md)
 - [GHI](docs/ghi.md)
@@ -21,10 +23,6 @@ clone the repository
 - docker compose build
 - docker compose up
 
-## Design
-Concerto is a full-stack web application for music lovers to search for concerts. It removes the friction between searching for concerts and moving to another application to sample music by an artist, by embedding a Spotify player within the browser window.
-
-Concerts and Users are separate microservices. The microservices communicate via a poller.
 
 ## Functionality
 - Visitors to the site can search for local entertainment based off whatever location/destination as they please.
