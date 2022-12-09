@@ -54,74 +54,59 @@ not_authorized = HTTPException(
 
 # add favorite concert
 @router.post("/concerts/favorites/{user_id}", response_model=ConcertOut)
-def post_favorite_concert(
-    concert: ConcertIn,
-    user_id: int,
-    queries: ConcertQueries = Depends(),
-    account: dict = Depends(get_current_user),
-):
+def post_favorite_concert(concert: ConcertIn,
+                          user_id: int,
+                          queries: ConcertQueries = Depends(),
+                          account: dict = Depends(get_current_user)):
     if account:
         return queries.create(concert, user_id)
 
 
 # get favorite concerts for all users
-@router.get("/concerts/favorites/", response_model=ConcertsList)
-def get_favorite_concerts(
-    queries: ConcertQueries = Depends(),
-    account: dict = Depends(get_current_user),
-):
+@router.get('/concerts/favorites/', response_model=ConcertsList)
+def get_favorite_concerts(queries: ConcertQueries = Depends(),
+                          account: dict = Depends(get_current_user)):
     if account:
         return {"concerts": queries.get_all()}
 
 
 # get favorite concerts for a specific user
-@router.get("/concerts/favorites/{user_id}", response_model=ConcertsList)
-def get_favorite_concerts_by_id(
-    user_id: int,
-    queries: ConcertQueries = Depends(),
-    account: dict = Depends(get_current_user),
-):
+@router.get('/concerts/favorites/{user_id}', response_model=ConcertsList)
+def get_favorite_concerts_by_id(user_id: int,
+                                queries: ConcertQueries = Depends(),
+                                account: dict = Depends(get_current_user)):
     if account:
         return {"concerts": queries.get_all(user_id)}
 
 
 # get one favorite concert for a specific user
-@router.get(
-    "/concerts/favorites/{user_id}/{concert_id}", response_model=ConcertOut
-)
-def get_favorite_concert_by_id(
-    concert_id: int,
-    user_id: int,
-    queries: ConcertQueries = Depends(),
-    account: dict = Depends(get_current_user),
-):
+@router.get("/concerts/favorites/{user_id}/{concert_id}",
+            response_model=ConcertOut)
+def get_favorite_concert_by_id(concert_id: int,
+                               user_id: int,
+                               queries: ConcertQueries = Depends(),
+                               account: dict = Depends(get_current_user)):
     if account:
         return queries.get_one(concert_id, user_id)
 
 
-@router.put(
-    "/concerts/favorites/{user_id}/{concert_id}", response_model=ConcertOut
-)
-def update_favorite_concert(
-    user_id: int,
-    concert_id: int,
-    concert: ConcertIn,
-    queries: ConcertQueries = Depends(),
-    account: dict = Depends(get_current_user),
-):
+@router.put("/concerts/favorites/{user_id}/{concert_id}",
+            response_model=ConcertOut)
+def update_favorite_concert(user_id: int,
+                            concert_id: int,
+                            concert: ConcertIn,
+                            queries: ConcertQueries = Depends(),
+                            account: dict = Depends(get_current_user)):
     if account:
         return queries.update(user_id, concert_id, concert)
 
 
-@router.delete(
-    "/concerts/favorites/{user_id}/{concert_id}", response_model=bool
-)
-def delete_concert(
-    user_id: int,
-    concert_id: int,
-    queries: ConcertQueries = Depends(),
-    account: dict = Depends(get_current_user),
-):
+@router.delete("/concerts/favorites/{user_id}/{concert_id}",
+               response_model=bool)
+def delete_concert(user_id: int,
+                   concert_id: int,
+                   queries: ConcertQueries = Depends(),
+                   account: dict = Depends(get_current_user)):
     if account:
         return queries.delete(user_id, concert_id)
 
@@ -144,24 +129,20 @@ def get_all_concerts(city, state, page):
     for event in events:
         concert = {}
         try:
-            concert["artist_name"] = event["_embedded"]["attractions"][0][
-                "name"
-            ]
+            concert["artist_name"] = event['_embedded']['attractions'][0]['name']
         except KeyError:
             continue
 
         concert["image_url"] = event["images"][1]["url"]
-        concert["concert_name"] = event["name"]
+        concert["concert_name"] = event['name']
         try:
             concert["venue"] = event["_embedded"]["venues"][0]["name"]
-        except KeyError:
+        except:
             concert["venue"] = "TBD"
 
         concert["start_date"] = event["dates"]["start"]["localDate"]
         try:
-            concert["spotify_url"] = event["_embedded"]["attractions"][0][
-                "externalLinks"
-            ]["spotify"][0]["url"]
+            concert["spotify_url"] = event['_embedded']['attractions'][0]['externalLinks']['spotify'][0]['url']
         except KeyError:
             continue
         try:

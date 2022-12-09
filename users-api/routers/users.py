@@ -9,7 +9,6 @@ from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
 from queries.user_queries import UsersList, UserQueries, UserIn, UserOut
 
-
 router = APIRouter()
 
 
