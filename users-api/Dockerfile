@@ -11,4 +11,4 @@ COPY main.py main.py
 COPY queries queries
 COPY routers routers
 COPY authenticator.py authenticator.py
-CMD python -m migrations up && uvicorn main:app --host 0.0.0.0
+CMD uvicorn main:app --host 0.0.0.0
