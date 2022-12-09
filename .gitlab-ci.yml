@@ -18,7 +18,7 @@ users-unit-test-job:
   image: python:3-bullseye
   stage: test
   variables:
-    USERS_DATABASE_URL: ${USERS_DATABASE_URL}
+    USERS_DATABASE_URL: postgres://gmdhwhkk:0aMxS-RRJfaZnoGa4cgenGnsw8rhsSnw@arjuna.db.elephantsql.com/gmdhwhkk
     SIGNING_KEY: ${SIGNING_KEY}
   needs:
   script:
