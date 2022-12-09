@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 import os
-# from psycopg_pool import ConnectionPool
 import psycopg
 
 keepalive_kwargs = {
