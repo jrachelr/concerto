@@ -7,6 +7,7 @@ COPY requirements.txt requirements.txt
 RUN python -m pip install -r requirements.txt
 WORKDIR /app
 COPY main.py main.py
+COPY migrations migrations
 COPY queries queries
 COPY routers routers
 CMD uvicorn main:app --host 0.0.0.0
