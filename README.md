@@ -36,10 +36,10 @@ Concerto is a full-stack web application for music lovers to search for concerts
 
 - cd into the new project directory
 
-- Run 'docker volume create pg-admin'
+- Run `docker volume create pg-admin`
 
-- Run 'docker volume create postgres-data'
+- Run `docker volume create postgres-data`
 
-- Run 'docker compose build'
+- Run `docker compose build`
 
-- Run 'docker compose up'
+- Run `docker compose up`
