@@ -164,6 +164,8 @@ export function useToken() {
 		});
 		if (response.ok) {
 			await login(email, password);
+		} else {
+			console.log("ERROR");
 		}
 		console.log("respose:", response);
 		return false;

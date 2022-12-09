@@ -6,7 +6,7 @@ import { GiHarp } from "react-icons/gi";
 
 const SignupForm = () => {
 	// this destructuring has to be in the same order as in auth
-	const [, login, , signup] = useToken();
+	const [, , , signup] = useToken();
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [username, setUsername] = useState("");
@@ -62,8 +62,8 @@ const SignupForm = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		signup(username, password, email, firstName, lastName);
-		login(username, password);
-		console.log(username, "is logged in");
+		// login(username, password);
+		// console.log(username, "is logged in");
 		if (usernameTaken || emailTaken) {
 			return;
 		} else {
