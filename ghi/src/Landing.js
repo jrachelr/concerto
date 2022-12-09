@@ -38,6 +38,7 @@ export default function Landing() {
 			.then((data) => {
 				setConcerts(concerts.concat(data.concerts));
 				setSuccess(true);
+				setSubmitted(false);
 			})
 			.catch((error) => {
 				setSuccess(false);

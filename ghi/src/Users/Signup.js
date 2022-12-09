@@ -61,13 +61,13 @@ const SignupForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		signup(username, password, email, firstName, lastName);
-		login(username, password);
+		// signup(username, password, email, firstName, lastName);
+		// login(username, password);
 		// console.log(username, "is logged in");
 		if (usernameTaken || emailTaken) {
 			return;
 		} else {
-			navigate("/");
+			signup(username, password, email, firstName, lastName);
 		}
 	};
 
