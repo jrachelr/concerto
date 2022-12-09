@@ -10,7 +10,7 @@ export default function Favorites() {
 
 	useEffect(() => {
 		async function getFavoriteConcerts() {
-			const favoritesURL = `${process.env.CONCERTS_API_HOST}/concerts/favorites/${user.id}`;
+			const favoritesURL = `${process.env.REACT_APP_CONCERTS_API_HOST}/concerts/favorites/${user.id}`;
 
 			const fetchConfig = {
 				method: "get",
@@ -35,7 +35,7 @@ export default function Favorites() {
 	}, [token, user, setConcerts, submitted]);
 
 	const removeFavorite = async (concert) => {
-		const removeURL = `${process.env.CONCERTS_API_HOST}/concerts/favorites/${user.id}/${concert.id}`;
+		const removeURL = `${process.env.REACT_APP_CONCERTS_API_HOST}/concerts/favorites/${user.id}/${concert.id}`;
 		const fetchConfig = {
 			method: "delete",
 			headers: {
