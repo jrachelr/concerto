@@ -14,8 +14,6 @@ This is the page the user will see when trying to access their favorite Concerts
 
 ## Login/Accounts Page
 
-This is the page the user will see when attempting to sign into their account
+This is the page the user will see when attempting to sign into their account, as well as their own account details upon successfully logging in. 
 
 ![Login/Account Info Page](readme_images/Login_Account.png)
-
-
