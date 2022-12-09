@@ -56,3 +56,15 @@
 12/6/22
 
 - Successfully built front end jobs, not working on deploying
+
+12/7/22
+
+- Deployment put on hold, Currently working on Login bug
+
+12/8/22
+
+Login bug fixed, deployment still put on hold. Also started readme
+
+12/9/22
+
+- Finished Readme, Deployment done

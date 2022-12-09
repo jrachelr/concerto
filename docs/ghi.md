@@ -4,16 +4,28 @@
 
 This is the main page that people will see when they get to the Web Site.
 
-![Home Page](readme_images/Landing_detail.png)
+![Home Page](readme_images/Home_Page.png)
+
+## Sign In
+
+This is the page that users will see when attempting to sign in
+
+![Sign In](readme_images/Sign_In.png)
+
+## Searching For Concerts
+
+This is the page that users will see when searching for concerts
+
+![Search For Concerts](readme_images/Search.png)
+
+## Concert Details
+
+This is the page that users will see when attempting to view concert details
+
+![Concert Details](readme_images/Concert_Detail.png)
 
 ## Favorited Concerts Page
 
 This is the page the user will see when trying to access their favorite Concerts
 
-![Favorite Concerts Page](readme_images/Favourite_Concerts.png)
-
-## Login/Accounts Page
-
-This is the page the user will see when attempting to sign into their account, as well as their own account details upon successfully logging in. 
-
-![Login/Account Info Page](readme_images/Login_Account.png)
+![Favorite Concerts Page](readme_images/Favorites_Page.png)
