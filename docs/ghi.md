@@ -35,3 +35,9 @@ This is the page that users will see when attempting to view concert details
 This is the page the user will see when trying to access their favorite Concerts
 
 ![Favorite Concerts Page](readme_images/Favorites_Page.png)
+
+## Log Out
+
+This is the page the user will see when attempting to log out of their account
+
+![Log Out](readme_images/Log_Out.png)
