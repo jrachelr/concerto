@@ -6,6 +6,12 @@ This is the main page that people will see when they get to the Web Site.
 
 ![Home Page](readme_images/Home_Page.png)
 
+## Create an Account
+
+This is the page that users will see when they attempt to create a new account
+
+![Create an Account](readme_images/Create_Account.png)
+
 ## Sign In
 
 This is the page that users will see when attempting to sign in
