@@ -117,7 +117,7 @@ export function useToken() {
 	}
 
 	async function login(username, password) {
-		const url = `${process.env.REACT_APP_USERS_HOST}/token`;
+		const url = `${process.env.USERS_API_HOST}/token`;
 		const form = new FormData();
 
 		form.append("username", username);
@@ -128,7 +128,7 @@ export function useToken() {
 			body: form,
 		});
 		const response2 = await fetch(
-			`${process.env.REACT_APP_USERS_HOST}/users/current`,
+			`${process.env.USERS_API_HOST}/users/current`,
 			{
 				method: "get",
 				credentials: "include",
