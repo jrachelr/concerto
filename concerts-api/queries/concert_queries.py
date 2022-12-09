@@ -1,15 +1,16 @@
 import os
 # from psycopg_pool import ConnectionPool
 from datetime import date
-from psycopg import connect
+# from psycopg import connect
+import psycopg
 from pydantic import BaseModel
 
-keepalive_kwargs = {
-   "keepalives": 1,
-   "keepalives_idle": 60,
-   "keepalives_interval": 10,
-   "keepalives_count": 5
-  }
+# keepalive_kwargs = {
+#    "keepalives": 1,
+#    "keepalives_idle": 60,
+#    "keepalives_interval": 10,
+#    "keepalives_count": 5
+#   }
 
 
 class Concert(BaseModel):
@@ -60,12 +61,17 @@ class UserOut(BaseModel):
 class ConcertsList(BaseModel):
     concerts: list[ConcertOut]
 
+# conn = connect(conninfo=os.environ.get("CONCERT_DATABASE_URL"), **keepalive_kwargs) # noqa
 
-# pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
-conn = connect(conninfo=os.environ["CONCERT_DATABASE_URL"], **keepalive_kwargs)
+
+kwargs = {"autocommit": True}
+
+conn = psycopg.connect(conninfo=os.environ["CONCERTS_DATABASE_URL"], **kwargs)
 
 
 # need to fix so it can return the id as well
+
+
 class ConcertQueries:
     def create(self, concert: ConcertIn, user_id: int) -> ConcertOut:
         with pool.connection() as conn:

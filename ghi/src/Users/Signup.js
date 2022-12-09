@@ -1,18 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useToken } from "../auth.js";
-import { useNavigate } from "react-router-dom";
 import { GiHarp } from "react-icons/gi";
 
 const SignupForm = () => {
 	// this destructuring has to be in the same order as in auth
-	const [, login, , signup] = useToken();
+	const [, , , signup] = useToken();
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const navigate = useNavigate();
 	const [usernameList, setUsernameList] = useState(null);
 	const [emailList, setEmailList] = useState(null);
 	const [usernameTaken, setUsernameTaken] = useState(false);
@@ -21,7 +19,7 @@ const SignupForm = () => {
 	useEffect(() => {
 		async function fetchUserList() {
 			const response = await fetch(
-				`${process.env.REACT_APP_ACCOUNTS_HOST}/users`,
+				`${process.env.REACT_APP_USERS_API_HOST}/users`,
 				{
 					method: "get",
 					credentials: "include",
@@ -61,13 +59,13 @@ const SignupForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		signup(username, password, email, firstName, lastName);
-		login(username, password);
-		console.log(username, "is logged in");
+		// signup(username, password, email, firstName, lastName);
+		// login(username, password);
+		// console.log(username, "is logged in");
 		if (usernameTaken || emailTaken) {
 			return;
 		} else {
-			navigate("/");
+			signup(username, password, email, firstName, lastName);
 		}
 	};
 

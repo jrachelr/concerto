@@ -72,3 +72,12 @@
 - Fixed 401 error showing up on console before user tried logging in
 - Fixed Favorite Concerts error showing null ID
   -- Separating fetches for user and token in two UseEffects
+
+12/8/22
+
+- Fixed login so that only users with credentials can log in
+- Fixed signup so that no duplicate users are created with the same username or email
+- Finished deployment. Some issues were:
+  -- Needed to fix environment variable names
+  -- Had to change connection pools to add auto-commit kwargs
+  --

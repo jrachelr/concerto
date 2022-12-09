@@ -6,6 +6,7 @@ COPY requirements.txt requirements.txt
 #RUN chmod +x /wait
 RUN python -m pip install -r requirements.txt
 WORKDIR /app
+COPY migrations migrations
 COPY main.py main.py
 COPY queries queries
 COPY routers routers

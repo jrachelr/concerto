@@ -11,7 +11,7 @@ const ConcertList = ({ concerts, setConcerts, success }) => {
 	const navigate = useNavigate();
 
 	const addFavorite = async (concert) => {
-		const favoriteUrl = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/concerts/favorites/${user.id}`;
+		const favoriteUrl = `${process.env.REACT_APP_CONCERTS_API_HOST}/concerts/favorites/${user.id}`;
 
 		const data = {
 			concert_name: concert.concert_name,
