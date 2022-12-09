@@ -10,31 +10,31 @@ import SideBar from "./Layout/SidebarNav";
 import Favorites from "./Users/ConcertFavorites";
 import { useAuthContext } from "./auth.js";
 function GetToken() {
-	// Get token from JWT cookie (if already logged in)
-	useToken();
-	return null;
+  // Get token from JWT cookie (if already logged in)
+  useToken();
+  return null;
 }
 
 function App() {
-	const { token } = useAuthContext();
-	console.log(token);
-	return (
-		<>
-			<AuthProvider>
-				<GetToken />
-				<Routes>
-					<Route path="/" element={<Landing />} />
-					<Route path="header/" element={<Header />} />
-					<Route path="sidebar/" element={<SideBar />} />
-					<Route path="myconcerts/" element={<Favorites />} />
-					<Route path="login/" element={<LoginForm />} />
-					<Route path="signup/" element={<SignupForm />} />
-					<Route path="logout/" element={<Logout />} />
-					<Route path="*" element={<Navigate to="/" />} />
-				</Routes>
-			</AuthProvider>
-		</>
-	);
+  const { token } = useAuthContext();
+
+  return (
+    <>
+      <AuthProvider>
+        <GetToken />
+        <Routes basename="/concerto">
+          <Route path="/" element={<Landing />} />
+          <Route path="header/" element={<Header />} />
+          <Route path="sidebar/" element={<SideBar />} />
+          <Route path="myconcerts/" element={<Favorites />} />
+          <Route path="login/" element={<LoginForm />} />
+          <Route path="signup/" element={<SignupForm />} />
+          <Route path="logout/" element={<Logout />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </AuthProvider>
+    </>
+  );
 }
 
 export default App;

@@ -99,4 +99,5 @@ DOCKER_DEFAULT_PLATFORM=linux/amd64 docker-compose build (for m1 users)
 
 ### 8 December
 
--
+- added unit testing for concerts. was quite tricky testing a protected endpoint but fixed with help from tristen
+- ran into a lot of issues with deployment but nikko got it deployed at 1am 🎉
