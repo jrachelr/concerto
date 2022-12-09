@@ -24,9 +24,22 @@ Concerto is a full-stack web application for music lovers to search for concerts
 
 ## Getting started
 
-clone the repository
+- Fork repository
+
+- git clone HTTPS link
+
+- get ticketmaster API key https://developer.ticketmaster.com/products-and-docs/apis/getting-started/
+
+- get google autocomplete API key "Website HERE"
+
+- make .env file and place the 2 API keys in there (THIS IS FOR LOCAL TESTING)
+
 - cd into the new project directory
-- docker volume create pg-admin
-- docker volume create postgres-data
-- docker compose build
-- docker compose up
+
+- Run 'docker volume create pg-admin'
+
+- Run 'docker volume create postgres-data'
+
+- Run 'docker compose build'
+
+- Run 'docker compose up'
