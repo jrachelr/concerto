@@ -6,6 +6,14 @@
 - Nicolette Mabeza
 - Jimmy Nguyen
 
+## Functionality
+- Visitors to the site can search for local entertainment based off whatever location/destination as they please.
+
+- Users who are signed in will have the ability to favorite such concerts to add to a list of "Favorited Concerts"
+
+- In addition to searching for concerts, users will be able to sample such artists music directly from the application with the Spotify Embedded player.
+
+
 ## Design
 Concerto is a full-stack web application for music lovers to search for concerts. It removes the friction between searching for concerts and moving to another application to sample music by an artist, by embedding a Spotify player within the browser window.
 
@@ -13,13 +21,6 @@ Concerto is a full-stack web application for music lovers to search for concerts
 - [Data Model](docs/data-model.md)
 - [GHI](docs/ghi.md)
 - [Integrations](docs/integrations.md)
-
-## Functionality
-- Visitors to the site can search for local entertainment based off whatever location/destination as they please.
-
-- Users who are signed in will have the ability to favorite such concerts to add to a list of "Favorited Concerts"
-
-- In addition to searching for concerts, users will be able to sample such artists music directly from the application with the Spotify Embedded player.
 
 ## Getting started
 
