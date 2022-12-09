@@ -66,7 +66,7 @@ class ConcertsList(BaseModel):
 
 kwargs = {"autocommit": True}
 
-conn = psycopg.connect(conninfo=os.environ["CONCERT_DATABASE_URL"], **kwargs)
+conn = psycopg.connect(conninfo=os.environ["CONCERTS_DATABASE_URL"], **kwargs)
 
 
 # need to fix so it can return the id as well
