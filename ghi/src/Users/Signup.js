@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useToken } from "../auth.js";
-import { useNavigate } from "react-router-dom";
 import { GiHarp } from "react-icons/gi";
 
 const SignupForm = () => {
