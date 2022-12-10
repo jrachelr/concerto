@@ -80,4 +80,8 @@
 - Finished deployment. Some issues were:
   -- Needed to fix environment variable names
   -- Had to change connection pools to add auto-commit kwargs
-  --
+
+12/9/22
+
+- Fixed bugs on signup
+- ANDREW SAID WE PASSED!!!
