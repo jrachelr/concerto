@@ -29,3 +29,27 @@
 12/01/22
 
 - Added passing unit tests for users microservice
+
+12/02/22
+
+- Working on development and added elephantSQL databases
+
+12/05/22
+
+- Created render services and connected it to our services
+
+12/06/22
+
+- Continued working on deployment issues we are having
+
+12/07/22
+
+- Worked on gitlab yaml file and deployment so it can work with our backend and frontend
+
+12/08/22
+
+- Worked on wireframing for readme and finalized pipeline tests
+
+12/09/22
+
+- Pipeline test passing and deployment is all working.
